@@ -21,6 +21,8 @@ namespace UI
         // Update is called once per frame
         void Update()
         {
+            if (playerStats == null) return; // in case player stats isnt assinged
+
             healthbar.value = playerStats.currentHealth / playerStats.maxHealth;
             oxygenbar.value = playerStats.currentOxygen / playerStats.maxOxygen;
             saturationbar.value = playerStats.currentSaturation / playerStats.maxSaturation;
