@@ -25,8 +25,8 @@ public class PlayerStats : MonoBehaviour
     [Header("Toxicity")]
     public float maxToxicity = 100f;
     public float currentToxicity = 0f;
-    public float toxicityBuildupRate = 2f;
-    public float toxicityDecayRate = 5f;
+    public float toxicityBuildupRate = 0.1f;
+    public float toxicityDecayRate = 0f;
 
     [Header("Environment")]
     public bool isInsideShip = true;
