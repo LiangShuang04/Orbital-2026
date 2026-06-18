@@ -2,6 +2,7 @@
 @username = orbital_test_player
 @email = orbital.test.player@example.com
 @password = StrongPassword123
+@worldSeed = 2026
 @token = {{login.response.body.$.token}}
 
 # @name register
@@ -32,10 +33,23 @@ POST {{baseUrl}}/save
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-{}
+{
+  "worldSeed": {{worldSeed}}
+}
 
 ###
 
 # @name getSave
 GET {{baseUrl}}/save
 Authorization: Bearer {{token}}
+
+###
+
+# @name updateSeed
+PUT {{baseUrl}}/save
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "worldSeed": {{worldSeed}}
+}

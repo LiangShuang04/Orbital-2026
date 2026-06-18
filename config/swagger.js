@@ -293,6 +293,7 @@ const createSwaggerDefinition = () => {
           required: [
             "id",
             "userId",
+            "worldSeed",
             "playerTransform",
             "survivalStats",
             "inventory",
@@ -309,6 +310,12 @@ const createSwaggerDefinition = () => {
             userId: {
               type: "string",
               example: "665f7d30fb3f7b1df83d2e91",
+            },
+            worldSeed: {
+              type: "integer",
+              minimum: -2147483648,
+              maximum: 2147483647,
+              example: 2026,
             },
             playerTransform: {
               $ref: "#/components/schemas/PlayerTransform",
@@ -359,6 +366,12 @@ const createSwaggerDefinition = () => {
         SaveUpdateRequest: {
           type: "object",
           properties: {
+            worldSeed: {
+              type: "integer",
+              minimum: -2147483648,
+              maximum: 2147483647,
+              example: 2026,
+            },
             playerTransform: {
               $ref: "#/components/schemas/PlayerTransform",
             },
@@ -538,8 +551,18 @@ const createSwaggerDefinition = () => {
                 schema: {
                   type: "object",
                   additionalProperties: false,
+                  properties: {
+                    worldSeed: {
+                      type: "integer",
+                      minimum: -2147483648,
+                      maximum: 2147483647,
+                      example: 2026,
+                    },
+                  },
                 },
-                example: {},
+                example: {
+                  worldSeed: 2026,
+                },
               },
             },
           },
@@ -637,6 +660,7 @@ const createSwaggerDefinition = () => {
                   $ref: "#/components/schemas/SaveUpdateRequest",
                 },
                 example: {
+                  worldSeed: 2026,
                   playerTransform: {
                     position: {
                       x: 12.5,

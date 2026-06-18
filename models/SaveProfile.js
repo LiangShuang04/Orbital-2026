@@ -156,6 +156,17 @@ const saveProfileSchema = new Schema(
       unique: true,
       index: true
     },
+    worldSeed: {
+      type: Number,
+      required: true,
+      default: 0,
+      min: [-2147483648, "World seed is below the allowed integer range"],
+      max: [2147483647, "World seed is above the allowed integer range"],
+      validate: {
+        validator: Number.isInteger,
+        message: "World seed must be an integer"
+      }
+    },
     playerTransform: {
       type: playerTransformSchema,
       default: () => ({})

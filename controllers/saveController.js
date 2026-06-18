@@ -1,6 +1,6 @@
 import SaveProfile from "#models/SaveProfile";
 
-const allowedRootFields = new Set(["playerTransform", "survivalStats", "inventory", "baseModules", "objectiveState"]);
+const allowedRootFields = new Set(["worldSeed", "playerTransform", "survivalStats", "inventory", "baseModules", "objectiveState"]);
 const allowedTransformFields = new Set(["position", "rotation"]);
 const allowedVectorFields = new Set(["x", "y", "z"]);
 const allowedSurvivalStats = new Set(["health", "oxygen", "hunger", "toxicity"]);
@@ -193,6 +193,11 @@ const buildSaveUpdate = body => {
 
   const update = {};
 
+  if (body.worldSeed !== undefined) {
+    assertInteger(body.worldSeed, "worldSeed", -2147483648, 2147483647);
+    update.worldSeed = body.worldSeed;
+  }
+
   if (body.playerTransform !== undefined) {
     assertObject(body.playerTransform, "playerTransform");
     assertOnlyFields(body.playerTransform, allowedTransformFields, "playerTransform");
@@ -241,6 +246,20 @@ const buildSaveUpdate = body => {
   return update;
 };
 
+const buildSaveCreate = body => {
+  assertObject(body, "request body");
+  assertOnlyFields(body, new Set(["worldSeed"]), "request body");
+
+  if (body.worldSeed === undefined) {
+    return {};
+  }
+
+  assertInteger(body.worldSeed, "worldSeed", -2147483648, 2147483647);
+  return {
+    worldSeed: body.worldSeed
+  };
+};
+
 export const createSaveProfile = handleAsync(async (req, res) => {
   const existingProfile = await SaveProfile.findOne({ userId: req.user.id });
 
@@ -248,7 +267,11 @@ export const createSaveProfile = handleAsync(async (req, res) => {
     throw httpError(409, "Save profile already exists");
   }
 
-  const saveProfile = await SaveProfile.create({ userId: req.user.id });
+  const createPayload = buildSaveCreate(req.body ?? {});
+  const saveProfile = await SaveProfile.create({
+    userId: req.user.id,
+    ...createPayload
+  });
 
   res.status(201).json({
     success: true,
