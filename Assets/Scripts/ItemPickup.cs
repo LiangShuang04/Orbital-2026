@@ -3,10 +3,7 @@ using UnityEngine;
 /// <summary>
 /// A pickable item sitting in the world. References an ItemData definition and a
 /// quantity; when interacted with, it adds itself to the interactor's Inventory
-/// and removes the world object.
-///
-/// Attach to any world object that has a Collider so the SelectionManager raycast
-/// can hit it.
+/// and removes the world object
 /// </summary>
 public class ItemPickup : MonoBehaviour, IInteractable
 {
@@ -30,7 +27,7 @@ public class ItemPickup : MonoBehaviour, IInteractable
             return;
         }
 
-        // The Inventory may live on the interactor or one of its children.
+        // The Inventory may live on the interactor or one of its children
         var inventory = interactor.GetComponent<Inventory>()
                         ?? interactor.GetComponentInChildren<Inventory>();
         if (inventory == null)

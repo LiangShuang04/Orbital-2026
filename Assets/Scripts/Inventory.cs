@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour
     /// <summary>
     /// Adds <paramref name="amount"/> of <paramref name="item"/>, filling existing
     /// stacks first then creating new slots. Returns false if the inventory ran out
-    /// of room before everything fit (the portion that fit is still added).
+    /// of room before everything fit (the portion that fit is still added)
     /// </summary>
     public bool AddItem(ItemData item, int amount = 1)
     {
@@ -76,8 +76,8 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// Removes up to <paramref name="amount"/> of <paramref name="item"/> across stacks.
-    /// Returns true only if the full amount was available and removed.
+    /// Removes up to <paramref name="amount"/> of <paramref name="item"/> across stacks
+    /// Returns true only if the full amount was available and removed
     /// </summary>
     public bool RemoveItem(ItemData item, int amount = 1)
     {
@@ -96,7 +96,7 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    /// <summary>Total quantity of an item held across all stacks.</summary>
+    /// <summary>Total quantity of an item held across all stacks</summary>
     public int GetCount(ItemData item)
     {
         int total = 0;

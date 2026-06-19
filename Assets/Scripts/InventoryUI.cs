@@ -5,7 +5,7 @@ using TMPro;
 /// <summary>
 /// Minimal inventory display: a panel listing the current stacks as text, toggled
 /// with a key. Subscribes to Inventory.OnInventoryChanged so it only rebuilds when
-/// the contents actually change. Replace with a slot/icon grid later.
+/// the contents actually change. Replace with a slot/icon grid later
 /// </summary>
 public class InventoryUI : MonoBehaviour
 {

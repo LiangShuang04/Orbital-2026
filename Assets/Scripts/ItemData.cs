@@ -18,9 +18,9 @@ public class ItemData : ScriptableObject
 
 public enum ItemType
 {
-    Resource, //includes materials and resources
-    Consumable, // includes things that can restore health or saturation like medkit or food
-    Tool, // weapons and tools
+    Resource,
+    Consumable,
+    Tool, // (and weapons)
     Key // key items used to unlock the next act
 }
 
