@@ -50,10 +50,22 @@ namespace DontDiePlease.EditorTools
             Debug.Log($"Seeded variant defaults applied to {selectedObjects.Length} scene object{(selectedObjects.Length == 1 ? string.Empty : "s")}.");
         }
 
+        [MenuItem("Window/Don't Die Please/Batch Assign Seeded Variant")]
+        private static void BatchAssignSeededVariantFromWindow()
+        {
+            BatchAssignSeededVariant();
+        }
+
         [MenuItem("Tools/Don't Die Please/Batch Assign Seeded Variant", true)]
         private static bool CanBatchAssignSeededVariant()
         {
             return Selection.gameObjects.Any(IsSceneObject);
+        }
+
+        [MenuItem("Window/Don't Die Please/Batch Assign Seeded Variant", true)]
+        private static bool CanBatchAssignSeededVariantFromWindow()
+        {
+            return CanBatchAssignSeededVariant();
         }
 
         private static bool IsSceneObject(GameObject selectedObject)

@@ -29,6 +29,7 @@ sysinfo.txt
 *.apk
 *.aab
 *.unitypackage
+*.unitypackage.meta
 
 node_modules/
 .env
