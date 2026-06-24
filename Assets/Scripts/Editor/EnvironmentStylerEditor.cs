@@ -38,6 +38,12 @@ namespace DontDiePlease.EditorTools
             Debug.Log($"Applied toxic Morandi style to {materialCount} selected material{(materialCount == 1 ? string.Empty : "s")}.");
         }
 
+        [MenuItem("Window/Don't Die Please/Apply Toxic Morandi Style")]
+        private static void ApplyToxicMorandiStyleFromWindow()
+        {
+            ApplyToxicMorandiStyle();
+        }
+
         private static void ApplyLightingAndFog()
         {
             var renderSettings = ResolveRenderSettingsObject();
