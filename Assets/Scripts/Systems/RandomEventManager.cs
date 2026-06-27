@@ -113,6 +113,11 @@ namespace DontDiePlease.Systems
             isRunning = false;
         }
 
+        public void SetSpawnPoints(RandomEventSpawnPoint[] points)
+        {
+            spawnPoints = points ?? new RandomEventSpawnPoint[0];
+        }
+
         public void TriggerNextEvent()
         {
             var definition = PickDefinition(eventRandom);
