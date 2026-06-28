@@ -16,5 +16,5 @@ MonoBehaviour:
   description: An iron ore
   icon: {fileID: 21300038, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
   isStackable: 1
-  maxStackSize: 5
+  maxStackSize: 50
   type: 0
