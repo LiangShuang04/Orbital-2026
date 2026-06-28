@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     PlayerMovement movement;
-    CameraController CamController;
+    CameraController camController;
 
     [Header("Health")]
     public float maxHealth = 100f;
@@ -31,21 +31,20 @@ public class PlayerStats : MonoBehaviour
     [Header("Environment")]
     public bool isInsideShip = true;
 
-    bool isDead = false;
+    bool isDead;
 
     void Start()
     {
         isDead = false;
         movement = GetComponent<PlayerMovement>();
-        CamController = GetComponentInChildren<CameraController>();
+        camController = GetComponentInChildren<CameraController>();
     }
 
     void Update()
     {
         if (isDead) return;
-        float dt = Time.deltaTime;
+        var dt = Time.deltaTime;
 
-        // Oxygen and toxicity react to environment
         if (isInsideShip)
         {
             currentOxygen = Mathf.Min(maxOxygen,  currentOxygen   + oxygenRegenerationRate * dt);
@@ -57,27 +56,24 @@ public class PlayerStats : MonoBehaviour
             currentToxicity = Mathf.Min(maxToxicity,currentToxicity + toxicityBuildupRate * dt);
         }
 
-        // Saturation always drains
         currentSaturation = Mathf.Max(0f, currentSaturation - saturationDepletionRate * dt);
 
-        // Damage from empty/maxed stats — all hit health
         if (currentOxygen <= 0f) currentHealth -= suffocationDamage * dt;
         if (currentSaturation <= 0f) currentHealth -= starvationDamage * dt;
-        if (currentToxicity >= maxToxicity) currentHealth = 0f;  // insta-kill
+        if (currentToxicity >= maxToxicity) currentHealth = 0f;
 
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
         if (currentHealth <= 0f) Die();
-    }   // <-- Update closes HERE, before the other methods
+    }
 
     public void Die()
     {
         isDead = true;
         movement.enabled = false;
-        CamController.enabled = false;
+        camController.enabled = false;
         Debug.Log("Player died");
     }
 
-    // --- Public methods for pickups, medkits, food, oxygen tanks ---
     public void Heal(float amount) => currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
     public void RestoreOxygen(float amount) => currentOxygen = Mathf.Min(maxOxygen, currentOxygen + amount);
     public void RestoreSaturation(float amount) => currentSaturation = Mathf.Min(maxSaturation, currentSaturation + amount);

@@ -30,7 +30,7 @@ namespace DontDiePlease.Central.EditorTools
         private BuildSummary lastSummary;
         private static Mesh puddleMesh;
 
-        [MenuItem("Tools/Central/Open Generator")]
+        [MenuItem("Tools/Don't Die Please/Map/Central/Open Generator")]
         public static void Open()
         {
             var window = GetWindow<CentralMapGenerator>("Central Map");
@@ -38,23 +38,23 @@ namespace DontDiePlease.Central.EditorTools
             window.Show();
         }
 
-        [MenuItem("Tools/Central/Generate Map")]
+        [MenuItem("Tools/Don't Die Please/Map/Central/Generate Map")]
         public static void BuildDefaultCentralMap()
         {
-            var generator = CreateInstance<CentralMapGenerator>();
-            generator.seed = DefaultSeed;
-            generator.randomizeSeedOnGenerate = false;
-            generator.GenerateCentral(true);
-            DestroyImmediate(generator);
+            var gen = CreateInstance<CentralMapGenerator>();
+            gen.seed = DefaultSeed;
+            gen.randomizeSeedOnGenerate = false;
+            gen.GenerateCentral(true);
+            DestroyImmediate(gen);
         }
 
-        [MenuItem("Tools/Central/Rebuild Manifest")]
+        [MenuItem("Tools/Don't Die Please/Map/Central/Rebuild Manifest")]
         public static void RebuildManifestFromMenu()
         {
             EnsureFolders();
-            var builtManifest = BuildManifest();
-            SaveManifest(builtManifest);
-            ShowMessage("Central Manifest", BuildManifestMessage(builtManifest));
+            var fresh = BuildManifest();
+            SaveManifest(fresh);
+            ShowMessage("Central Manifest", BuildManifestMessage(fresh));
         }
 
         private void OnEnable()
@@ -898,7 +898,7 @@ namespace DontDiePlease.Central.EditorTools
             builder.AppendLine();
             builder.AppendLine("## Regenerate");
             builder.AppendLine();
-            builder.AppendLine("Open Unity, then run `Tools/Central/Open Generator`, keep the same seed, and press `Generate Central`.");
+            builder.AppendLine("Open Unity, then run `Tools/Don't Die Please/Map/Central/Open Generator`, keep the same seed, and press `Generate Central`.");
             builder.AppendLine();
             builder.AppendLine("## Layout");
             builder.AppendLine();

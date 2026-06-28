@@ -75,11 +75,11 @@ namespace DontDiePlease.EditorTools
 
                 if (GUILayout.Button("Browse", GUILayout.Width(90f)))
                 {
-                    var pickedPath = EditorUtility.OpenFolderPanel("Select External Sci-Fi Asset Folder", externalAssetPath, string.Empty);
+                    var folder = EditorUtility.OpenFolderPanel("Select External Sci-Fi Asset Folder", externalAssetPath, string.Empty);
 
-                    if (!string.IsNullOrWhiteSpace(pickedPath))
+                    if (!string.IsNullOrWhiteSpace(folder))
                     {
-                        externalAssetPath = pickedPath;
+                        externalAssetPath = folder;
                         EditorPrefs.SetString(ExternalPathPrefKey, externalAssetPath);
                     }
                 }
@@ -95,9 +95,9 @@ namespace DontDiePlease.EditorTools
         {
             if (GUILayout.Button("Generate"))
             {
-                foreach (var targetObj in targets)
+                foreach (var obj in targets)
                 {
-                    var generator = targetObj as SeededMapGenerator;
+                    var generator = obj as SeededMapGenerator;
 
                     if (generator == null)
                     {
@@ -112,9 +112,9 @@ namespace DontDiePlease.EditorTools
 
             if (GUILayout.Button("Clear"))
             {
-                foreach (var targetObj in targets)
+                foreach (var obj in targets)
                 {
-                    var generator = targetObj as SeededMapGenerator;
+                    var generator = obj as SeededMapGenerator;
 
                     if (generator == null)
                     {
@@ -130,7 +130,7 @@ namespace DontDiePlease.EditorTools
 
         private void ImportAndAutoAssignAssets()
         {
-            var generators = targets.OfType<SeededMapGenerator>().Where(generator => generator != null).ToArray();
+            var generators = targets.OfType<SeededMapGenerator>().Where(g => g != null).ToArray();
 
             if (generators.Length == 0)
             {
@@ -146,28 +146,28 @@ namespace DontDiePlease.EditorTools
 
             EditorPrefs.SetString(ExternalPathPrefKey, externalAssetPath);
 
-            var importPlan = BuildImportPlan(externalAssetPath);
+            var plan = BuildImportPlan(externalAssetPath);
 
-            if (importPlan == null)
+            if (plan == null)
             {
                 return;
             }
 
-            var importedAssetPaths = new List<string>();
+            var imported = new List<string>();
 
             try
             {
-                if (importPlan.UnityPackages.Count > 0)
+                if (plan.UnityPackages.Count > 0)
                 {
-                    importedAssetPaths.AddRange(ImportUnityPackages(importPlan.UnityPackages));
+                    imported.AddRange(ImportUnityPackages(plan.UnityPackages));
                 }
 
-                if (importPlan.CopyFiles.Count > 0)
+                if (plan.CopyFiles.Count > 0)
                 {
-                    importedAssetPaths.AddRange(CopyExternalAssets(importPlan.CopyFiles, importPlan.RootPath));
+                    imported.AddRange(CopyExternalAssets(plan.CopyFiles, plan.RootPath));
                     AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
                 }
-                else if (importPlan.UnityPackages.Count > 0)
+                else if (plan.UnityPackages.Count > 0)
                 {
                     AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
                 }
@@ -178,15 +178,15 @@ namespace DontDiePlease.EditorTools
                 return;
             }
 
-            var assetObjects = LoadImportedGameObjects(importedAssetPaths);
+            var assets = LoadImportedGameObjects(imported);
 
-            if (assetObjects.Count == 0)
+            if (assets.Count == 0)
             {
                 EditorUtility.DisplayDialog("Import Failed", "Unity imported the files, but no prefab or model GameObject assets were found.", "OK");
                 return;
             }
 
-            var groups = CategorizeAssets(assetObjects);
+            var groups = CategorizeAssets(assets);
 
             foreach (var generator in generators)
             {
@@ -196,7 +196,7 @@ namespace DontDiePlease.EditorTools
             }
 
             AssetDatabase.SaveAssets();
-            EditorUtility.DisplayDialog("Import Complete", BuildResultMessage(assetObjects.Count, groups), "OK");
+            EditorUtility.DisplayDialog("Import Complete", BuildResultMessage(assets.Count, groups), "OK");
         }
 
         private static ImportPlan BuildImportPlan(string inputPath)
@@ -237,16 +237,16 @@ namespace DontDiePlease.EditorTools
             }
 
             var primaryAssets = allFiles.Where(path => PrimaryAssetExts.Contains(Path.GetExtension(path))).ToList();
-            var unityPackages = allFiles.Where(path => string.Equals(Path.GetExtension(path), ".unitypackage", StringComparison.OrdinalIgnoreCase)).ToList();
+            var packages = allFiles.Where(path => string.Equals(Path.GetExtension(path), ".unitypackage", StringComparison.OrdinalIgnoreCase)).ToList();
 
-            if (primaryAssets.Count == 0 && unityPackages.Count == 0)
+            if (primaryAssets.Count == 0 && packages.Count == 0)
             {
                 EditorUtility.DisplayDialog("Import Failed", "No .prefab, .fbx, .obj, or .unitypackage assets were found in that folder.", "OK");
                 return null;
             }
 
             var copyFiles = allFiles.Where(path => CopyAssetExts.Contains(Path.GetExtension(path))).ToList();
-            return new ImportPlan(fullPath, copyFiles, unityPackages);
+            return new ImportPlan(fullPath, copyFiles, packages);
         }
 
         private static ImportPlan BuildFileImportPlan(string filePath)
@@ -271,9 +271,9 @@ namespace DontDiePlease.EditorTools
         {
             var before = new HashSet<string>(AssetDatabase.GetAllAssetPaths(), StringComparer.OrdinalIgnoreCase);
 
-            foreach (var packagePath in packagePaths)
+            foreach (var pkg in packagePaths)
             {
-                AssetDatabase.ImportPackage(packagePath, false);
+                AssetDatabase.ImportPackage(pkg, false);
             }
 
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
@@ -287,21 +287,21 @@ namespace DontDiePlease.EditorTools
         {
             Directory.CreateDirectory(ProjectImportAbsolutePath());
 
-            var copiedPaths = new List<string>();
-            var projectImportRoot = Path.GetFullPath(ProjectImportAbsolutePath());
+            var copied = new List<string>();
+            var importRoot = Path.GetFullPath(ProjectImportAbsolutePath());
 
             foreach (var sourcePath in files)
             {
                 var fullSourcePath = Path.GetFullPath(sourcePath);
 
-                if (fullSourcePath.StartsWith(projectImportRoot, StringComparison.OrdinalIgnoreCase))
+                if (fullSourcePath.StartsWith(importRoot, StringComparison.OrdinalIgnoreCase))
                 {
-                    copiedPaths.Add(ToAssetPath(fullSourcePath));
+                    copied.Add(ToAssetPath(fullSourcePath));
                     continue;
                 }
 
                 var relativePath = GetRelativePath(rootPath, fullSourcePath);
-                var targetPath = Path.Combine(projectImportRoot, relativePath);
+                var targetPath = Path.Combine(importRoot, relativePath);
                 var targetDir = Path.GetDirectoryName(targetPath);
 
                 if (!string.IsNullOrWhiteSpace(targetDir))
@@ -310,10 +310,10 @@ namespace DontDiePlease.EditorTools
                 }
 
                 File.Copy(fullSourcePath, targetPath, true);
-                copiedPaths.Add(ToAssetPath(targetPath));
+                copied.Add(ToAssetPath(targetPath));
             }
 
-            return copiedPaths.Where(IsGameObjectAssetPath).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+            return copied.Where(IsGameObjectAssetPath).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
         }
 
         private static List<GameObject> LoadImportedGameObjects(IEnumerable<string> assetPaths)

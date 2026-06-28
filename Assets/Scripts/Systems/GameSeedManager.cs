@@ -17,7 +17,7 @@ namespace DontDiePlease.Systems
         [SerializeField] private bool logSeed = true;
         [SerializeField] private Text seedDebugText;
 
-        private readonly Dictionary<string, System.Random> randomStreams = new Dictionary<string, System.Random>();
+        private readonly Dictionary<string, System.Random> streams = new Dictionary<string, System.Random>();
 
         public int CurrentSeed { get; private set; }
         public bool HasSeed { get; private set; }
@@ -56,7 +56,7 @@ namespace DontDiePlease.Systems
         {
             CurrentSeed = seed;
             HasSeed = true;
-            randomStreams.Clear();
+            streams.Clear();
 
             if (initialiseUnityRandom)
             {
@@ -79,13 +79,13 @@ namespace DontDiePlease.Systems
 
             var key = string.IsNullOrWhiteSpace(streamName) ? "default" : streamName.Trim();
 
-            if (!randomStreams.TryGetValue(key, out var random))
+            if (!streams.TryGetValue(key, out var rng))
             {
-                random = CreateRandomStream(key);
-                randomStreams[key] = random;
+                rng = CreateRandomStream(key);
+                streams[key] = rng;
             }
 
-            return random;
+            return rng;
         }
 
         public System.Random CreateRandomStream(string streamName)
@@ -111,8 +111,8 @@ namespace DontDiePlease.Systems
                 return minimumInclusive;
             }
 
-            var random = GetRandomStream(streamName);
-            return minimumInclusive + (float)random.NextDouble() * (maximumInclusive - minimumInclusive);
+            var rng = GetRandomStream(streamName);
+            return minimumInclusive + (float)rng.NextDouble() * (maximumInclusive - minimumInclusive);
         }
 
         private void EnsureSeed()
@@ -144,9 +144,9 @@ namespace DontDiePlease.Systems
                 var hash = 2166136261;
                 var text = string.IsNullOrWhiteSpace(streamName) ? "default" : streamName.Trim();
 
-                foreach (var character in text)
+                foreach (var ch in text)
                 {
-                    hash ^= character;
+                    hash ^= ch;
                     hash *= 16777619;
                 }
 

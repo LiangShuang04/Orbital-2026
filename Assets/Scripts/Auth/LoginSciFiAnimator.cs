@@ -7,14 +7,14 @@ namespace DontDiePlease.Auth
     public class LoginSciFiAnimator : MonoBehaviour
     {
         private RectTransform scanLine;
-        private RectTransform[] rotatingTargets;
+        private RectTransform[] rotTargets;
         private Graphic[] pulseTargets;
         private Color[] baseColors;
 
         public void SetTargets(RectTransform scanLineTarget, RectTransform[] rotatingTargets, Graphic[] pulseTargets)
         {
             scanLine = scanLineTarget;
-            this.rotatingTargets = rotatingTargets;
+            rotTargets = rotatingTargets;
             this.pulseTargets = pulseTargets;
             baseColors = new Color[pulseTargets != null ? pulseTargets.Length : 0];
 
@@ -34,13 +34,13 @@ namespace DontDiePlease.Auth
                 scanLine.anchoredPosition = new Vector2(scanLine.anchoredPosition.x, y);
             }
 
-            if (rotatingTargets != null)
+            if (rotTargets != null)
             {
-                for (var i = 0; i < rotatingTargets.Length; i++)
+                for (var i = 0; i < rotTargets.Length; i++)
                 {
-                    if (rotatingTargets[i] != null)
+                    if (rotTargets[i] != null)
                     {
-                        rotatingTargets[i].Rotate(0f, 0f, (i % 2 == 0 ? 6f : -8f) * Time.unscaledDeltaTime);
+                        rotTargets[i].Rotate(0f, 0f, (i % 2 == 0 ? 6f : -8f) * Time.unscaledDeltaTime);
                     }
                 }
             }

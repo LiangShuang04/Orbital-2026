@@ -225,12 +225,12 @@ namespace DontDiePlease.Systems
 
         private Canvas CreateCanvas()
         {
-            var canvasObject = new GameObject("RuntimeMenuCanvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-            var canvas = canvasObject.GetComponent<Canvas>();
+            var go = new GameObject("RuntimeMenuCanvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            var canvas = go.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = 80;
 
-            var scaler = canvasObject.GetComponent<CanvasScaler>();
+            var scaler = go.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1920f, 1080f);
             scaler.matchWidthOrHeight = 0.5f;
@@ -239,20 +239,20 @@ namespace DontDiePlease.Systems
 
         private Button CreateButton(Transform parent, string name, string label, Color color, Color textColor, int fontSize)
         {
-            var buttonObject = new GameObject(name, typeof(Image), typeof(Button));
-            buttonObject.transform.SetParent(parent, false);
-            var image = buttonObject.GetComponent<Image>();
-            image.sprite = buttonSprite;
-            image.type = Image.Type.Sliced;
-            image.color = color;
-            AddShadow(buttonObject, new Color(0f, 0f, 0f, 0.48f), new Vector2(4f, -4f));
-            AddButtonAccents(buttonObject.transform, color == PrimaryColor ? TextDark : PrimaryColor);
+            var go = new GameObject(name, typeof(Image), typeof(Button));
+            go.transform.SetParent(parent, false);
+            var img = go.GetComponent<Image>();
+            img.sprite = buttonSprite;
+            img.type = Image.Type.Sliced;
+            img.color = color;
+            AddShadow(go, new Color(0f, 0f, 0f, 0.48f), new Vector2(4f, -4f));
+            AddButtonAccents(go.transform, color == PrimaryColor ? TextDark : PrimaryColor);
 
-            var text = CreateText(buttonObject.transform, "Text", label, fontSize, FontStyle.Bold, textColor, TextAnchor.MiddleCenter);
+            var text = CreateText(go.transform, "Text", label, fontSize, FontStyle.Bold, textColor, TextAnchor.MiddleCenter);
             Stretch(text.rectTransform);
             AddShadow(text.gameObject, color == PrimaryColor ? new Color(1f, 1f, 1f, 0.2f) : new Color(0f, 0f, 0f, 0.45f), new Vector2(1f, -1f));
 
-            var button = buttonObject.GetComponent<Button>();
+            var button = go.GetComponent<Button>();
             var colors = button.colors;
             colors.normalColor = color;
             colors.highlightedColor = MultiplyColor(color, 1.14f);
@@ -264,16 +264,16 @@ namespace DontDiePlease.Systems
 
         private Slider CreateSlider(Transform parent, string name, float minValue, float maxValue)
         {
-            var sliderObject = new GameObject(name, typeof(Slider));
-            sliderObject.transform.SetParent(parent, false);
+            var go = new GameObject(name, typeof(Slider));
+            go.transform.SetParent(parent, false);
 
-            var background = CreateImage(sliderObject.transform, "Background", new Color(0.08f, 0.14f, 0.17f, 1f), buttonSprite);
+            var background = CreateImage(go.transform, "Background", new Color(0.08f, 0.14f, 0.17f, 1f), buttonSprite);
             Stretch(background);
             background.GetComponent<Image>().type = Image.Type.Sliced;
             AddOutline(background.gameObject, new Color(0.22f, 0.54f, 0.62f, 0.62f), new Vector2(1f, -1f));
 
             var fillArea = new GameObject("Fill Area", typeof(RectTransform));
-            fillArea.transform.SetParent(sliderObject.transform, false);
+            fillArea.transform.SetParent(go.transform, false);
             var fillAreaRect = fillArea.GetComponent<RectTransform>();
             fillAreaRect.anchorMin = Vector2.zero;
             fillAreaRect.anchorMax = Vector2.one;
@@ -285,14 +285,14 @@ namespace DontDiePlease.Systems
             fill.GetComponent<Image>().type = Image.Type.Sliced;
 
             var handleArea = new GameObject("Handle Slide Area", typeof(RectTransform));
-            handleArea.transform.SetParent(sliderObject.transform, false);
+            handleArea.transform.SetParent(go.transform, false);
             Stretch(handleArea.GetComponent<RectTransform>());
 
             var handle = CreateImage(handleArea.transform, "Handle", TextLight, circleSprite);
             SetRect(handle, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(34f, 34f));
             AddOutline(handle.gameObject, PrimaryColor, new Vector2(2f, -2f));
 
-            var slider = sliderObject.GetComponent<Slider>();
+            var slider = go.GetComponent<Slider>();
             slider.minValue = minValue;
             slider.maxValue = maxValue;
             slider.fillRect = fill;
@@ -303,10 +303,10 @@ namespace DontDiePlease.Systems
 
         private Toggle CreateToggle(Transform parent, string name, string label)
         {
-            var toggleObject = new GameObject(name, typeof(Toggle));
-            toggleObject.transform.SetParent(parent, false);
+            var go = new GameObject(name, typeof(Toggle));
+            go.transform.SetParent(parent, false);
 
-            var box = CreateImage(toggleObject.transform, "Background", new Color(0.08f, 0.14f, 0.17f, 1f), buttonSprite);
+            var box = CreateImage(go.transform, "Background", new Color(0.08f, 0.14f, 0.17f, 1f), buttonSprite);
             SetRect(box, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(22f, 0f), new Vector2(34f, 34f));
             box.GetComponent<Image>().type = Image.Type.Sliced;
             AddOutline(box.gameObject, new Color(0.22f, 0.54f, 0.62f, 0.62f), new Vector2(1f, -1f));
@@ -315,10 +315,10 @@ namespace DontDiePlease.Systems
             StretchWithMargin(checkmark, 7f);
             checkmark.GetComponent<Image>().type = Image.Type.Sliced;
 
-            var text = CreateText(toggleObject.transform, "Label", label, 16, FontStyle.Bold, TextLight, TextAnchor.MiddleLeft);
+            var text = CreateText(go.transform, "Label", label, 16, FontStyle.Bold, TextLight, TextAnchor.MiddleLeft);
             SetRect(text.rectTransform, new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(174f, 0f), new Vector2(220f, 36f));
 
-            var toggle = toggleObject.GetComponent<Toggle>();
+            var toggle = go.GetComponent<Toggle>();
             toggle.targetGraphic = box.GetComponent<Image>();
             toggle.graphic = checkmark.GetComponent<Image>();
             return toggle;
@@ -405,19 +405,19 @@ namespace DontDiePlease.Systems
 
         private RectTransform CreateImage(Transform parent, string name, Color color, Sprite sprite)
         {
-            var imageObject = new GameObject(name, typeof(Image));
-            imageObject.transform.SetParent(parent, false);
-            var image = imageObject.GetComponent<Image>();
-            image.color = color;
-            image.sprite = sprite;
-            return imageObject.GetComponent<RectTransform>();
+            var go = new GameObject(name, typeof(Image));
+            go.transform.SetParent(parent, false);
+            var img = go.GetComponent<Image>();
+            img.color = color;
+            img.sprite = sprite;
+            return go.GetComponent<RectTransform>();
         }
 
         private Text CreateText(Transform parent, string name, string value, int size, FontStyle style, Color color, TextAnchor alignment)
         {
-            var textObject = new GameObject(name, typeof(Text));
-            textObject.transform.SetParent(parent, false);
-            var text = textObject.GetComponent<Text>();
+            var go = new GameObject(name, typeof(Text));
+            go.transform.SetParent(parent, false);
+            var text = go.GetComponent<Text>();
             text.text = value;
             text.font = resolvedFont;
             text.fontSize = size;

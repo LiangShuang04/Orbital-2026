@@ -29,13 +29,12 @@ public class URPMaterialFixer : EditorWindow
         OldIndustryFolder + "/Models/Terrains/Layers/Ground03.terrainlayer"
     };
 
-    [MenuItem("Tools/Fix Old Industry Materials")]
     public static void FixMaterials()
     {
         FixMaterialsForUrp();
     }
 
-    [MenuItem("Tools/Old Industry/Fix Materials For URP")]
+    [MenuItem("Tools/Don't Die Please/Rendering/Old Industry/Fix Materials For URP")]
     public static void FixMaterialsForUrp()
     {
         var litShader = Shader.Find("Universal Render Pipeline/Lit");
@@ -55,10 +54,10 @@ public class URPMaterialFixer : EditorWindow
             return;
         }
 
-        var fixedCount = 0;
-        var decalCount = 0;
-        var transparentCount = 0;
-        var missingBaseMapCount = 0;
+        var fixedMats = 0;
+        var decals = 0;
+        var transparent = 0;
+        var missingBase = 0;
 
         AssetDatabase.StartAssetEditing();
 
@@ -77,16 +76,16 @@ public class URPMaterialFixer : EditorWindow
                 ApplyMaterialData(mat, data);
 
                 if (data.IsDecal)
-                    decalCount++;
+                    decals++;
 
                 if (data.IsTransparent)
-                    transparentCount++;
+                    transparent++;
 
                 if (data.BaseMap == null)
-                    missingBaseMapCount++;
+                    missingBase++;
 
                 EditorUtility.SetDirty(mat);
-                fixedCount++;
+                fixedMats++;
             }
         }
         finally
@@ -97,10 +96,10 @@ public class URPMaterialFixer : EditorWindow
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log($"Old Industry URP material pass finished. Fixed {fixedCount} materials, {decalCount} decals, {transparentCount} transparent materials, {missingBaseMapCount} without base textures.");
+        Debug.Log($"Old Industry URP material pass finished. Fixed {fixedMats} materials, {decals} decals, {transparent} transparent materials, {missingBase} without base textures.");
     }
 
-    [MenuItem("Tools/Old Industry/Fix Current Scene Rendering")]
+    [MenuItem("Tools/Don't Die Please/Rendering/Old Industry/Fix Current Scene Rendering")]
     public static void FixCurrentSceneRendering()
     {
         if (EditorApplication.isPlayingOrWillChangePlaymode)
@@ -125,7 +124,7 @@ public class URPMaterialFixer : EditorWindow
             .Distinct()
             .ToArray();
 
-        var disabledVolumeCount = 0;
+        var disabledVolumes = 0;
 
         foreach (var obj in allObjects)
         {
@@ -135,7 +134,7 @@ public class URPMaterialFixer : EditorWindow
             Undo.RecordObject(obj, "Disable HDRP volume");
             obj.SetActive(false);
             EditorUtility.SetDirty(obj);
-            disabledVolumeCount++;
+            disabledVolumes++;
         }
 
         var missingScriptCount = RemoveMissingScripts(scene);
@@ -163,17 +162,17 @@ public class URPMaterialFixer : EditorWindow
         EditorSceneManager.SaveScene(scene);
         SceneView.RepaintAll();
 
-        Debug.Log($"Old Industry scene rendering pass finished for {scene.name}. Disabled {disabledVolumeCount} volume objects, removed {missingScriptCount} missing scripts, fixed {sceneMaterialCount} scene materials, created {groundCreated} toxic ground layers, fixed {terrainCount} terrains, fixed {concreteFloorCount} concrete floor renderers, fixed {rendererCount} renderers, disabled {reflectionProbeCount} reflection probes, normalized {lightCount} lights, fixed {cameraCount} cameras, created {guardCreated} runtime guards, cleared baked lighting.");
+        Debug.Log($"Old Industry scene rendering pass finished for {scene.name}. Disabled {disabledVolumes} volume objects, removed {missingScriptCount} missing scripts, fixed {sceneMaterialCount} scene materials, created {groundCreated} ground layers, fixed {terrainCount} terrains, fixed {concreteFloorCount} concrete floor renderers, fixed {rendererCount} renderers, disabled {reflectionProbeCount} reflection probes, normalized {lightCount} lights, fixed {cameraCount} cameras, created {guardCreated} runtime guards, cleared baked lighting.");
     }
 
-    [MenuItem("Tools/Old Industry/Fix Materials And Current Scene")]
+    [MenuItem("Tools/Don't Die Please/Rendering/Old Industry/Fix Materials And Current Scene")]
     public static void FixMaterialsAndCurrentScene()
     {
         FixMaterialsForUrp();
         FixCurrentSceneRendering();
     }
 
-    [MenuItem("Tools/Old Industry/Fix Current Scene Terrain")]
+    [MenuItem("Tools/Don't Die Please/Rendering/Old Industry/Fix Current Scene Terrain")]
     public static void FixCurrentSceneTerrain()
     {
         if (EditorApplication.isPlayingOrWillChangePlaymode)
@@ -197,7 +196,7 @@ public class URPMaterialFixer : EditorWindow
         Debug.Log($"Old Industry terrain pass finished for {scene.name}. Fixed {terrainCount} terrains.");
     }
 
-    [MenuItem("Tools/Old Industry/Apply Ground And Concrete Materials")]
+    [MenuItem("Tools/Don't Die Please/Rendering/Old Industry/Apply Ground And Concrete Materials")]
     public static void ApplyGroundAndConcreteMaterials()
     {
         if (EditorApplication.isPlayingOrWillChangePlaymode)
@@ -990,7 +989,7 @@ public class URPMaterialFixer : EditorWindow
         mesh.RecalculateBounds();
     }
 
-    [MenuItem("Tools/Old Industry/Create Toxic Ground In Current Scene")]
+    [MenuItem("Tools/Don't Die Please/Rendering/Old Industry/Create Ground In Current Scene")]
     public static void CreateToxicGroundInCurrentScene()
     {
         if (EditorApplication.isPlayingOrWillChangePlaymode)

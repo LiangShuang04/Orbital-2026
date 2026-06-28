@@ -44,36 +44,36 @@ namespace DontDiePlease.Systems
         }
 
         public void SetGeneratedReferences(
-            GameObject generatedPauseMenuRoot,
-            GameObject generatedSettingsPanel,
-            Button generatedPauseButton,
-            Button generatedResumeButton,
-            Button generatedRestartButton,
-            Button generatedSettingsButton,
-            Button generatedMainMenuButton,
-            Button generatedQuitButton,
-            Button generatedBackButton,
-            Slider generatedMouseSensitivitySlider,
-            Slider generatedMasterVolumeSlider,
-            Toggle generatedFullscreenToggle,
-            Text generatedMouseSensitivityValueText,
-            Text generatedMasterVolumeValueText)
+            GameObject menuRoot,
+            GameObject panel,
+            Button pause,
+            Button resume,
+            Button restart,
+            Button settings,
+            Button mainMenu,
+            Button quit,
+            Button back,
+            Slider sensitivity,
+            Slider volume,
+            Toggle fullscreen,
+            Text sensitivityValue,
+            Text volumeValue)
         {
             UnregisterHandlers();
-            pauseMenuRoot = generatedPauseMenuRoot;
-            settingsPanel = generatedSettingsPanel;
-            pauseButton = generatedPauseButton;
-            resumeButton = generatedResumeButton;
-            restartButton = generatedRestartButton;
-            settingsButton = generatedSettingsButton;
-            mainMenuButton = generatedMainMenuButton;
-            quitButton = generatedQuitButton;
-            backButton = generatedBackButton;
-            mouseSensitivitySlider = generatedMouseSensitivitySlider;
-            masterVolumeSlider = generatedMasterVolumeSlider;
-            fullscreenToggle = generatedFullscreenToggle;
-            mouseSensitivityValueText = generatedMouseSensitivityValueText;
-            masterVolumeValueText = generatedMasterVolumeValueText;
+            pauseMenuRoot = menuRoot;
+            settingsPanel = panel;
+            pauseButton = pause;
+            resumeButton = resume;
+            restartButton = restart;
+            settingsButton = settings;
+            mainMenuButton = mainMenu;
+            quitButton = quit;
+            backButton = back;
+            mouseSensitivitySlider = sensitivity;
+            masterVolumeSlider = volume;
+            fullscreenToggle = fullscreen;
+            mouseSensitivityValueText = sensitivityValue;
+            masterVolumeValueText = volumeValue;
             RegisterHandlers();
             ApplySettingsToControls();
             ResumeGame();
@@ -86,17 +86,13 @@ namespace DontDiePlease.Systems
 
         private void Update()
         {
-            if (pauseWithEscape && Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (isPaused)
-                {
-                    ResumeGame();
-                }
-                else
-                {
-                    OpenPauseMenu();
-                }
-            }
+            if (!pauseWithEscape || !Input.GetKeyDown(KeyCode.Escape))
+                return;
+
+            if (isPaused)
+                ResumeGame();
+            else
+                OpenPauseMenu();
         }
 
         private void OnDestroy()
@@ -160,8 +156,8 @@ namespace DontDiePlease.Systems
         public void RestartScene()
         {
             Time.timeScale = 1f;
-            var activeScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(activeScene.buildIndex);
+            var scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.buildIndex);
         }
 
         public void LoadMainMenu()
@@ -218,19 +214,13 @@ namespace DontDiePlease.Systems
         private void ApplySettingsToControls()
         {
             if (mouseSensitivitySlider != null)
-            {
                 mouseSensitivitySlider.SetValueWithoutNotify(MouseSensitivity);
-            }
 
             if (masterVolumeSlider != null)
-            {
                 masterVolumeSlider.SetValueWithoutNotify(MasterVolume);
-            }
 
             if (fullscreenToggle != null)
-            {
                 fullscreenToggle.SetIsOnWithoutNotify(Screen.fullScreen);
-            }
 
             RefreshMouseSensitivityText();
             RefreshMasterVolumeText();

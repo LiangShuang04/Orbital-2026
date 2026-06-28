@@ -96,11 +96,11 @@ namespace DontDiePlease.Systems
                         continue;
                     }
 
-                    var components = obj.GetComponents<Component>();
+                    var comps = obj.GetComponents<Component>();
 
-                    foreach (var component in components)
+                    foreach (var comp in comps)
                     {
-                        if (component != null && component.GetType().Name.IndexOf("Volume", StringComparison.OrdinalIgnoreCase) >= 0)
+                        if (comp != null && comp.GetType().Name.IndexOf("Volume", StringComparison.OrdinalIgnoreCase) >= 0)
                         {
                             obj.SetActive(false);
                             break;
@@ -201,11 +201,11 @@ namespace DontDiePlease.Systems
                 return;
             }
 
-            var property = component.GetType().GetProperty("renderPostProcessing");
+            var prop = component.GetType().GetProperty("renderPostProcessing");
 
-            if (property != null && property.CanWrite)
+            if (prop != null && prop.CanWrite)
             {
-                property.SetValue(component, false);
+                prop.SetValue(component, false);
             }
         }
 

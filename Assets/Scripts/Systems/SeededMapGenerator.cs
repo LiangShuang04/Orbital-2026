@@ -58,7 +58,7 @@ namespace DontDiePlease.Systems
         private readonly HashSet<Vector2Int> doorCells = new HashSet<Vector2Int>();
         private readonly Dictionary<Vector2Int, RoomInfo> roomsByCell = new Dictionary<Vector2Int, RoomInfo>();
         private readonly List<RoomInfo> rooms = new List<RoomInfo>();
-        private readonly List<RandomEventSpawnPoint> generatedSpawnPoints = new List<RandomEventSpawnPoint>();
+        private readonly List<RandomEventSpawnPoint> spawnPts = new List<RandomEventSpawnPoint>();
 
         private static readonly Color FloorColor = new Color(0.17f, 0.19f, 0.18f, 1f);
         private static readonly Color WallColor = new Color(0.25f, 0.31f, 0.29f, 1f);
@@ -104,8 +104,9 @@ namespace DontDiePlease.Systems
             doorCells.Clear();
             roomsByCell.Clear();
             rooms.Clear();
-            generatedSpawnPoints.Clear();
+            spawnPts.Clear();
 
+            // old saves depend on this stream name
             var random = seedManager.CreateRandomStream("map-gen-v1");
             BuildLayout(random);
             SpawnFloors(random);
@@ -141,7 +142,7 @@ namespace DontDiePlease.Systems
                 }
             }
 
-            generatedSpawnPoints.Clear();
+            spawnPts.Clear();
 
             if (randomEventManager == null)
             {
@@ -165,10 +166,10 @@ namespace DontDiePlease.Systems
                 floorCells.Add(new Vector2Int(x, 0));
             }
 
-            var targetRooms = random.Next(Mathf.Max(1, minRooms), Mathf.Max(minRooms + 1, maxRooms + 1));
-            var attempts = targetRooms * 12;
+            var wantedRooms = random.Next(Mathf.Max(1, minRooms), Mathf.Max(minRooms + 1, maxRooms + 1));
+            var attempts = wantedRooms * 12;
 
-            for (var idx = 0; idx < attempts && rooms.Count < targetRooms + 1; idx++)
+            for (var idx = 0; idx < attempts && rooms.Count < wantedRooms + 1; idx++)
             {
                 var roomW = Pick(random, 3, 4, 5);
                 var roomH = Pick(random, 3, 4);
@@ -482,24 +483,24 @@ namespace DontDiePlease.Systems
 
                 used.Add(cell);
 
-                var obj = SpawnPrefabOrEmpty(prefab, CellPos(cell) + Vector3.up * 0.2f, RandomRot(random), $"Generated {eventType} Spawn");
-                var marker = obj.GetComponent<GeneratedMapPiece>();
+                var go = SpawnPrefabOrEmpty(prefab, CellPos(cell) + Vector3.up * 0.2f, RandomRot(random), $"Generated {eventType} Spawn");
+                var marker = go.GetComponent<GeneratedMapPiece>();
 
                 if (marker == null)
                 {
-                    obj.AddComponent<GeneratedMapPiece>();
+                    go.AddComponent<GeneratedMapPiece>();
                 }
 
-                var spawnPoint = obj.GetComponent<RandomEventSpawnPoint>();
+                var spawnPoint = go.GetComponent<RandomEventSpawnPoint>();
 
                 if (spawnPoint == null)
                 {
-                    spawnPoint = obj.AddComponent<RandomEventSpawnPoint>();
+                    spawnPoint = go.AddComponent<RandomEventSpawnPoint>();
                 }
 
                 spawnPoint.SetEventType(eventType);
                 spawnPoint.SetRadius(cellSize * 0.35f);
-                generatedSpawnPoints.Add(spawnPoint);
+                spawnPts.Add(spawnPoint);
             }
         }
 
@@ -651,7 +652,7 @@ namespace DontDiePlease.Systems
 
             if (randomEventManager != null)
             {
-                randomEventManager.SetSpawnPoints(generatedSpawnPoints.ToArray());
+                randomEventManager.SetSpawnPoints(spawnPts.ToArray());
             }
         }
 

@@ -20,8 +20,8 @@ public enum ItemType
 {
     Resource,
     Consumable,
-    Tool, // (and weapons)
-    Key // key items used to unlock the next act
+    Tool,
+    Key
 }
 
 

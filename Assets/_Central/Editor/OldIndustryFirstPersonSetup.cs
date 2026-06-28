@@ -20,14 +20,14 @@ namespace DontDiePlease.Central.EditorTools
         private const string PlayerCameraName = "FPS Camera";
         private const string FreeCameraName = "OldIndustry FreeCamera";
 
-        [MenuItem("Tools/Old Industry/Setup First Person Walker In Demo Scene")]
+        [MenuItem("Tools/Don't Die Please/First Person/Setup Walker In Demo Scene")]
         public static void SetupDemoScene()
         {
             var scene = EditorSceneManager.OpenScene(DemoScenePath, OpenSceneMode.Single);
             SetupScene(scene);
         }
 
-        [MenuItem("Tools/Old Industry/Setup First Person Walker In Open Scene")]
+        [MenuItem("Tools/Don't Die Please/First Person/Setup Walker In Open Scene")]
         public static void SetupOpenScene()
         {
             var scene = SceneManager.GetActiveScene();
@@ -54,29 +54,29 @@ namespace DontDiePlease.Central.EditorTools
                 return;
             }
 
-            Debug.Log($"Phase 0 report: target={scene.name}, input={DetectInputBackend()}, pipeline={DetectRenderPipeline()}, cameras={FindSceneComponents<Camera>(scene).Count}, audioListeners={FindSceneComponents<AudioListener>(scene).Count}.");
+            Debug.Log($"fps setup: scene={scene.name}, input={DetectInputBackend()}, pipeline={DetectRenderPipeline()}, cams={FindSceneComponents<Camera>(scene).Count}, listeners={FindSceneComponents<AudioListener>(scene).Count}");
 
             EnsureFolders();
             var prefab = CreateOrUpdatePrefab();
             var colliderReport = EnsureWalkableColliders(scene);
-            Debug.Log($"Phase 1 report: terrainColliders={colliderReport.TerrainColliders}, collidersAdded={colliderReport.CollidersAdded}, skippedDecor={colliderReport.SkippedDecor}.");
+            Debug.Log($"fps setup colliders: terrain={colliderReport.TerrainColliders}, added={colliderReport.CollidersAdded}, skipped decor={colliderReport.SkippedDecor}");
 
             var player = PlaceOrUpdatePlayer(scene, prefab);
-            Debug.Log($"Phase 2 report: prefab={PrefabPath}, player={player.name}.");
+            Debug.Log($"fps setup player: prefab={PrefabPath}, player={player.name}");
 
             var freeCamera = EnsureFreeCamera(scene, player);
             ConfigureCamerasAndSwitcher(scene, player, freeCamera);
-            Debug.Log($"Phase 3 report: controller=FirstPersonController, toggle=F, freeCamera={(freeCamera != null ? freeCamera.name : "none")}.");
+            Debug.Log($"fps setup camera: toggle=F, freeCam={(freeCamera != null ? freeCamera.name : "none")}");
 
             var spawn = SeatPlayerOnGround(player.transform.position);
             player.transform.position = spawn;
             player.transform.rotation = Quaternion.Euler(0f, -18f, 0f);
-            Debug.Log($"Phase 4 report: spawn={spawn}, mainCamera={PlayerCameraName}, oldCamerasKept=true.");
+            Debug.Log($"fps setup spawn: {spawn}, mainCam={PlayerCameraName}");
 
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
             AssetDatabase.SaveAssets();
-            Debug.Log($"Phase 6 report: saved={scene.path}, controls=WASD/arrows move, mouse look, Left Shift sprint, Space jump, Left Ctrl crouch, Esc cursor, F toggle FreeCamera.");
+            Debug.Log($"fps setup saved: {scene.path}. controls are WASD, mouse, shift, space, ctrl, esc, F");
         }
 
         private static GameObject CreateOrUpdatePrefab()

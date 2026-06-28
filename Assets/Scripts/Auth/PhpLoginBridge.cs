@@ -38,7 +38,7 @@ namespace DontDiePlease.Auth
         private Button registerButton;
         private Button backButton;
         private Button registerBackButton;
-        private readonly List<TMP_InputField> focusableInputs = new List<TMP_InputField>();
+        private readonly List<TMP_InputField> inputs = new List<TMP_InputField>();
         private readonly List<Button> controlledButtons = new List<Button>();
         private readonly Dictionary<Button, string> buttonLabels = new Dictionary<Button, string>();
         private bool busy;
@@ -129,7 +129,7 @@ namespace DontDiePlease.Auth
             backButton = GetButton(ui?.BtnBack) ?? FindButton("BtnBack");
             registerBackButton = GetButton(ui?.BtnBackLogin) ?? FindButton("BtnBackLogin");
 
-            focusableInputs.Clear();
+            inputs.Clear();
             AddInput(loginInput);
             AddInput(passwordInput);
             AddInput(registerLoginInput);
@@ -174,7 +174,7 @@ namespace DontDiePlease.Auth
 
         private void ClearPackageInputEvents()
         {
-            foreach (var input in focusableInputs)
+            foreach (var input in inputs)
             {
                 if (input == null)
                     continue;
@@ -330,6 +330,7 @@ namespace DontDiePlease.Auth
             }
             catch (Exception err)
             {
+                Debug.LogWarning($"login bridge blew up: {err.Message}");
                 SetStatus(CleanError(err.Message));
                 SetActive(ui?.ConnectionError, true);
             }
@@ -466,7 +467,7 @@ namespace DontDiePlease.Auth
                 SetButtonLabel(button, value ? "PLEASE WAIT" : GetButtonLabel(button));
             }
 
-            foreach (var input in focusableInputs)
+            foreach (var input in inputs)
             {
                 if (input != null)
                     input.interactable = !value;
@@ -480,14 +481,20 @@ namespace DontDiePlease.Auth
 
         private void FocusNextInput()
         {
-            var visibleInputs = focusableInputs.Where(input => input != null && input.gameObject.activeInHierarchy && input.interactable).ToArray();
+            var visibleInputs = new List<TMP_InputField>();
 
-            if (visibleInputs.Length == 0)
+            foreach (var input in inputs)
+            {
+                if (input != null && input.gameObject.activeInHierarchy && input.interactable)
+                    visibleInputs.Add(input);
+            }
+
+            if (visibleInputs.Count == 0)
                 return;
 
             var selected = EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null;
-            var idx = Array.FindIndex(visibleInputs, input => input.gameObject == selected);
-            Focus(visibleInputs[(idx + 1 + visibleInputs.Length) % visibleInputs.Length]);
+            var idx = visibleInputs.FindIndex(input => input.gameObject == selected);
+            Focus(visibleInputs[(idx + 1 + visibleInputs.Count) % visibleInputs.Count]);
         }
 
         private bool IsRegisterInputSelected(GameObject selected)
@@ -603,8 +610,8 @@ namespace DontDiePlease.Auth
 
         private void AddInput(TMP_InputField input)
         {
-            if (input != null && !focusableInputs.Contains(input))
-                focusableInputs.Add(input);
+            if (input != null && !inputs.Contains(input))
+                inputs.Add(input);
         }
 
         private void AddButton(Button button)

@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
+
 namespace UI
 {
-        public class HUDDisplay : MonoBehaviour
+    public class HUDDisplay : MonoBehaviour
     {
         [Header("Stat Bars")]
         [SerializeField] private Slider healthbar;
@@ -12,16 +13,10 @@ namespace UI
 
         [Header("Player Reference")]
         [SerializeField] private PlayerStats playerStats;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-            
-        }
 
-        // Update is called once per frame
         void Update()
         {
-            if (playerStats == null) return; // in case player stats isnt assinged
+            if (playerStats == null) return;
 
             healthbar.value = playerStats.currentHealth / playerStats.maxHealth;
             oxygenbar.value = playerStats.currentOxygen / playerStats.maxOxygen;
@@ -30,4 +25,3 @@ namespace UI
         }
     }
 }
-

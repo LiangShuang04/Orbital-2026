@@ -15,7 +15,7 @@ namespace DontDiePlease.EditorTools
         private static readonly Color IndustrialSunColor = new Color(0.82f, 0.84f, 0.82f, 1f);
         private static readonly Color IndustrialNeutral = new Color(0.46f, 0.47f, 0.45f, 1f);
 
-        [MenuItem("Tools/Don't Die Please/Apply Dim Industrial Atmosphere")]
+        [MenuItem("Tools/Don't Die Please/Rendering/Apply Dim Industrial Atmosphere")]
         private static void ApplyDimIndustrialAtmosphere()
         {
             var undoGroup = Undo.GetCurrentGroup();
@@ -35,12 +35,6 @@ namespace DontDiePlease.EditorTools
             }
 
             Debug.Log($"Applied dim industrial atmosphere to {materialCount} selected material{(materialCount == 1 ? string.Empty : "s")}.");
-        }
-
-        [MenuItem("Window/Don't Die Please/Apply Dim Industrial Atmosphere")]
-        private static void ApplyDimIndustrialAtmosphereFromWindow()
-        {
-            ApplyDimIndustrialAtmosphere();
         }
 
         private static void ApplyLightingAndFog()

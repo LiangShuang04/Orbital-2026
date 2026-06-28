@@ -92,24 +92,24 @@ namespace DontDiePlease.Central
             if (!cursorLocked)
                 return;
 
-            var lookInput = ReadLookInput() * mouseSensitivity;
-            transform.Rotate(0f, lookInput.x, 0f);
-            pitch = Mathf.Clamp(pitch - lookInput.y, -pitchClamp, pitchClamp);
+            var look = ReadLookInput() * mouseSensitivity;
+            transform.Rotate(0f, look.x, 0f);
+            pitch = Mathf.Clamp(pitch - look.y, -pitchClamp, pitchClamp);
             cameraPivot.localEulerAngles = new Vector3(pitch, 0f, 0f);
         }
 
         private void Move()
         {
-            var moveInput = ReadMoveInput();
-            var move = transform.right * moveInput.x + transform.forward * moveInput.y;
+            var input = ReadMoveInput();
+            var move = transform.right * input.x + transform.forward * input.y;
 
             if (move.sqrMagnitude > 1f)
             {
                 move.Normalize();
             }
 
-            var targetHeight = IsCrouching() ? crouchingHeight : standingHeight;
-            controller.height = Mathf.Lerp(controller.height, targetHeight, crouchBlendSpeed * Time.deltaTime);
+            var height = IsCrouching() ? crouchingHeight : standingHeight;
+            controller.height = Mathf.Lerp(controller.height, height, crouchBlendSpeed * Time.deltaTime);
             controller.center = new Vector3(0f, controller.height * 0.5f, 0f);
 
             var speed = IsCrouching() ? crouchSpeed : IsSprinting() ? sprintSpeed : walkSpeed;

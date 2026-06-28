@@ -41,29 +41,29 @@ namespace DontDiePlease.Auth
         }
 
         public void SetGeneratedReferences(
-            Text generatedTitleText,
-            Text generatedModeTitleText,
-            UnityInputField generatedEmailInput,
-            UnityInputField generatedPasswordInput,
-            UnityInputField generatedConfirmPasswordInput,
-            Button generatedSubmitButton,
-            Button generatedSwitchModeButton,
-            Text generatedSubmitButtonText,
-            Text generatedSwitchModeButtonText,
-            Text generatedErrorText,
-            Text generatedLoadingText)
+            Text title,
+            Text modeTitle,
+            UnityInputField email,
+            UnityInputField password,
+            UnityInputField confirmPassword,
+            Button submit,
+            Button switchMode,
+            Text submitLabel,
+            Text switchModeLabel,
+            Text error,
+            Text loading)
         {
-            titleText = generatedTitleText;
-            modeTitleText = generatedModeTitleText;
-            emailInput = generatedEmailInput;
-            passwordInput = generatedPasswordInput;
-            confirmPasswordInput = generatedConfirmPasswordInput;
-            submitButton = generatedSubmitButton;
-            switchModeButton = generatedSwitchModeButton;
-            submitButtonText = generatedSubmitButtonText;
-            switchModeButtonText = generatedSwitchModeButtonText;
-            errorText = generatedErrorText;
-            loadingText = generatedLoadingText;
+            titleText = title;
+            modeTitleText = modeTitle;
+            emailInput = email;
+            passwordInput = password;
+            confirmPasswordInput = confirmPassword;
+            submitButton = submit;
+            switchModeButton = switchMode;
+            submitButtonText = submitLabel;
+            switchModeButtonText = switchModeLabel;
+            errorText = error;
+            loadingText = loading;
 
             ConfigurePasswordFields();
             RegisterButtonHandlers();
@@ -84,10 +84,10 @@ namespace DontDiePlease.Auth
                 return;
             }
 
-            var validationError = ValidateInputs();
-            if (!string.IsNullOrWhiteSpace(validationError))
+            var err = ValidateInputs();
+            if (!string.IsNullOrWhiteSpace(err))
             {
-                SetError(validationError);
+                SetError(err);
                 return;
             }
 
@@ -111,18 +111,18 @@ namespace DontDiePlease.Auth
             SetLoading(true);
             SetError(string.Empty);
 
-            var emailOrUsername = emailInput.text.Trim();
+            var login = emailInput.text.Trim();
             var password = passwordInput.text;
-            AuthResponse response = isRegisterMode
-                ? await authManager.RegisterAsync(emailOrUsername, password)
-                : await authManager.LoginAsync(emailOrUsername, password);
+            var resp = isRegisterMode
+                ? await authManager.RegisterAsync(login, password)
+                : await authManager.LoginAsync(login, password);
 
             SetLoading(false);
 
-            if (response == null || !response.success)
+            if (resp == null || !resp.success)
             {
-                SetError(response != null && !string.IsNullOrWhiteSpace(response.errorMessage)
-                    ? response.errorMessage
+                SetError(resp != null && !string.IsNullOrWhiteSpace(resp.errorMessage)
+                    ? resp.errorMessage
                     : "Login failed. Please try again.");
                 return;
             }
@@ -235,13 +235,13 @@ namespace DontDiePlease.Auth
                 return;
             }
 
-            var rectTransform = component.GetComponent<RectTransform>();
-            if (rectTransform == null)
+            var rect = component.GetComponent<RectTransform>();
+            if (rect == null)
             {
                 return;
             }
 
-            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, y);
+            rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, y);
         }
 
         private void SetLoading(bool loading)
@@ -332,8 +332,8 @@ namespace DontDiePlease.Auth
                 return;
             }
 
-            var authObject = new GameObject("AuthManager");
-            authManager = authObject.AddComponent<AuthManager>();
+            var go = new GameObject("AuthManager");
+            authManager = go.AddComponent<AuthManager>();
         }
     }
 }
