@@ -9,15 +9,14 @@ namespace DontDiePlease.EditorTools
 {
     public static class EnvironmentStylerEditor
     {
-        private const string UndoName = "Apply Toxic Morandi Style";
+        private const string UndoName = "Apply Dim Industrial Atmosphere";
 
-        private static readonly Color ToxicFogColor = new Color(0.34f, 0.42f, 0.36f, 1f);
-        private static readonly Color CoolSunColor = new Color(0.62f, 0.68f, 0.69f, 1f);
-        private static readonly Color WarmBeige = new Color(0.63f, 0.57f, 0.49f, 1f);
-        private static readonly Color CoolGrey = new Color(0.47f, 0.54f, 0.55f, 1f);
+        private static readonly Color IndustrialFogColor = new Color(0.18f, 0.2f, 0.21f, 1f);
+        private static readonly Color IndustrialSunColor = new Color(0.82f, 0.84f, 0.82f, 1f);
+        private static readonly Color IndustrialNeutral = new Color(0.46f, 0.47f, 0.45f, 1f);
 
-        [MenuItem("Tools/Don't Die Please/Apply Toxic Morandi Style")]
-        private static void ApplyToxicMorandiStyle()
+        [MenuItem("Tools/Don't Die Please/Apply Dim Industrial Atmosphere")]
+        private static void ApplyDimIndustrialAtmosphere()
         {
             var undoGroup = Undo.GetCurrentGroup();
             Undo.SetCurrentGroupName(UndoName);
@@ -35,13 +34,13 @@ namespace DontDiePlease.EditorTools
                 return;
             }
 
-            Debug.Log($"Applied toxic Morandi style to {materialCount} selected material{(materialCount == 1 ? string.Empty : "s")}.");
+            Debug.Log($"Applied dim industrial atmosphere to {materialCount} selected material{(materialCount == 1 ? string.Empty : "s")}.");
         }
 
-        [MenuItem("Window/Don't Die Please/Apply Toxic Morandi Style")]
-        private static void ApplyToxicMorandiStyleFromWindow()
+        [MenuItem("Window/Don't Die Please/Apply Dim Industrial Atmosphere")]
+        private static void ApplyDimIndustrialAtmosphereFromWindow()
         {
-            ApplyToxicMorandiStyle();
+            ApplyDimIndustrialAtmosphere();
         }
 
         private static void ApplyLightingAndFog()
@@ -55,10 +54,10 @@ namespace DontDiePlease.EditorTools
 
             RenderSettings.fog = true;
             RenderSettings.fogMode = FogMode.ExponentialSquared;
-            RenderSettings.fogColor = ToxicFogColor;
-            RenderSettings.fogDensity = 0.026f;
-            RenderSettings.ambientLight = new Color(0.29f, 0.34f, 0.33f, 1f);
-            RenderSettings.ambientIntensity = 0.72f;
+            RenderSettings.fogColor = IndustrialFogColor;
+            RenderSettings.fogDensity = 0.008f;
+            RenderSettings.ambientLight = new Color(0.2f, 0.21f, 0.21f, 1f);
+            RenderSettings.ambientIntensity = 0.78f;
 
             var sun = RenderSettings.sun != null ? RenderSettings.sun : FindDirectionalLight();
 
@@ -69,8 +68,8 @@ namespace DontDiePlease.EditorTools
 
             Undo.RecordObject(sun, UndoName);
             RenderSettings.sun = sun;
-            sun.color = CoolSunColor;
-            sun.intensity = 0.72f;
+            sun.color = IndustrialSunColor;
+            sun.intensity = 0.82f;
             sun.shadowStrength = 0.55f;
             EditorUtility.SetDirty(sun);
         }
@@ -99,7 +98,7 @@ namespace DontDiePlease.EditorTools
             foreach (var material in selectedMaterials)
             {
                 Undo.RecordObject(material, UndoName);
-                ApplyMorandiAlbedo(material);
+                ApplyIndustrialAlbedo(material);
                 ReduceFloatProperty(material, "_Metallic", 0.22f);
                 ReduceFloatProperty(material, "_Smoothness", 0.38f);
                 ReduceFloatProperty(material, "_Glossiness", 0.38f);
@@ -110,10 +109,10 @@ namespace DontDiePlease.EditorTools
             return selectedMaterials.Length;
         }
 
-        private static void ApplyMorandiAlbedo(Material material)
+        private static void ApplyIndustrialAlbedo(Material material)
         {
             var sourceColor = ReadAlbedoColor(material);
-            var styledColor = CreateMorandiColor(sourceColor);
+            var styledColor = CreateIndustrialColor(sourceColor);
 
             SetColorProperty(material, "_BaseColor", styledColor);
             SetColorProperty(material, "_Color", styledColor);
@@ -134,20 +133,16 @@ namespace DontDiePlease.EditorTools
             return Color.white;
         }
 
-        private static Color CreateMorandiColor(Color sourceColor)
+        private static Color CreateIndustrialColor(Color sourceColor)
         {
             Color.RGBToHSV(sourceColor, out var hue, out var saturation, out var value);
 
-            var mutedColor = Color.HSVToRGB(hue, Mathf.Clamp01(saturation * 0.32f), Mathf.Lerp(value, 0.64f, 0.35f));
-            var anchorColor = IsWarmHue(hue) ? WarmBeige : CoolGrey;
-            var finalColor = Color.Lerp(mutedColor, anchorColor, 0.34f);
+            var adjustedSaturation = Mathf.Clamp01(saturation * 0.68f);
+            var adjustedValue = Mathf.Clamp01(Mathf.Lerp(value, 0.5f, 0.22f));
+            var industrialColor = Color.HSVToRGB(hue, adjustedSaturation, adjustedValue);
+            var finalColor = Color.Lerp(industrialColor, IndustrialNeutral, 0.18f);
             finalColor.a = sourceColor.a;
             return finalColor;
-        }
-
-        private static bool IsWarmHue(float hue)
-        {
-            return hue <= 0.18f || hue >= 0.92f;
         }
 
         private static void SetColorProperty(Material material, string propertyName, Color value)

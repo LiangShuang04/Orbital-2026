@@ -3,24 +3,26 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - InputName
+  - InputPass
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - No Player Collision
   - Water
   - UI
   - 
   - 
+  - Player
   - 
   - 
+  - Post-Procssing
+  - FPS Object
+  - Enviroment
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Iteractable
   - 
   - 
   - 

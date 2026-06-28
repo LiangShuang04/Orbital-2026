@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityInputField = UnityEngine.UI.InputField;
 
 namespace DontDiePlease.Auth
 {
@@ -16,9 +17,9 @@ namespace DontDiePlease.Auth
         [Header("UI")]
         [SerializeField] private Text titleText;
         [SerializeField] private Text modeTitleText;
-        [SerializeField] private InputField emailInput;
-        [SerializeField] private InputField passwordInput;
-        [SerializeField] private InputField confirmPasswordInput;
+        [SerializeField] private UnityInputField emailInput;
+        [SerializeField] private UnityInputField passwordInput;
+        [SerializeField] private UnityInputField confirmPasswordInput;
         [SerializeField] private Button submitButton;
         [SerializeField] private Button switchModeButton;
         [SerializeField] private Text submitButtonText;
@@ -42,9 +43,9 @@ namespace DontDiePlease.Auth
         public void SetGeneratedReferences(
             Text generatedTitleText,
             Text generatedModeTitleText,
-            InputField generatedEmailInput,
-            InputField generatedPasswordInput,
-            InputField generatedConfirmPasswordInput,
+            UnityInputField generatedEmailInput,
+            UnityInputField generatedPasswordInput,
+            UnityInputField generatedConfirmPasswordInput,
             Button generatedSubmitButton,
             Button generatedSwitchModeButton,
             Text generatedSubmitButtonText,
@@ -294,12 +295,12 @@ namespace DontDiePlease.Auth
         {
             if (passwordInput != null)
             {
-                passwordInput.contentType = InputField.ContentType.Password;
+                passwordInput.contentType = UnityInputField.ContentType.Password;
             }
 
             if (confirmPasswordInput != null)
             {
-                confirmPasswordInput.contentType = InputField.ContentType.Password;
+                confirmPasswordInput.contentType = UnityInputField.ContentType.Password;
             }
         }
 

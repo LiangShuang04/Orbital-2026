@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityInputField = UnityEngine.UI.InputField;
 
 namespace DontDiePlease.Auth
 {
@@ -706,9 +707,9 @@ namespace DontDiePlease.Auth
             cap.GetComponent<Image>().type = Image.Type.Sliced;
         }
 
-        private InputField CreateInput(Transform parent, string name, string placeholder)
+        private UnityInputField CreateInput(Transform parent, string name, string placeholder)
         {
-            var inputObject = new GameObject(name, typeof(Image), typeof(InputField));
+            var inputObject = new GameObject(name, typeof(Image), typeof(UnityInputField));
             inputObject.transform.SetParent(parent, false);
             var image = inputObject.GetComponent<Image>();
             image.sprite = fieldSprite;
@@ -741,7 +742,7 @@ namespace DontDiePlease.Auth
                 CreateEyeGlyph(inputObject.transform);
             }
 
-            var input = inputObject.GetComponent<InputField>();
+            var input = inputObject.GetComponent<UnityInputField>();
             input.textComponent = text;
             input.placeholder = placeholderText;
             input.selectionColor = new Color(0.64f, 0.96f, 1f, 0.35f);

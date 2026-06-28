@@ -66,7 +66,7 @@ namespace DontDiePlease.Systems
         private static readonly Color PropColor = new Color(0.38f, 0.42f, 0.39f, 1f);
         private static readonly Color ResourceColor = new Color(0.43f, 0.72f, 0.58f, 1f);
         private static readonly Color RobotColor = new Color(0.55f, 0.16f, 0.14f, 1f);
-        private static readonly Color ToxicColor = new Color(0.42f, 0.62f, 0.38f, 1f);
+        private static readonly Color ToxicColor = new Color(0.43f, 0.45f, 0.42f, 1f);
 
         private static readonly Vector2Int[] Dirs =
         {
