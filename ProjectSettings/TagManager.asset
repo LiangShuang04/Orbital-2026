@@ -6,6 +6,7 @@ TagManager:
   tags:
   - InputName
   - InputPass
+  - walkable
   layers:
   - Default
   - TransparentFX
