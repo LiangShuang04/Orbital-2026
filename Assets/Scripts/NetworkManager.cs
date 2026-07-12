@@ -36,14 +36,14 @@ namespace DontDiePlease.Networking
                 return ApiResult<AuthSession>.Fail(400, "Username, email, and password are required");
             }
 
-            var payload = new RegisterPayload
+            var req = new RegisterPayload
             {
                 username = username.Trim(),
                 email = email.Trim().ToLowerInvariant(),
                 password = password
             };
 
-            return await Authenticate("/auth/register", payload);
+            return await Authenticate("/auth/register", req);
         }
 
         public async Task<ApiResult<AuthSession>> LoginUser(string email, string password)
@@ -53,13 +53,13 @@ namespace DontDiePlease.Networking
                 return ApiResult<AuthSession>.Fail(400, "Email and password are required");
             }
 
-            var payload = new LoginPayload
+            var req = new LoginPayload
             {
                 email = email.Trim().ToLowerInvariant(),
                 password = password
             };
 
-            return await Authenticate("/auth/login", payload);
+            return await Authenticate("/auth/login", req);
         }
 
         public void ClearSession()
@@ -103,18 +103,18 @@ namespace DontDiePlease.Networking
 
         private async Task<ApiResult<AuthSession>> Authenticate<TPayload>(string endpoint, TPayload payload)
         {
-            var result = await SendJsonBody<TPayload, AuthEnvelope>(UnityWebRequest.kHttpVerbPOST, endpoint, payload, false, "Authentication failed");
+            var resp = await SendJsonBody<TPayload, AuthEnvelope>(UnityWebRequest.kHttpVerbPOST, endpoint, payload, false, "Authentication failed");
 
-            if (!result.Success)
+            if (!resp.Success)
             {
-                return ApiResult<AuthSession>.Fail(result.StatusCode, result.Error);
+                return ApiResult<AuthSession>.Fail(resp.StatusCode, resp.Error);
             }
 
-            var envelope = result.Data;
+            var envelope = resp.Data;
 
             if (envelope == null || !envelope.success || string.IsNullOrWhiteSpace(envelope.token))
             {
-                return ApiResult<AuthSession>.Fail(result.StatusCode, "Authentication response was invalid");
+                return ApiResult<AuthSession>.Fail(resp.StatusCode, "Authentication response was invalid");
             }
 
             jwtToken = envelope.token;
@@ -126,7 +126,7 @@ namespace DontDiePlease.Networking
                 email = envelope.user != null ? envelope.user.email : string.Empty
             };
 
-            return ApiResult<AuthSession>.Ok(result.StatusCode, session);
+            return ApiResult<AuthSession>.Ok(resp.StatusCode, session);
         }
 
         private async Task<ApiResult<TResponse>> SendJsonBody<TPayload, TResponse>(string method, string endpoint, TPayload payload, bool requiresAuth, string fallbackError) where TResponse : class
@@ -159,9 +159,9 @@ namespace DontDiePlease.Networking
                 return ApiResult<TResponse>.Fail(request.responseCode, ResolveErrorMessage(request, fallbackError));
             }
 
-            var responseText = request.downloadHandler != null ? request.downloadHandler.text : string.Empty;
+            var body = request.downloadHandler != null ? request.downloadHandler.text : string.Empty;
 
-            if (!TryParseJson(responseText, out TResponse response))
+            if (!TryParseJson(body, out TResponse response))
             {
                 return ApiResult<TResponse>.Fail(request.responseCode, "Response could not be parsed");
             }
@@ -194,17 +194,17 @@ namespace DontDiePlease.Networking
 
         private static Task Send(UnityWebRequest request)
         {
-            var completion = new TaskCompletionSource<bool>();
-            var operation = request.SendWebRequest();
-            operation.completed += _ => completion.TrySetResult(true);
-            return completion.Task;
+            var tcs = new TaskCompletionSource<bool>();
+            var op = request.SendWebRequest();
+            op.completed += _ => tcs.TrySetResult(true);
+            return tcs.Task;
         }
 
         private static string ResolveErrorMessage(UnityWebRequest request, string fallbackError)
         {
-            var responseText = request.downloadHandler != null ? request.downloadHandler.text : string.Empty;
+            var body = request.downloadHandler != null ? request.downloadHandler.text : string.Empty;
 
-            if (TryParseJson(responseText, out ErrorEnvelope errorEnvelope))
+            if (TryParseJson(body, out ErrorEnvelope errorEnvelope))
             {
                 var serverMessage = FirstFilled(errorEnvelope.error, errorEnvelope.errorMessage, errorEnvelope.message);
 

@@ -10,6 +10,16 @@ namespace DontDiePlease.Systems
         public RandomEventType EventType => eventType;
         public float Radius => Mathf.Max(0f, radius);
 
+        public void SetEventType(RandomEventType value)
+        {
+            eventType = value;
+        }
+
+        public void SetRadius(float value)
+        {
+            radius = Mathf.Max(0f, value);
+        }
+
         public Vector3 GetSpawnPosition(System.Random random)
         {
             if (random == null || radius <= 0f)

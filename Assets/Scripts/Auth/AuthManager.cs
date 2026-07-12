@@ -37,27 +37,27 @@ namespace DontDiePlease.Auth
         public async Task<AuthResponse> LoginAsync(string emailOrUsername, string password)
         {
             EnsureApiClient();
-            var response = await apiClient.LoginAsync(new LoginRequest
+            var resp = await apiClient.LoginAsync(new LoginRequest
             {
                 emailOrUsername = emailOrUsername,
                 password = password
             });
 
-            ApplySuccessfulResponse(response);
-            return response;
+            ApplySuccessfulResponse(resp);
+            return resp;
         }
 
         public async Task<AuthResponse> RegisterAsync(string emailOrUsername, string password)
         {
             EnsureApiClient();
-            var response = await apiClient.RegisterAsync(new RegisterRequest
+            var resp = await apiClient.RegisterAsync(new RegisterRequest
             {
                 emailOrUsername = emailOrUsername,
                 password = password
             });
 
-            ApplySuccessfulResponse(response);
-            return response;
+            ApplySuccessfulResponse(resp);
+            return resp;
         }
 
         public void ClearSession()
@@ -69,17 +69,17 @@ namespace DontDiePlease.Auth
             PlayerPrefs.Save();
         }
 
-        private void ApplySuccessfulResponse(AuthResponse response)
+        private void ApplySuccessfulResponse(AuthResponse resp)
         {
-            if (response == null || !response.success)
+            if (resp == null || !resp.success)
             {
                 return;
             }
 
-            Session.SetSession(response.token, response.userId, response.username);
-            PlayerPrefs.SetString(TokenKey, response.token);
-            PlayerPrefs.SetString(UserIdKey, response.userId);
-            PlayerPrefs.SetString(UsernameKey, response.username);
+            Session.SetSession(resp.token, resp.userId, resp.username);
+            PlayerPrefs.SetString(TokenKey, resp.token);
+            PlayerPrefs.SetString(UserIdKey, resp.userId);
+            PlayerPrefs.SetString(UsernameKey, resp.username);
             PlayerPrefs.Save();
         }
 

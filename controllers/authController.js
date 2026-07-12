@@ -19,7 +19,7 @@ const jwtSecret = () => {
   return secret;
 };
 
-const createToken = user =>
+const signToken = user =>
   jwt.sign(
     {
       sub: user._id.toString(),
@@ -39,24 +39,24 @@ const publicUser = user => ({
   email: user.email
 });
 
-const normalizedCredentials = (body = {}) => ({
+const cleanCredentials = (body = {}) => ({
   username: body.username?.trim(),
   email: body.email?.trim().toLowerCase(),
   password: body.password
 });
 
 export const register = handleAsync(async (req, res) => {
-  const { username, email, password } = normalizedCredentials(req.body);
+  const { username, email, password } = cleanCredentials(req.body);
 
   if (!username || !email || !password) {
     throw httpError(400, "Username, email, and password are required");
   }
 
-  const existingUser = await User.findOne({
+  const existing = await User.findOne({
     $or: [{ username }, { email }]
   });
 
-  if (existingUser) {
+  if (existing) {
     throw httpError(409, "Username or email already exists");
   }
 
@@ -64,28 +64,28 @@ export const register = handleAsync(async (req, res) => {
 
   res.status(201).json({
     success: true,
-    token: createToken(user),
+    token: signToken(user),
     user: publicUser(user)
   });
 });
 
 export const login = handleAsync(async (req, res) => {
-  const { email, password } = normalizedCredentials(req.body);
+  const { email, password } = cleanCredentials(req.body);
 
   if (!email || !password) {
     throw httpError(400, "Email and password are required");
   }
 
   const user = await User.findOne({ email }).select("+password");
-  const passwordMatches = user ? await user.comparePassword(password) : false;
+  const ok = user ? await user.comparePassword(password) : false;
 
-  if (!passwordMatches) {
+  if (!ok) {
     throw httpError(401, "Invalid email or password");
   }
 
   res.status(200).json({
     success: true,
-    token: createToken(user),
+    token: signToken(user),
     user: publicUser(user)
   });
 });

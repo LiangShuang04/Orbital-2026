@@ -41,16 +41,16 @@ userSchema.pre("save", async function hashPassword() {
   this.password = await bcrypt.hash(this.password, 12);
 });
 
-userSchema.methods.comparePassword = function comparePassword(candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
+userSchema.methods.comparePassword = function comparePassword(candidate) {
+  return bcrypt.compare(candidate, this.password);
 };
 
 userSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString();
-    delete returnedObject._id;
-    delete returnedObject.password;
-    return returnedObject;
+  transform: (doc, ret) => {
+    ret.id = ret._id.toString();
+    delete ret._id;
+    delete ret.password;
+    return ret;
   }
 });
 

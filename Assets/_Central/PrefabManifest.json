@@ -1,0 +1,2422 @@
+{
+    "PackageRoot": "Assets/OldIndustry",
+    "Pipeline": "URP",
+    "GeneratedAt": "2026-06-27 14:25:53",
+    "Buckets": [
+        {
+            "Category": "floor",
+            "Items": [
+                {
+                    "Guid": "63fbccc58f4832c4e906b1360a4288c6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Block_300x150x300.prefab"
+                },
+                {
+                    "Guid": "a034b9fcdaa5d954fa4b033a045b9881",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Block_300x300x300.prefab"
+                },
+                {
+                    "Guid": "10ed60be3f882e540b84e4915b2566ae",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Block_600x150x300.prefab"
+                },
+                {
+                    "Guid": "8deddf3f1bddd064d821768d4cb66383",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Block_600x300x300.prefab"
+                },
+                {
+                    "Guid": "4c61a70a1ba198543a0317a473f23353",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Block_600x300x600 1.prefab"
+                },
+                {
+                    "Guid": "2caf5814058c6b448800a0a7dea3fd6e",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Block_600x300x600.prefab"
+                },
+                {
+                    "Guid": "b271deb8a258c1e4599fd56f1f2fe0b5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Block_Pillar01.prefab"
+                },
+                {
+                    "Guid": "de502945b7532fc4386bd9461819ea20",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Block_Pillar02.prefab"
+                },
+                {
+                    "Guid": "53ba20f7b32788243bfdecda35ba5a72",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor01_150x150.prefab"
+                },
+                {
+                    "Guid": "6913c884d2b792243886c87e13aa930f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor01_300x150.prefab"
+                },
+                {
+                    "Guid": "0a53f89d14a07c74eae5dd85a41a68d7",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor01_300x300.prefab"
+                },
+                {
+                    "Guid": "5d965672e15f1c747803df72a049ac5c",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor01_600x300.prefab"
+                },
+                {
+                    "Guid": "cdac1666e8faef544a2e8351e0283755",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor01_600x600.prefab"
+                },
+                {
+                    "Guid": "9839cf2289034fa4f93470cf3e5149fb",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor02_150x150x12.5.prefab"
+                },
+                {
+                    "Guid": "2cc5c0bc6c243ad46894b5f472a01583",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor02_300x150x12.5.prefab"
+                },
+                {
+                    "Guid": "616aa3b981b597d408e57c8a86a704bd",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor02_300x300x12.5.prefab"
+                },
+                {
+                    "Guid": "5a24f6ecc3fc95c43b627964918d7d86",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor02_600x300x12.5.prefab"
+                },
+                {
+                    "Guid": "6060ddc2e188ff541abac3e4fc148093",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor02_600x600x12.5.prefab"
+                },
+                {
+                    "Guid": "d18eb4723a2c1ac4caa02d4b45886bf5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor03_150x150.prefab"
+                },
+                {
+                    "Guid": "bc7223b594a50f247bec4de069407c8e",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor03_300x150.prefab"
+                },
+                {
+                    "Guid": "f4961e01b49e7f9479b9f8e2cf2c805a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor03_300x300.prefab"
+                },
+                {
+                    "Guid": "bc31c493e5478134499ce97f9e01a56a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor03_600x300.prefab"
+                },
+                {
+                    "Guid": "48d6749cb5aa46b4a9548150777c7eed",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Floor03_600x600.prefab"
+                },
+                {
+                    "Guid": "b835acbce0c48da42a7576c120cc1425",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/ConcreteBlock01.prefab"
+                },
+                {
+                    "Guid": "9bfbf339cbd588c4b93bac1c0fb65bf5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/ConcreteBlock02.prefab"
+                },
+                {
+                    "Guid": "7c2a0d3d1f73ccf42ad6f47c9567f85e",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/ConcreteBlock03.prefab"
+                },
+                {
+                    "Guid": "bfabaca222076944c92f83ef61590c1e",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/ConcreteBlock04.prefab"
+                },
+                {
+                    "Guid": "df82bac998cd19a43a6e469e4191d737",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Block_Line.prefab"
+                },
+                {
+                    "Guid": "a1669188e87e01b42a6a0efa5079b370",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Block_LineStart.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "wall",
+            "Items": [
+                {
+                    "Guid": "b271deb8a258c1e4599fd56f1f2fe0b5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Block_Pillar01.prefab"
+                },
+                {
+                    "Guid": "de502945b7532fc4386bd9461819ea20",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Blocks/Block_Pillar02.prefab"
+                },
+                {
+                    "Guid": "283b9499636b1384fb0c429472aa2b32",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/RoofWindow01.prefab"
+                },
+                {
+                    "Guid": "2bdb00c45dc3c3e40825b7506e362b14",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/RoofWindow01b.prefab"
+                },
+                {
+                    "Guid": "1171af75178ba7140ad46a2b7f573916",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure03_Pillar01.prefab"
+                },
+                {
+                    "Guid": "09118d055ee0c034d8cc391be203ce74",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure03_Pillar02.prefab"
+                },
+                {
+                    "Guid": "89df9d8b730b2db448de2ababb5467e3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure03_Pillar03.prefab"
+                },
+                {
+                    "Guid": "6dfa7d01c65ccf445b42319a64a208c3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure03_PillarRoof.prefab"
+                },
+                {
+                    "Guid": "7863c9f31a68d7e4abe46cf3cc8fad03",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tarp/TarpWall01.prefab"
+                },
+                {
+                    "Guid": "bc949e1fb11e43a4e82d21fb7fe58d44",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tarp/TarpWall01b.prefab"
+                },
+                {
+                    "Guid": "4f40c781d3c1dc0499b6c29b9084850b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tarp/TarpWall01c.prefab"
+                },
+                {
+                    "Guid": "44e293782c09d244383a41ccf4588818",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01.prefab"
+                },
+                {
+                    "Guid": "6d5ac65580448774abfe10ea7f504282",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Door01.prefab"
+                },
+                {
+                    "Guid": "cac8e97bd25fa6940a518033c31b761f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Door02.prefab"
+                },
+                {
+                    "Guid": "56730cb12089d6b44b769707b4f24c5a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Door03.prefab"
+                },
+                {
+                    "Guid": "4062c610dcad8fd49bf8dcbfeae6e8d9",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Door04.prefab"
+                },
+                {
+                    "Guid": "d4530642205d61d45b0e41569203e565",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Door05.prefab"
+                },
+                {
+                    "Guid": "59d74c87bc54acf44af5a290982c39fb",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Pillar01.prefab"
+                },
+                {
+                    "Guid": "9703e4151783d374189d3851befe1795",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Roof01.prefab"
+                },
+                {
+                    "Guid": "8a6ff41e6ef1a404d9089bd4be25ade3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Roof02.prefab"
+                },
+                {
+                    "Guid": "258074d9c64487b4bbca66360106a3e5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Roof03.prefab"
+                },
+                {
+                    "Guid": "6aef6af14dd616b4190373a531fd30e3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Roof04.prefab"
+                },
+                {
+                    "Guid": "11b62f0c010731f45942e5dbc996e8c8",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Roof05.prefab"
+                },
+                {
+                    "Guid": "4d1e20aa05bbc1f49a51eabb0a7bd290",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Window01.prefab"
+                },
+                {
+                    "Guid": "86e5878a9b6a3304b8f8a87a8a789db6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Window02.prefab"
+                },
+                {
+                    "Guid": "d31ebe7b28ca1014c908ba89076bb870",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/ConcreteWall01.prefab"
+                },
+                {
+                    "Guid": "38f315aa07444734583054b300023235",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/ConcreteWall01b.prefab"
+                },
+                {
+                    "Guid": "964934e0e0929724181c839375a250a4",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01.prefab"
+                },
+                {
+                    "Guid": "a54e1b8f38504d04aacef08a367348aa",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Door01.prefab"
+                },
+                {
+                    "Guid": "26f39d267258303448d39896a08f2821",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Door02.prefab"
+                },
+                {
+                    "Guid": "af30287c9e8d16741be1dcdf63102ada",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Roof01.prefab"
+                },
+                {
+                    "Guid": "f4a89610f4492db41a45c551b4c8a1b0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Roof02.prefab"
+                },
+                {
+                    "Guid": "3797f513d48539b4a94e404dbe15f09d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Roof03.prefab"
+                },
+                {
+                    "Guid": "76e526bcad0b82645b26b97d3b3a0dea",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Roof04.prefab"
+                },
+                {
+                    "Guid": "00f989395bd507c4a8a431bb8a8413fe",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Window01.prefab"
+                },
+                {
+                    "Guid": "6525386e5aeb9ab498465fde7d4a199f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Window02.prefab"
+                },
+                {
+                    "Guid": "d71697e79fd939a46b111098147f26b3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall02.prefab"
+                },
+                {
+                    "Guid": "e3d69b068eb126048b754e2aa44e193d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall02b.prefab"
+                },
+                {
+                    "Guid": "8bb7dc98cfeb48f42b8cf20c7c27a74a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall02_Roof01.prefab"
+                },
+                {
+                    "Guid": "61acc581340e8fd4fa310a55dd6f4040",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall02_Roof02.prefab"
+                },
+                {
+                    "Guid": "5fabdfb233e5ecf44b115bf3f86e1263",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall02_Roof03.prefab"
+                },
+                {
+                    "Guid": "e3f05c5923a23f4478200362115c491f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall02_Roof04.prefab"
+                },
+                {
+                    "Guid": "b185ab17a33ad524d86dec90c28c1d3d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall02_Window01.prefab"
+                },
+                {
+                    "Guid": "2266281033eb08e4989d99a852990273",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall03.prefab"
+                },
+                {
+                    "Guid": "d9bcbc50be0f6054b8a04024fc40a0ac",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall03b.prefab"
+                },
+                {
+                    "Guid": "9f0deb18102ffe5438901e3d445cb232",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall03c.prefab"
+                },
+                {
+                    "Guid": "4935cd34e27c6fa4794d9fc52d6fbde7",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window01.prefab"
+                },
+                {
+                    "Guid": "e9f4785ba2cdbe5418a7d5e4f61b0487",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window02.prefab"
+                },
+                {
+                    "Guid": "1eb46e0d9498cdf43961292e60c1f194",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window02_Broken01.prefab"
+                },
+                {
+                    "Guid": "51f9be9a9e624bd42b43bdd667bb239f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window02_Broken02.prefab"
+                },
+                {
+                    "Guid": "12b7aaa2f401b344ba65c883b43091f6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window02_Broken03.prefab"
+                },
+                {
+                    "Guid": "be2e31d8759a2cb4e9e6195dde85739b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window03.prefab"
+                },
+                {
+                    "Guid": "249e2bd7b3e96a84da3ec17a8a7bd579",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window03_Broken01.prefab"
+                },
+                {
+                    "Guid": "78eae50b7a05d044086a3709e7b1cf60",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window03_Broken02.prefab"
+                },
+                {
+                    "Guid": "0a25e1e70fe9aa84cb3e05f86897d1de",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window03_Broken03.prefab"
+                },
+                {
+                    "Guid": "d0a75e5df5cd30548a671af014096434",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04.prefab"
+                },
+                {
+                    "Guid": "1806d0eae0b2c874d9416034119336e0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken01.prefab"
+                },
+                {
+                    "Guid": "6174f8aea49230b489165b7f0cfc09ce",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken02.prefab"
+                },
+                {
+                    "Guid": "6685ca5c52fd89849b70676742a99a5f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken03.prefab"
+                },
+                {
+                    "Guid": "67ab3f2b2b6318e4bb29904e0c573356",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken04.prefab"
+                },
+                {
+                    "Guid": "2cc6845947e7d364cacd518aa516be68",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window05.prefab"
+                },
+                {
+                    "Guid": "d2ce9ac82e9078b44971fb2f58cfafb8",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/WindowBay01.prefab"
+                },
+                {
+                    "Guid": "3115f24a09386c244a126bd330e310c3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/WindowBay01b.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "wallBroken",
+            "Items": [
+                {
+                    "Guid": "04e773268ef22b84bb653ff9157ec2ef",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/BridgeBroken01.prefab"
+                },
+                {
+                    "Guid": "96fbef944dde3e440b280ef2c8a937d3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01a_Broken.prefab"
+                },
+                {
+                    "Guid": "4379206003b2c6a428638d3308778f0c",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01_BrokenLarge.prefab"
+                },
+                {
+                    "Guid": "32db2e7c4c238bc47b64430f42d0154f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Stairs/Stairs01b_Broken.prefab"
+                },
+                {
+                    "Guid": "fd8ec23d8b707a44a8474497d3bd3be2",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Broken01.prefab"
+                },
+                {
+                    "Guid": "f39e56d13ac41284381315e295e3c28b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Broken02.prefab"
+                },
+                {
+                    "Guid": "67adb64f03c54cc45b1317c33157a0b6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankSmall02_Broken01.prefab"
+                },
+                {
+                    "Guid": "b4c9a5f162c339f4ebb4b4f68356a1ef",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankSmall02_Broken02.prefab"
+                },
+                {
+                    "Guid": "1eb46e0d9498cdf43961292e60c1f194",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window02_Broken01.prefab"
+                },
+                {
+                    "Guid": "51f9be9a9e624bd42b43bdd667bb239f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window02_Broken02.prefab"
+                },
+                {
+                    "Guid": "12b7aaa2f401b344ba65c883b43091f6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window02_Broken03.prefab"
+                },
+                {
+                    "Guid": "249e2bd7b3e96a84da3ec17a8a7bd579",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window03_Broken01.prefab"
+                },
+                {
+                    "Guid": "78eae50b7a05d044086a3709e7b1cf60",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window03_Broken02.prefab"
+                },
+                {
+                    "Guid": "0a25e1e70fe9aa84cb3e05f86897d1de",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window03_Broken03.prefab"
+                },
+                {
+                    "Guid": "1806d0eae0b2c874d9416034119336e0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken01.prefab"
+                },
+                {
+                    "Guid": "6174f8aea49230b489165b7f0cfc09ce",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken02.prefab"
+                },
+                {
+                    "Guid": "6685ca5c52fd89849b70676742a99a5f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken03.prefab"
+                },
+                {
+                    "Guid": "67ab3f2b2b6318e4bb29904e0c573356",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken04.prefab"
+                },
+                {
+                    "Guid": "a5346195f89e9d7479d28d2db38eee11",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/BoF_Broken.prefab"
+                },
+                {
+                    "Guid": "6949561a294f6024187bab995c9e150b",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door01_Broken.prefab"
+                },
+                {
+                    "Guid": "a25871a503402e047a62867c3e711d82",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door02_Broken.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "door",
+            "Items": [
+                {
+                    "Guid": "55e7a8fa364019346bdfdb68679b5c6e",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Doors/Door01.prefab"
+                },
+                {
+                    "Guid": "5da5dc025905d844598412fa8490b13d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Doors/Door02.prefab"
+                },
+                {
+                    "Guid": "7899b852fc0537b41a015b3e3fa62065",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Doors/Door03.prefab"
+                },
+                {
+                    "Guid": "6d5ac65580448774abfe10ea7f504282",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Door01.prefab"
+                },
+                {
+                    "Guid": "cac8e97bd25fa6940a518033c31b761f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Door02.prefab"
+                },
+                {
+                    "Guid": "56730cb12089d6b44b769707b4f24c5a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Door03.prefab"
+                },
+                {
+                    "Guid": "4062c610dcad8fd49bf8dcbfeae6e8d9",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Door04.prefab"
+                },
+                {
+                    "Guid": "d4530642205d61d45b0e41569203e565",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Door05.prefab"
+                },
+                {
+                    "Guid": "a54e1b8f38504d04aacef08a367348aa",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Door01.prefab"
+                },
+                {
+                    "Guid": "26f39d267258303448d39896a08f2821",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Door02.prefab"
+                },
+                {
+                    "Guid": "4fd8f63feb642a8459e0e381dd6c6ef2",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door01.prefab"
+                },
+                {
+                    "Guid": "6949561a294f6024187bab995c9e150b",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door01_Broken.prefab"
+                },
+                {
+                    "Guid": "e1335c0ecce6b3b4e8944a6fc5f0ddea",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door02.prefab"
+                },
+                {
+                    "Guid": "a25871a503402e047a62867c3e711d82",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door02_Broken.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "roof",
+            "Items": [
+                {
+                    "Guid": "e36812ff83d817d4f8803c122e71ebb1",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01a.prefab"
+                },
+                {
+                    "Guid": "aefae5c6a903c2742b4ace0b2f8ac12b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01a_End.prefab"
+                },
+                {
+                    "Guid": "642d1b31f0b22684299396323fd33e66",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01b.prefab"
+                },
+                {
+                    "Guid": "26838fda21de94b4a90526eb65873fee",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01b_End.prefab"
+                },
+                {
+                    "Guid": "21fa63598fba8fb448a9271837d145ee",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01b_End02.prefab"
+                },
+                {
+                    "Guid": "dd8c03f6c308f004faf491f126c0952a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01c.prefab"
+                },
+                {
+                    "Guid": "a78d5f515db16cb42aa3d495aa38a06d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01d.prefab"
+                },
+                {
+                    "Guid": "f00729c2b43bca74198a2c6bb5b581cf",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01e.prefab"
+                },
+                {
+                    "Guid": "5f80ae04460bdec4cb5e23bfdc18a8ef",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01f.prefab"
+                },
+                {
+                    "Guid": "14e8869e0f48d164fbd22ff0262b79f1",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01g.prefab"
+                },
+                {
+                    "Guid": "a4e74a4fc4affef45bba0cea422fcdee",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01h.prefab"
+                },
+                {
+                    "Guid": "8da2769273d93f643a2e91286b38069b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01i.prefab"
+                },
+                {
+                    "Guid": "4379206003b2c6a428638d3308778f0c",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01_BrokenLarge.prefab"
+                },
+                {
+                    "Guid": "67777454fe3fcf34dbab3298284f7cd5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof03a.prefab"
+                },
+                {
+                    "Guid": "9428ef4ce686e20429ccadbad8ef53fa",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof03b.prefab"
+                },
+                {
+                    "Guid": "6d9d2b3825632c74ebc2a523637550e9",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof03_Bar.prefab"
+                },
+                {
+                    "Guid": "283b9499636b1384fb0c429472aa2b32",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/RoofWindow01.prefab"
+                },
+                {
+                    "Guid": "2bdb00c45dc3c3e40825b7506e362b14",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/RoofWindow01b.prefab"
+                },
+                {
+                    "Guid": "efd52e62de9eb594ea2ea4d43e6c3468",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Roof01.prefab"
+                },
+                {
+                    "Guid": "74d74182c4360cd45bca48ddf75cba32",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Roof02.prefab"
+                },
+                {
+                    "Guid": "ad31f37f93cf18a4780acb5ab649910b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Roof03.prefab"
+                },
+                {
+                    "Guid": "fa8afe3e2d9cbb04cb849eb8c0819d13",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Roof04.prefab"
+                },
+                {
+                    "Guid": "1addccc70fd3eb247a391e3c1a52a035",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Roof05.prefab"
+                },
+                {
+                    "Guid": "0be485fffedc73646be4fd49e9191e7b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Roof06.prefab"
+                },
+                {
+                    "Guid": "310b661a6d0ac944fa1f12b70b534e7c",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Roof01.prefab"
+                },
+                {
+                    "Guid": "756e1d32244d7c24982fea67881680df",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Roof02.prefab"
+                },
+                {
+                    "Guid": "4caccea25cb88e14ea5b3d1d16fd9cef",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Roof03.prefab"
+                },
+                {
+                    "Guid": "f2ef77c978b942547b44e4c6ccc681f4",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Roof04.prefab"
+                },
+                {
+                    "Guid": "d8694f9a9a977924e8a1e6fa56d55c03",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Roof05.prefab"
+                },
+                {
+                    "Guid": "716a5b43fe1f24443a6033927ab72277",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Roof06.prefab"
+                },
+                {
+                    "Guid": "afcd6a1b52d82e04aba00dfd210763d3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure03_BeamRoof01.prefab"
+                },
+                {
+                    "Guid": "6731c7a1064eb9f42951b1f42ef17cfc",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure03_BeamRoof01b.prefab"
+                },
+                {
+                    "Guid": "cb3eb4c64061c6940a240d77ef73da71",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure03_BeamRoof02.prefab"
+                },
+                {
+                    "Guid": "6dfa7d01c65ccf445b42319a64a208c3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure03_PillarRoof.prefab"
+                },
+                {
+                    "Guid": "9703e4151783d374189d3851befe1795",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Roof01.prefab"
+                },
+                {
+                    "Guid": "8a6ff41e6ef1a404d9089bd4be25ade3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Roof02.prefab"
+                },
+                {
+                    "Guid": "258074d9c64487b4bbca66360106a3e5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Roof03.prefab"
+                },
+                {
+                    "Guid": "6aef6af14dd616b4190373a531fd30e3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Roof04.prefab"
+                },
+                {
+                    "Guid": "11b62f0c010731f45942e5dbc996e8c8",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/BrickWall01_Roof05.prefab"
+                },
+                {
+                    "Guid": "af30287c9e8d16741be1dcdf63102ada",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Roof01.prefab"
+                },
+                {
+                    "Guid": "f4a89610f4492db41a45c551b4c8a1b0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Roof02.prefab"
+                },
+                {
+                    "Guid": "3797f513d48539b4a94e404dbe15f09d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Roof03.prefab"
+                },
+                {
+                    "Guid": "76e526bcad0b82645b26b97d3b3a0dea",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall01_Roof04.prefab"
+                },
+                {
+                    "Guid": "8bb7dc98cfeb48f42b8cf20c7c27a74a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall02_Roof01.prefab"
+                },
+                {
+                    "Guid": "61acc581340e8fd4fa310a55dd6f4040",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall02_Roof02.prefab"
+                },
+                {
+                    "Guid": "5fabdfb233e5ecf44b115bf3f86e1263",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall02_Roof03.prefab"
+                },
+                {
+                    "Guid": "e3f05c5923a23f4478200362115c491f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Walls/MetalWall02_Roof04.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "stairs",
+            "Items": [
+                {
+                    "Guid": "3b47e84b565f92049ac9d95734e45b6d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01_Stairs01a.prefab"
+                },
+                {
+                    "Guid": "a56bbcbc53afe054c87c71b121bfce67",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01_Stairs01b.prefab"
+                },
+                {
+                    "Guid": "b1080421d2aa24042aff5488a8c37651",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01_Stairs01a.prefab"
+                },
+                {
+                    "Guid": "319732f00e4b347408aa203661dca2cb",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01_Stairs01b.prefab"
+                },
+                {
+                    "Guid": "7aaa63e62a968934a9c12387bd581567",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01_Stairs01c.prefab"
+                },
+                {
+                    "Guid": "c3e9242d6d9d4d84a9b3a42cc9c00c8f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01_Stairs01_Curve01.prefab"
+                },
+                {
+                    "Guid": "f8606c99f659f6643b7317ad0de4d32f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Stairs/Stairs01a.prefab"
+                },
+                {
+                    "Guid": "e6948d4cf7922a142b2ae8e2d3cdd52b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Stairs/Stairs01b.prefab"
+                },
+                {
+                    "Guid": "32db2e7c4c238bc47b64430f42d0154f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Stairs/Stairs01b_Broken.prefab"
+                },
+                {
+                    "Guid": "23fbc76d7f248bf48bb32879679596e9",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Stairs/Stairs01c.prefab"
+                },
+                {
+                    "Guid": "86a3b2d8bfc28a540b1236bd073c26da",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Stairs/Stairs01_Curve01.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "bridge",
+            "Items": [
+                {
+                    "Guid": "88875a1238d5ed64ab508b5a91d7b696",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01a.prefab"
+                },
+                {
+                    "Guid": "7946278c455a9cf4391bd0670845d441",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01b.prefab"
+                },
+                {
+                    "Guid": "1bb449d4e9054284a88f5d78c5acc88a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01c.prefab"
+                },
+                {
+                    "Guid": "f5abb45bdd4084a4cbbdeb3fa8c48ead",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01d.prefab"
+                },
+                {
+                    "Guid": "f19a1d1684f34f24d841f937b71f1e2e",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01e.prefab"
+                },
+                {
+                    "Guid": "0f7de8dfdf70c834685c86e604ed51e1",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01f.prefab"
+                },
+                {
+                    "Guid": "25fdb623db4b6504f9d3c7f3cadbd3a7",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01g.prefab"
+                },
+                {
+                    "Guid": "7f00a2399a8035a4f8903091ad9802b6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01h.prefab"
+                },
+                {
+                    "Guid": "0895fced33517254d83d8f191c25b57c",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01i.prefab"
+                },
+                {
+                    "Guid": "0470ca2052df26c49b4fff6d5f729607",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01j.prefab"
+                },
+                {
+                    "Guid": "4f2af6a0c5a344a4cb82363c76bd4eee",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01k.prefab"
+                },
+                {
+                    "Guid": "0955b33f8ae477e4b9b480eb11175cad",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01_Curve01a.prefab"
+                },
+                {
+                    "Guid": "a69779f74f21405438a52770aca7b145",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01_Curve01b.prefab"
+                },
+                {
+                    "Guid": "79babe7ed76565f4eab99e6d5b5782c6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01_Ladder.prefab"
+                },
+                {
+                    "Guid": "3b47e84b565f92049ac9d95734e45b6d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01_Stairs01a.prefab"
+                },
+                {
+                    "Guid": "a56bbcbc53afe054c87c71b121bfce67",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/Bridge01_Stairs01b.prefab"
+                },
+                {
+                    "Guid": "04e773268ef22b84bb653ff9157ec2ef",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/BridgeBroken01.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "railing",
+            "Items": [
+                {
+                    "Guid": "6981716b2ad56a748be39a31de02cc72",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01a.prefab"
+                },
+                {
+                    "Guid": "dc34b2ffb7a9f0646856361183fdf9bb",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01b.prefab"
+                },
+                {
+                    "Guid": "9a1ee34cb8c90164abcd0a822133a64f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01c.prefab"
+                },
+                {
+                    "Guid": "08813f098d1e15e4384bda8fbcb8bb16",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01d.prefab"
+                },
+                {
+                    "Guid": "0b45c817e63e8e44c883b11640458dbb",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01_Curve01.prefab"
+                },
+                {
+                    "Guid": "b1080421d2aa24042aff5488a8c37651",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01_Stairs01a.prefab"
+                },
+                {
+                    "Guid": "319732f00e4b347408aa203661dca2cb",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01_Stairs01b.prefab"
+                },
+                {
+                    "Guid": "7aaa63e62a968934a9c12387bd581567",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01_Stairs01c.prefab"
+                },
+                {
+                    "Guid": "c3e9242d6d9d4d84a9b3a42cc9c00c8f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing01_Stairs01_Curve01.prefab"
+                },
+                {
+                    "Guid": "9e3a7c58312abf54bb6498b8e69cd23f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing02a.prefab"
+                },
+                {
+                    "Guid": "5571976de643972418191d2678e8bcbf",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing02b.prefab"
+                },
+                {
+                    "Guid": "dd097e1c6e5c33447b4f9d7f4dafa32a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing02c.prefab"
+                },
+                {
+                    "Guid": "82d79c40e22f0de48bce5b78736e575f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Railings/Railing02d.prefab"
+                },
+                {
+                    "Guid": "4a8cf3d9d10b8b94188a32af5c64a6bd",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Furnace/Runner_Fence01.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "track",
+            "Items": [
+                {
+                    "Guid": "480f578d8559f5b4ba8675327cf36368",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track01.prefab"
+                },
+                {
+                    "Guid": "3e942a84ce4c54843bdc0dc78d945c34",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track01_Bias.prefab"
+                },
+                {
+                    "Guid": "949794d88b4dbdf44a821f1e1f1ad2b7",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track01_Curve.prefab"
+                },
+                {
+                    "Guid": "3762349f577f4ae46b7a0b642db8d7a0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track01_to02.prefab"
+                },
+                {
+                    "Guid": "e44ad9ead416fc243988e6c87111bf1c",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02.prefab"
+                },
+                {
+                    "Guid": "d103e1f95e4a1c24987b745a81bc1995",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02_Bias.prefab"
+                },
+                {
+                    "Guid": "3c9025a997fab7540b1b47e43a9914e0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02_Concrete01.prefab"
+                },
+                {
+                    "Guid": "be1742b255ac7a6468b909918ebf2d48",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02_Concrete02.prefab"
+                },
+                {
+                    "Guid": "42992ae3aeba5bc42bd261c8026b1f29",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02_Curve.prefab"
+                },
+                {
+                    "Guid": "67c17001559c49f438441ffa84a79620",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02_Plates.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "train",
+            "Items": [
+                {
+                    "Guid": "5bd3662d4aa9c0347a9e0493962626d5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tarp/TarpTrain01.prefab"
+                },
+                {
+                    "Guid": "b835acbce0c48da42a7576c120cc1425",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/ConcreteBlock01.prefab"
+                },
+                {
+                    "Guid": "9bfbf339cbd588c4b93bac1c0fb65bf5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/ConcreteBlock02.prefab"
+                },
+                {
+                    "Guid": "7c2a0d3d1f73ccf42ad6f47c9567f85e",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/ConcreteBlock03.prefab"
+                },
+                {
+                    "Guid": "bfabaca222076944c92f83ef61590c1e",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/ConcreteBlock04.prefab"
+                },
+                {
+                    "Guid": "480f578d8559f5b4ba8675327cf36368",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track01.prefab"
+                },
+                {
+                    "Guid": "3e942a84ce4c54843bdc0dc78d945c34",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track01_Bias.prefab"
+                },
+                {
+                    "Guid": "949794d88b4dbdf44a821f1e1f1ad2b7",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track01_Curve.prefab"
+                },
+                {
+                    "Guid": "3762349f577f4ae46b7a0b642db8d7a0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track01_to02.prefab"
+                },
+                {
+                    "Guid": "e44ad9ead416fc243988e6c87111bf1c",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02.prefab"
+                },
+                {
+                    "Guid": "d103e1f95e4a1c24987b745a81bc1995",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02_Bias.prefab"
+                },
+                {
+                    "Guid": "3c9025a997fab7540b1b47e43a9914e0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02_Concrete01.prefab"
+                },
+                {
+                    "Guid": "be1742b255ac7a6468b909918ebf2d48",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02_Concrete02.prefab"
+                },
+                {
+                    "Guid": "42992ae3aeba5bc42bd261c8026b1f29",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02_Curve.prefab"
+                },
+                {
+                    "Guid": "67c17001559c49f438441ffa84a79620",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Track02_Plates.prefab"
+                },
+                {
+                    "Guid": "a7168cd07a4a2d34b97d1698d95e6307",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Box01.prefab"
+                },
+                {
+                    "Guid": "32403c4892bc8f145b53a16f253c140d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Box02.prefab"
+                },
+                {
+                    "Guid": "968accdf23c61734c9e9a767050fec09",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Lamp01.prefab"
+                },
+                {
+                    "Guid": "1844904ca0b95d443b023565102fc0b3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Lever01.prefab"
+                },
+                {
+                    "Guid": "6b6f8b4185b777142af3efb47a788949",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Pole01a.prefab"
+                },
+                {
+                    "Guid": "09b87002aecdde94d9c5158bbfa798f5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Pole01b.prefab"
+                },
+                {
+                    "Guid": "0e3a48d1fd901fb4eb4ac56a061d9ccb",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Pole01c.prefab"
+                },
+                {
+                    "Guid": "aaf14c1ef61b6a04b97273d1c9c0a97b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Pole02a.prefab"
+                },
+                {
+                    "Guid": "125a5cfe5f2bc0d479a9f8646105ccf7",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Pole02b.prefab"
+                },
+                {
+                    "Guid": "ef159c190c923fa48841237e418bb68e",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Pole02c.prefab"
+                },
+                {
+                    "Guid": "2a085e7c62a79f341b39cd82f43469c5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Pole03.prefab"
+                },
+                {
+                    "Guid": "0777e3f132358f54f9963d5f56c85b91",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Trains/LaddleCar01.prefab"
+                },
+                {
+                    "Guid": "8a904dc7683d45f43b4a7ac87dfe153d",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Trains/Torpedo01.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "pipe",
+            "Items": [
+                {
+                    "Guid": "3c3bfb2cd4a52ba47855de5927f99f66",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables01.prefab"
+                },
+                {
+                    "Guid": "8d222ae73646ebf428b4efb4891f3f28",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables01b.prefab"
+                },
+                {
+                    "Guid": "7819ee94cd0b9a84bb123dca3d2f02ce",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables01c.prefab"
+                },
+                {
+                    "Guid": "b96580690e21c164e81ccdaa9fa51912",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables01d.prefab"
+                },
+                {
+                    "Guid": "f68dc833492708a40b2b1f06410477af",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables01e.prefab"
+                },
+                {
+                    "Guid": "46e9dcd5265f97c4d9bd1f2af4ba5f37",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables01_Box.prefab"
+                },
+                {
+                    "Guid": "e966cca3bd65c5f4d9b6023ec27af26d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables01_Curve.prefab"
+                },
+                {
+                    "Guid": "68e3b921c2a13ba47b846bb03668629f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables01_Joint.prefab"
+                },
+                {
+                    "Guid": "c73fc0becd28c4847b3773c8af495d17",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables02.prefab"
+                },
+                {
+                    "Guid": "b5e7b88dedafa2c4cb14bc75e1d5bbf5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables02b.prefab"
+                },
+                {
+                    "Guid": "6a97d8fb704a8de4bacea8887ab2ad13",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables02b_Curve.prefab"
+                },
+                {
+                    "Guid": "b5d1571b186946c46a82429784dea82a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables02c.prefab"
+                },
+                {
+                    "Guid": "438b77bd6f9d76e48bf78601e7ef5356",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables02c_Curve.prefab"
+                },
+                {
+                    "Guid": "6da51ab82d6254d4faa932a7cd7c94e3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables02d.prefab"
+                },
+                {
+                    "Guid": "0d018fe845d412241856b98b3421ddd9",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables02d_Curve.prefab"
+                },
+                {
+                    "Guid": "caadbced87603204d9bcb986511f40d9",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables02e.prefab"
+                },
+                {
+                    "Guid": "8db588d70c8661042826b10c17b05108",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables02_Curve.prefab"
+                },
+                {
+                    "Guid": "4c35c6ded9ae6d54884ef54f20f7328d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables03.prefab"
+                },
+                {
+                    "Guid": "ea84e2892c6e29541ad98042939af102",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables03b.prefab"
+                },
+                {
+                    "Guid": "8f1dde5ead399f045bec951266255396",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01a.prefab"
+                },
+                {
+                    "Guid": "96fbef944dde3e440b280ef2c8a937d3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01a_Broken.prefab"
+                },
+                {
+                    "Guid": "d3d49ad3a8ba060408e675696c234433",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01b.prefab"
+                },
+                {
+                    "Guid": "f6f75a35fad48f64c871fa7ebf805ad9",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01c.prefab"
+                },
+                {
+                    "Guid": "4549cf8574ad25743924441d46cb0348",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01d.prefab"
+                },
+                {
+                    "Guid": "8673a0128640fd946b098f2a3cc259f3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01_Bend01.prefab"
+                },
+                {
+                    "Guid": "73666b4b3a5d1244ea58d67cfb451a86",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01_Bend02.prefab"
+                },
+                {
+                    "Guid": "a5bd0bd7e618a1744b28fe3ff807d9de",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01_Bend03.prefab"
+                },
+                {
+                    "Guid": "561b732fc2c6d10428aaac89ba2317c0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01_Bend04.prefab"
+                },
+                {
+                    "Guid": "aecb4952423d71f40960edab4a38c858",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01_Bend05.prefab"
+                },
+                {
+                    "Guid": "f011964ac771f7c419b2c7401722cf5f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01_Curve.prefab"
+                },
+                {
+                    "Guid": "ff9dc1c97d72b354aa199d53a97a1ab4",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01_Joint.prefab"
+                },
+                {
+                    "Guid": "b4b1291019824b04d97a0cfc8a6596d9",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipesLarge01_Long.prefab"
+                },
+                {
+                    "Guid": "8b88934803058e941841bc3ba952d5bf",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall00a.prefab"
+                },
+                {
+                    "Guid": "1488e1cbc34732a49acd49d6f1bd3e3e",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall00b.prefab"
+                },
+                {
+                    "Guid": "b2c5f60e1c554f745a393f52b0129f3a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall01a.prefab"
+                },
+                {
+                    "Guid": "e1b9ff21cd34e574f9b3029daad5d2b6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall01b.prefab"
+                },
+                {
+                    "Guid": "ba3d0579b2431114fa0ef95ba0b36bd7",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall01c.prefab"
+                },
+                {
+                    "Guid": "ffedd1698732d5f4f996af660afcfdc8",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall01d.prefab"
+                },
+                {
+                    "Guid": "18d670221ecc30d468d1fa703d5f2315",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall01e.prefab"
+                },
+                {
+                    "Guid": "09f0372cee51ca748bf9b251b9ded2d4",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall01f.prefab"
+                },
+                {
+                    "Guid": "0c301e4c9c4552448876490ea6551256",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall01g.prefab"
+                },
+                {
+                    "Guid": "3aa1f041f244f0547b72d93ff2b97102",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall02c.prefab"
+                },
+                {
+                    "Guid": "c42daa786c659b84b905b11c93588f2a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall02d.prefab"
+                },
+                {
+                    "Guid": "8ff9dc0148b27ad40941ef671bb15f8f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall02e.prefab"
+                },
+                {
+                    "Guid": "eea035d286b2bbb48b6e083d4d4260cd",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall02f.prefab"
+                },
+                {
+                    "Guid": "d361fb0ec438b0742be8db5bc1e3ea9d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesSmall/PipeSmall02g.prefab"
+                },
+                {
+                    "Guid": "6901c6bcec6704547b1abdb18a24373d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny00.prefab"
+                },
+                {
+                    "Guid": "b4131a7cf5bff06439ded0875471c586",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny00b.prefab"
+                },
+                {
+                    "Guid": "67abcde48bec3cc49b7bd54c810573fe",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01.prefab"
+                },
+                {
+                    "Guid": "25900400c5c037e429b3c06f0cacdfca",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01b.prefab"
+                },
+                {
+                    "Guid": "6016e4a1138ccfb40b4afe54ad830300",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Curve01.prefab"
+                },
+                {
+                    "Guid": "3447e9752a3351848988562911531c3e",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Curve02.prefab"
+                },
+                {
+                    "Guid": "7e3d587865b282940b2f96445fe19ddb",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Curve03.prefab"
+                },
+                {
+                    "Guid": "9e27cb691addc1a44a91f123f20b95ab",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Curve04.prefab"
+                },
+                {
+                    "Guid": "5fd40499ddbf33b4db1f463eda0a66a2",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Curve05.prefab"
+                },
+                {
+                    "Guid": "a85f513e7b2ab264abb1549598808981",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Joint01.prefab"
+                },
+                {
+                    "Guid": "5009b4cfd0c0905439d578004b1237a7",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Joint02.prefab"
+                },
+                {
+                    "Guid": "2e9bc120bafdc9f40b954df40b8c2e82",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Joint03.prefab"
+                },
+                {
+                    "Guid": "d667f0c494304074c968acd67b0e4601",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Joint04.prefab"
+                },
+                {
+                    "Guid": "343595fd439bef540bf0548d52825f9f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Joint05.prefab"
+                },
+                {
+                    "Guid": "2e17ea4bd2a39ba448c1659f176050fd",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Joint07.prefab"
+                },
+                {
+                    "Guid": "d46042511de4a324696bfad3af81e506",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Joint08.prefab"
+                },
+                {
+                    "Guid": "a49ed824b32e61f4dbf1e95ac050f3dd",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Joint09.prefab"
+                },
+                {
+                    "Guid": "bcec4214b730c674499b58afc515123b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Joint10.prefab"
+                },
+                {
+                    "Guid": "ca888047d76a11a4da934da612b889bc",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Joint11.prefab"
+                },
+                {
+                    "Guid": "baa208ff01377794fbe72c759cde88e9",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Joint12.prefab"
+                },
+                {
+                    "Guid": "d80995f8a835dda4593cbbf05c08a74d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Link01.prefab"
+                },
+                {
+                    "Guid": "34baf452c51eb8545806d5ec8802c37f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesTiny/PipeTiny01_Link02.prefab"
+                },
+                {
+                    "Guid": "d02ad17df52e3324982f6ffdacab9a45",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Vents/Vent01.prefab"
+                },
+                {
+                    "Guid": "91ba8e26dea46ab41b0f432547a52d8a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Vents/Vent01_Bias.prefab"
+                },
+                {
+                    "Guid": "b60609d5b69381a4cbff64107f71d597",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Vents/Vent01_Bias01b.prefab"
+                },
+                {
+                    "Guid": "4a95139a59ed6e7429970f1b917b2906",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Vents/Vent01_Curve.prefab"
+                },
+                {
+                    "Guid": "1716e2804e2f3f44bbdcb38051c2e1ab",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Vents/Vent01_Funnel01.prefab"
+                },
+                {
+                    "Guid": "2f595b523df9f054d869dfe2644aa9a4",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Vents/Vent01_Funnel01b.prefab"
+                },
+                {
+                    "Guid": "66ac3b4ca7095e44b9ed18f75d12ae57",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Vents/Vent02.prefab"
+                },
+                {
+                    "Guid": "8157a44ff6817364da5979fa21cf9849",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Vents/Vent02b.prefab"
+                },
+                {
+                    "Guid": "a495e96b21b524f4e847de356445dbef",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Vents/Vent02_Bias.prefab"
+                },
+                {
+                    "Guid": "9a6acb82397e28f4397e912559482217",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Vents/Vent02_Curve.prefab"
+                },
+                {
+                    "Guid": "20fc9aaab98577f4f9030071ceb88960",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/CableRolls/CableRoll01.prefab"
+                },
+                {
+                    "Guid": "126ec3e0c26471b4cb1d5a025bab848e",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/CableRolls/CableRoll02.prefab"
+                },
+                {
+                    "Guid": "db648ba948e64ee4ebd31ddf444c3c5a",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/CableRolls/CableRoll03.prefab"
+                },
+                {
+                    "Guid": "a36b7d44a943aee44a5c610ee33d4ad0",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_VentLeft.prefab"
+                },
+                {
+                    "Guid": "bd6f4ee0a62524c478ab9f3427a54611",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_VentRight.prefab"
+                },
+                {
+                    "Guid": "8c4fb7b11b55f6f4da7db3c0d11199f5",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Crane/Crane01_Cables01.prefab"
+                },
+                {
+                    "Guid": "3097e8336a4916747a140f361aea1d39",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Crane/Crane01_Cables02.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "machinery",
+            "Items": [
+                {
+                    "Guid": "6436cf420a1f0074983197e3a210c946",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Runners/Runner01.prefab"
+                },
+                {
+                    "Guid": "8b83f5608e820f247a3cd2b405703346",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Runners/Runner02.prefab"
+                },
+                {
+                    "Guid": "77871808d75253349a6f0040a35a1ff3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Runners/Runner03.prefab"
+                },
+                {
+                    "Guid": "83145c1e9ec3f4e499d7a3d811009736",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/BoF.prefab"
+                },
+                {
+                    "Guid": "a5346195f89e9d7479d28d2db38eee11",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/BoF_Broken.prefab"
+                },
+                {
+                    "Guid": "4fd8f63feb642a8459e0e381dd6c6ef2",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door01.prefab"
+                },
+                {
+                    "Guid": "6949561a294f6024187bab995c9e150b",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door01_Broken.prefab"
+                },
+                {
+                    "Guid": "e1335c0ecce6b3b4e8944a6fc5f0ddea",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door02.prefab"
+                },
+                {
+                    "Guid": "a25871a503402e047a62867c3e711d82",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door02_Broken.prefab"
+                },
+                {
+                    "Guid": "399b26e6164134f47aaf4f8d5da9bf85",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_PartLeft.prefab"
+                },
+                {
+                    "Guid": "adbaa3a5967e5f146ab54bae23778cde",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_PartRight.prefab"
+                },
+                {
+                    "Guid": "046142aecd70c6a41a33ecb519cb2521",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_PartUp.prefab"
+                },
+                {
+                    "Guid": "a36b7d44a943aee44a5c610ee33d4ad0",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_VentLeft.prefab"
+                },
+                {
+                    "Guid": "bd6f4ee0a62524c478ab9f3427a54611",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_VentRight.prefab"
+                },
+                {
+                    "Guid": "df82bac998cd19a43a6e469e4191d737",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Block_Line.prefab"
+                },
+                {
+                    "Guid": "a1669188e87e01b42a6a0efa5079b370",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Block_LineStart.prefab"
+                },
+                {
+                    "Guid": "513ac31addffbfd42a3256644dea64cf",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Casting_Curve.prefab"
+                },
+                {
+                    "Guid": "bd00b6d5638286c4486536a410b4717d",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Casting_End.prefab"
+                },
+                {
+                    "Guid": "28f193d42f194844ea9fa9de3a7915a2",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Casting_EndCurve.prefab"
+                },
+                {
+                    "Guid": "16d82272f739d884ba9bb83a044c5aa1",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Casting_EndMachine.prefab"
+                },
+                {
+                    "Guid": "ad0209d254a786847b25beb1f99800db",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Casting_Machine01.prefab"
+                },
+                {
+                    "Guid": "80301e820a901514b88894a2708b530f",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Casting_Machine02.prefab"
+                },
+                {
+                    "Guid": "841fa620d65668f4bb91c9ed0ad288b7",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Casting_Machine04.prefab"
+                },
+                {
+                    "Guid": "d5d67937be6df534584ebe30a8ac8e29",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Casting_Mold.prefab"
+                },
+                {
+                    "Guid": "80cdc4dae364a7f43a38699f9b313434",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Cast_Line.prefab"
+                },
+                {
+                    "Guid": "0aca1982650551d4ab514727ca263a0a",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Cast_LineStart.prefab"
+                },
+                {
+                    "Guid": "0041b0097789c5b49a7282421ca87205",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/LaddleTurret.prefab"
+                },
+                {
+                    "Guid": "b33304eab4705894f91a83609dc156d9",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Casting/Tundish.prefab"
+                },
+                {
+                    "Guid": "5319112c4dc00044b820e1c4fdffe9f2",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Crane/Crane01.prefab"
+                },
+                {
+                    "Guid": "8c4fb7b11b55f6f4da7db3c0d11199f5",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Crane/Crane01_Cables01.prefab"
+                },
+                {
+                    "Guid": "3097e8336a4916747a140f361aea1d39",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Crane/Crane01_Cables02.prefab"
+                },
+                {
+                    "Guid": "95a1884a0bac9944ab4186c651fa7d03",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Crane/Crane01_Hook01.prefab"
+                },
+                {
+                    "Guid": "8723c0e0c59aa71439a0c3c9e8fc1839",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Crane/Crane01_Hook02.prefab"
+                },
+                {
+                    "Guid": "71ad9d513b460f74cb6b4e2471f27363",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Crane/CraneSupport01.prefab"
+                },
+                {
+                    "Guid": "59fed97085e66ff4989ee796dc892efc",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Crane/CraneSupport02.prefab"
+                },
+                {
+                    "Guid": "db66c50790bec1c479096ae25af6102b",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Crane/Crane_Full.prefab"
+                },
+                {
+                    "Guid": "c1fb0a66012c42542a7cf74b0996c224",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Furnace/BlastFurnace01.prefab"
+                },
+                {
+                    "Guid": "3f85cc12c13772142b93c518d28d1810",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Furnace/Eaf.prefab"
+                },
+                {
+                    "Guid": "ecef2ae561ec0754aae947933ead824c",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Furnace/Laddle01.prefab"
+                },
+                {
+                    "Guid": "2f848910632410d40abd1ffc2dd512a2",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Furnace/Laddle02.prefab"
+                },
+                {
+                    "Guid": "1dcc8c95aa20ea646a9b28583355012a",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Furnace/Runner_Cap01.prefab"
+                },
+                {
+                    "Guid": "a103a7fe66af6f84e9dfcc6da0a40bc7",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Furnace/Runner_Cap02.prefab"
+                },
+                {
+                    "Guid": "7fdf4328cf59e654e9a32b0d1a14f013",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Furnace/Runner_End01.prefab"
+                },
+                {
+                    "Guid": "f12b75c7fd86a994da706af9f53903c8",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Furnace/Runner_End02.prefab"
+                },
+                {
+                    "Guid": "4a8cf3d9d10b8b94188a32af5c64a6bd",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Furnace/Runner_Fence01.prefab"
+                },
+                {
+                    "Guid": "0777e3f132358f54f9963d5f56c85b91",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Trains/LaddleCar01.prefab"
+                },
+                {
+                    "Guid": "8a904dc7683d45f43b4a7ac87dfe153d",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/Trains/Torpedo01.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "electrical",
+            "Items": [
+                {
+                    "Guid": "2dbce1cf2b4374c49b31c6873919509d",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalBox01.prefab"
+                },
+                {
+                    "Guid": "c41e123992ba1df4097a7734f92d36f1",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalBox02.prefab"
+                },
+                {
+                    "Guid": "39a939273a4abec4285e2753fa919707",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalBox03.prefab"
+                },
+                {
+                    "Guid": "18bb1c1c6c954bc40976dda60e168abb",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalBox04.prefab"
+                },
+                {
+                    "Guid": "104615ecf9fb2774ca5b994ae52f9c93",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalBox05.prefab"
+                },
+                {
+                    "Guid": "2f69b7393683ebd439ec37b98e6d7a2a",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalCabin01.prefab"
+                },
+                {
+                    "Guid": "77487f63bb4fc854abf1fba00ed3bfe9",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalCabin02.prefab"
+                },
+                {
+                    "Guid": "dd1644fb3d0456d4f88fdb8e97c2a151",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalCabin03.prefab"
+                },
+                {
+                    "Guid": "82b683badb2efb749a443e0c15755289",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalCabin04.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "storage",
+            "Items": [
+                {
+                    "Guid": "46e9dcd5265f97c4d9bd1f2af4ba5f37",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Cables/Cables01_Box.prefab"
+                },
+                {
+                    "Guid": "ba59f3d4cfb911c41be85d5e253dfda5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankHuge01.prefab"
+                },
+                {
+                    "Guid": "45f7ef0b4e39b5d4bad132193549f885",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankMedium01.prefab"
+                },
+                {
+                    "Guid": "fa85eb139cd1241459426e8059881474",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankMedium01_Bar.prefab"
+                },
+                {
+                    "Guid": "0f21ade1d3394aa44818b083e47042e3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankSmall01.prefab"
+                },
+                {
+                    "Guid": "47cd0f1828deab047926bfcbbdef0fa3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankSmall01b.prefab"
+                },
+                {
+                    "Guid": "06e3b976a7d119249bb3290c17f6866c",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankSmall02.prefab"
+                },
+                {
+                    "Guid": "67adb64f03c54cc45b1317c33157a0b6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankSmall02_Broken01.prefab"
+                },
+                {
+                    "Guid": "b4c9a5f162c339f4ebb4b4f68356a1ef",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankSmall02_Broken02.prefab"
+                },
+                {
+                    "Guid": "5bd3662d4aa9c0347a9e0493962626d5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tarp/TarpTrain01.prefab"
+                },
+                {
+                    "Guid": "7863c9f31a68d7e4abe46cf3cc8fad03",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tarp/TarpWall01.prefab"
+                },
+                {
+                    "Guid": "bc949e1fb11e43a4e82d21fb7fe58d44",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tarp/TarpWall01b.prefab"
+                },
+                {
+                    "Guid": "4f40c781d3c1dc0499b6c29b9084850b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tarp/TarpWall01c.prefab"
+                },
+                {
+                    "Guid": "a7168cd07a4a2d34b97d1698d95e6307",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Box01.prefab"
+                },
+                {
+                    "Guid": "32403c4892bc8f145b53a16f253c140d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Box02.prefab"
+                },
+                {
+                    "Guid": "2dbce1cf2b4374c49b31c6873919509d",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalBox01.prefab"
+                },
+                {
+                    "Guid": "c41e123992ba1df4097a7734f92d36f1",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalBox02.prefab"
+                },
+                {
+                    "Guid": "39a939273a4abec4285e2753fa919707",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalBox03.prefab"
+                },
+                {
+                    "Guid": "18bb1c1c6c954bc40976dda60e168abb",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalBox04.prefab"
+                },
+                {
+                    "Guid": "104615ecf9fb2774ca5b994ae52f9c93",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalBox05.prefab"
+                },
+                {
+                    "Guid": "2f69b7393683ebd439ec37b98e6d7a2a",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalCabin01.prefab"
+                },
+                {
+                    "Guid": "77487f63bb4fc854abf1fba00ed3bfe9",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalCabin02.prefab"
+                },
+                {
+                    "Guid": "dd1644fb3d0456d4f88fdb8e97c2a151",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalCabin03.prefab"
+                },
+                {
+                    "Guid": "82b683badb2efb749a443e0c15755289",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/ElectricalBoxes/ElectricalCabin04.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "vegetation",
+            "Items": [
+                {
+                    "Guid": "d257681abdb760f41a7966079cef5726",
+                    "Path": "Assets/OldIndustry/Prefabs/Vegetation/GrassLine01.prefab"
+                },
+                {
+                    "Guid": "42264ab21241a5345b0da58cdb7f25b1",
+                    "Path": "Assets/OldIndustry/Prefabs/Vegetation/GrassLine02.prefab"
+                },
+                {
+                    "Guid": "ef4e7ff68fbcd04499c2c5692740e63b",
+                    "Path": "Assets/OldIndustry/Prefabs/Vegetation/GrassLine03.prefab"
+                },
+                {
+                    "Guid": "44636e60e9665184a89e20d3885cd3cf",
+                    "Path": "Assets/OldIndustry/Prefabs/Vegetation/GrassLine04.prefab"
+                },
+                {
+                    "Guid": "47961a0b39329d542be766f337175322",
+                    "Path": "Assets/OldIndustry/Prefabs/Vegetation/GrassLine05.prefab"
+                },
+                {
+                    "Guid": "335ababd666a9614a927249c89382aa1",
+                    "Path": "Assets/OldIndustry/Prefabs/Vegetation/GrassLine06.prefab"
+                },
+                {
+                    "Guid": "aa0427db14e938c4bbee9ba12c0e855f",
+                    "Path": "Assets/OldIndustry/Prefabs/Vegetation/GrassLine07.prefab"
+                },
+                {
+                    "Guid": "3534922a3bbc82046a52577d2cdc74fa",
+                    "Path": "Assets/OldIndustry/Prefabs/Vegetation/Ivy01.prefab"
+                },
+                {
+                    "Guid": "1818c5b0ee02b244395b2b1954d5ace0",
+                    "Path": "Assets/OldIndustry/Prefabs/Vegetation/Ivy02.prefab"
+                },
+                {
+                    "Guid": "3a0484bccc7a85141a57f174a05ff716",
+                    "Path": "Assets/OldIndustry/Prefabs/Vegetation/Ivy03.prefab"
+                },
+                {
+                    "Guid": "10311cc415772674dbe0648441ec844a",
+                    "Path": "Assets/OldIndustry/Prefabs/Vegetation/Ivy04.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "lamp",
+            "Items": [
+                {
+                    "Guid": "968accdf23c61734c9e9a767050fec09",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Train/Train_Lamp01.prefab"
+                },
+                {
+                    "Guid": "a9dd4fb8f925a6942b7cd7f7513ea690",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lamps/Lamp01_Bulb01.prefab"
+                },
+                {
+                    "Guid": "a57fbd532bba19b468081f198ddaf5f8",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lamps/Lamp01_Hanging01.prefab"
+                },
+                {
+                    "Guid": "5a8601903d9693a46add80a25311ee03",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lamps/Lamp01_Hanging02.prefab"
+                },
+                {
+                    "Guid": "d5d456fa3815602479a82a5cb7e37eff",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lamps/Lamp01_Tube01.prefab"
+                },
+                {
+                    "Guid": "b57b759af854d38439b59e1ad1fe69fa",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lamps/Lamp01_Tube02.prefab"
+                },
+                {
+                    "Guid": "4a04d948458fd9b4f9ee7c08d673fb03",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lamps/Lamp02.prefab"
+                },
+                {
+                    "Guid": "31931294c62074e4697fbef33c0984ef",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lamps/Lamp02_Bar.prefab"
+                },
+                {
+                    "Guid": "89c0ab2adfcdc654c8e91cbc43c0416a",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lamps/Lamp02_Bar_Green Variant.prefab"
+                },
+                {
+                    "Guid": "afb49db81d707134d971b6155dcdb953",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lamps/Lamp02_Bar_Pink Variant.prefab"
+                },
+                {
+                    "Guid": "de5248777470f7d4f9250387acd2e6d0",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lamps/Lamp02_Double.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "graffiti",
+            "Items": [
+                {
+                    "Guid": "22d687f8031f46949bc1a47a8930607f",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Graffiti01.prefab"
+                },
+                {
+                    "Guid": "1897dd2132adcbd46aa0e79d1ac6b625",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Graffiti02.prefab"
+                },
+                {
+                    "Guid": "ec06dbf63a3cd1540b33072cc3e9fe7d",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Graffiti03.prefab"
+                },
+                {
+                    "Guid": "57b85a644922aa146a83402bf03792cb",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Graffiti04.prefab"
+                },
+                {
+                    "Guid": "eca4b99177b26ba4e9f75b45ebab5af3",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Graffiti05.prefab"
+                },
+                {
+                    "Guid": "c8eb0daed7044ad49b90ce89bcc5eea3",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Graffiti06.prefab"
+                },
+                {
+                    "Guid": "756e7c207fba18d42a03c439b02a5d5b",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Graffiti07.prefab"
+                },
+                {
+                    "Guid": "aa90561b530b72442ae3c3cc357c5130",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Graffiti08.prefab"
+                },
+                {
+                    "Guid": "6def48e32b5b634458a6c1ee18cd01d8",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Graffiti09.prefab"
+                },
+                {
+                    "Guid": "cb9056a99e152e143918966a8d3241ce",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Tag01.prefab"
+                },
+                {
+                    "Guid": "0a4f684f590c8c54396ad15f34adf036",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Tag02.prefab"
+                },
+                {
+                    "Guid": "64f0146606eeafa4db18a01d550cf59b",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Tag03.prefab"
+                },
+                {
+                    "Guid": "fc3c380f5ddfaec479b2c91b39dd4c3a",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Tag04.prefab"
+                },
+                {
+                    "Guid": "6cc44049c1f2fa64aa172dd527086883",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Tag05.prefab"
+                },
+                {
+                    "Guid": "2c98e527a7850ce4fb93e975cb876fd2",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Tag06.prefab"
+                },
+                {
+                    "Guid": "acc8df1133518bc4e99b85d733678d2d",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Tag07.prefab"
+                },
+                {
+                    "Guid": "07a982b801558a842a6c67ab0f699b78",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Tag08.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "puddle",
+            "Items": []
+        },
+        {
+            "Category": "pebble",
+            "Items": [
+                {
+                    "Guid": "3259ca09616a23b41a865242c7b87fb0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Debris/Pebbles01.prefab"
+                },
+                {
+                    "Guid": "ec620b38bdcc9d945848e16c2ea0c9cb",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Debris/Pebbles02.prefab"
+                },
+                {
+                    "Guid": "7d8ee3f7be63f5549916305c91b89008",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Debris/Pebbles03.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "scrap",
+            "Items": [
+                {
+                    "Guid": "04e773268ef22b84bb653ff9157ec2ef",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Bridges/BridgeBroken01.prefab"
+                },
+                {
+                    "Guid": "bba3aa440884d094082c3bfa86fe0628",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Debris/DirtLine01.prefab"
+                },
+                {
+                    "Guid": "3259ca09616a23b41a865242c7b87fb0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Debris/Pebbles01.prefab"
+                },
+                {
+                    "Guid": "ec620b38bdcc9d945848e16c2ea0c9cb",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Debris/Pebbles02.prefab"
+                },
+                {
+                    "Guid": "7d8ee3f7be63f5549916305c91b89008",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Debris/Pebbles03.prefab"
+                },
+                {
+                    "Guid": "c76346317e3c09b42aed42b3a7ce589f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Debris/RubbleConcrete01.prefab"
+                },
+                {
+                    "Guid": "96fbef944dde3e440b280ef2c8a937d3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/PipesLarge/PipeLarge01a_Broken.prefab"
+                },
+                {
+                    "Guid": "4379206003b2c6a428638d3308778f0c",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Roofs/Roof01_BrokenLarge.prefab"
+                },
+                {
+                    "Guid": "1e392f0a6b1920041954d15dcee36952",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/Scrap01.prefab"
+                },
+                {
+                    "Guid": "b9da1adb649058b42b91890369f80399",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/Scrap02.prefab"
+                },
+                {
+                    "Guid": "bc06cd870b21a2f48a1825f638267d80",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/Scrap03.prefab"
+                },
+                {
+                    "Guid": "b06f269739ac134449f7bbcd07d991a6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart01.prefab"
+                },
+                {
+                    "Guid": "eec7c6c8e90fb534a8a920a889eb1145",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart02.prefab"
+                },
+                {
+                    "Guid": "e35d307ced1efc24d907dcd260557c33",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart03.prefab"
+                },
+                {
+                    "Guid": "f92f242bc24814a40943db47408981fd",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart04.prefab"
+                },
+                {
+                    "Guid": "138ad2c88f286cc44b141997ade1be31",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart05.prefab"
+                },
+                {
+                    "Guid": "51e87754c09453f4982f20b009f150a8",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart06.prefab"
+                },
+                {
+                    "Guid": "9b1e41b7b1be8194480ed3b42a29b8dc",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart07.prefab"
+                },
+                {
+                    "Guid": "cb63c500d37c5f3438b9eac53352f256",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart08.prefab"
+                },
+                {
+                    "Guid": "52b373135b91056499cb3d9f9efbb5e8",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart09.prefab"
+                },
+                {
+                    "Guid": "161556aed43f9554f8d61bbc20478dd0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart10.prefab"
+                },
+                {
+                    "Guid": "846c375ec8618e64f97239e53acb2498",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart11.prefab"
+                },
+                {
+                    "Guid": "3da886bb11910aa428c1d2951dc02a9d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart12.prefab"
+                },
+                {
+                    "Guid": "ddb435a66e3195a4d8aad446ea7689bb",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart13.prefab"
+                },
+                {
+                    "Guid": "9da8e20b35c56734f88273fd0a479212",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart14.prefab"
+                },
+                {
+                    "Guid": "009bf97a606a51647b9a05180090cda0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart15.prefab"
+                },
+                {
+                    "Guid": "9b23c0817b3f69641bffe50fcdce1d64",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart16.prefab"
+                },
+                {
+                    "Guid": "97f87f9620e9db7488742518b479b346",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart17.prefab"
+                },
+                {
+                    "Guid": "77f786357e55afd45876430741ea1cf4",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart18.prefab"
+                },
+                {
+                    "Guid": "f84d5e3e339b8774182d86ef13d722e1",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart19.prefab"
+                },
+                {
+                    "Guid": "2a5371e768096e84a8a7eb7b0bf2bd9a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart20.prefab"
+                },
+                {
+                    "Guid": "d80105a68e6d89f4abf8c5f29bcc68cf",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart21.prefab"
+                },
+                {
+                    "Guid": "e01ef3310e1cdd043900bf03fdc64ace",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart22.prefab"
+                },
+                {
+                    "Guid": "66a70cf050e3a70439f6ddeaf6d4fffa",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart23.prefab"
+                },
+                {
+                    "Guid": "cf26dd33c711b41408932f11cbdac937",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart24.prefab"
+                },
+                {
+                    "Guid": "6bc302438d34ccc40af51e663e5bf32b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart25.prefab"
+                },
+                {
+                    "Guid": "96a77d62ac92ba049abe4caf083567e5",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart26.prefab"
+                },
+                {
+                    "Guid": "f1e7e29481bc448438d6cb9536cbc0b9",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart27.prefab"
+                },
+                {
+                    "Guid": "cdf8c8d579d55a240b6650a688fc7bb3",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart28.prefab"
+                },
+                {
+                    "Guid": "8539ff2475d1d5643947807ea4049842",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapsPart29.prefab"
+                },
+                {
+                    "Guid": "35c8ae56552f0ed4e8fad8fe77c4d4df",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapTubes01.prefab"
+                },
+                {
+                    "Guid": "c1a4f39adcd51ab4295d2a36a1f5ec6d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Scraps/ScrapTubes01b.prefab"
+                },
+                {
+                    "Guid": "32db2e7c4c238bc47b64430f42d0154f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Stairs/Stairs01b_Broken.prefab"
+                },
+                {
+                    "Guid": "fd8ec23d8b707a44a8474497d3bd3be2",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Broken01.prefab"
+                },
+                {
+                    "Guid": "f39e56d13ac41284381315e295e3c28b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Broken02.prefab"
+                },
+                {
+                    "Guid": "67adb64f03c54cc45b1317c33157a0b6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankSmall02_Broken01.prefab"
+                },
+                {
+                    "Guid": "b4c9a5f162c339f4ebb4b4f68356a1ef",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Tanks/TankSmall02_Broken02.prefab"
+                },
+                {
+                    "Guid": "1eb46e0d9498cdf43961292e60c1f194",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window02_Broken01.prefab"
+                },
+                {
+                    "Guid": "51f9be9a9e624bd42b43bdd667bb239f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window02_Broken02.prefab"
+                },
+                {
+                    "Guid": "12b7aaa2f401b344ba65c883b43091f6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window02_Broken03.prefab"
+                },
+                {
+                    "Guid": "249e2bd7b3e96a84da3ec17a8a7bd579",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window03_Broken01.prefab"
+                },
+                {
+                    "Guid": "78eae50b7a05d044086a3709e7b1cf60",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window03_Broken02.prefab"
+                },
+                {
+                    "Guid": "0a25e1e70fe9aa84cb3e05f86897d1de",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window03_Broken03.prefab"
+                },
+                {
+                    "Guid": "1806d0eae0b2c874d9416034119336e0",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken01.prefab"
+                },
+                {
+                    "Guid": "6174f8aea49230b489165b7f0cfc09ce",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken02.prefab"
+                },
+                {
+                    "Guid": "6685ca5c52fd89849b70676742a99a5f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken03.prefab"
+                },
+                {
+                    "Guid": "67ab3f2b2b6318e4bb29904e0c573356",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Windows/Window04_Broken04.prefab"
+                },
+                {
+                    "Guid": "a5346195f89e9d7479d28d2db38eee11",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/BoF_Broken.prefab"
+                },
+                {
+                    "Guid": "6949561a294f6024187bab995c9e150b",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door01_Broken.prefab"
+                },
+                {
+                    "Guid": "a25871a503402e047a62867c3e711d82",
+                    "Path": "Assets/OldIndustry/Prefabs/Machinery/BoF/Bof_Door02_Broken.prefab"
+                }
+            ]
+        },
+        {
+            "Category": "misc",
+            "Items": [
+                {
+                    "Guid": "cdb9a360ca80ab24a8449a047723608a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Conveyors/Conveyor01.prefab"
+                },
+                {
+                    "Guid": "f723b62e5a6fee94d9f7ec9890c6ec81",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Conveyors/Conveyor01b.prefab"
+                },
+                {
+                    "Guid": "ed501339e00f0b140934428623179263",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Conveyors/Conveyor01c.prefab"
+                },
+                {
+                    "Guid": "682c1a2452e95534eab28c30675012e6",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Gutters/Gutter01_End.prefab"
+                },
+                {
+                    "Guid": "0204fa444c05b804d9c33787ff44f29f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Gutters/Gutter01_Middle01.prefab"
+                },
+                {
+                    "Guid": "e27d512a1476a6f478aad40d087daa9b",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Gutters/Gutter01_Middle02.prefab"
+                },
+                {
+                    "Guid": "f0906ac38bafa164894345cb3b15cb5a",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Gutters/Gutter01_Up.prefab"
+                },
+                {
+                    "Guid": "04798c66b303e3346b7e46695ad959a1",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Beam01.prefab"
+                },
+                {
+                    "Guid": "63a5affccb0295245a05613eb2864e59",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Beam01b.prefab"
+                },
+                {
+                    "Guid": "0eb1fa62ebf73ca48992aa16db227275",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Beam02.prefab"
+                },
+                {
+                    "Guid": "1661530332b2b67448f1c21f88d2d0af",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Beam02b.prefab"
+                },
+                {
+                    "Guid": "fee51431a0822ff4caa3906626c1c634",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Beam03.prefab"
+                },
+                {
+                    "Guid": "221cf3ec0f3bb5e42919fa6e61121750",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Beam03b.prefab"
+                },
+                {
+                    "Guid": "9112093827db8a14b96f4c60b1df6101",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Beam03c.prefab"
+                },
+                {
+                    "Guid": "ed92fc54bc6d5854abd28615245768b7",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Beam03d.prefab"
+                },
+                {
+                    "Guid": "c1ec0396503209340b1364dec1e95414",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Support01.prefab"
+                },
+                {
+                    "Guid": "0533050ab1afb784493623496b99ef84",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure01_Support01b.prefab"
+                },
+                {
+                    "Guid": "9e3074d63d762da4eaab7108f52ebde9",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Beam01.prefab"
+                },
+                {
+                    "Guid": "8fa090ec0aab2a8469c4c37e3fa55bc4",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Beam01b.prefab"
+                },
+                {
+                    "Guid": "7f554d8f7e609d34d86b9d687793235f",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Beam02.prefab"
+                },
+                {
+                    "Guid": "4e4736f312bd8c94ba995dccad57136d",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Beam02b.prefab"
+                },
+                {
+                    "Guid": "6e3107bf97659784f91548fe43b03288",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Beam03.prefab"
+                },
+                {
+                    "Guid": "debd451ad03e99f45a02751097f1a9ba",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Beam03b.prefab"
+                },
+                {
+                    "Guid": "a1e1e9cd3fdede44999aa78e87da4839",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Support01.prefab"
+                },
+                {
+                    "Guid": "e7d0f1127e8e11b4180cfb45511d8312",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Support01b.prefab"
+                },
+                {
+                    "Guid": "00aff657b4845c34895adb1a6be423f8",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure02_Support01c.prefab"
+                },
+                {
+                    "Guid": "191fa3f571ed7944f9d1ecbc03b4cf56",
+                    "Path": "Assets/OldIndustry/Prefabs/Architecture/Structures/Structure03_Beam01.prefab"
+                },
+                {
+                    "Guid": "69cc482f9e612114fa827f0136a663a0",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Draw01.prefab"
+                },
+                {
+                    "Guid": "b2ecda9bb41c98742ba08065825c2f49",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Draw02.prefab"
+                },
+                {
+                    "Guid": "b16e95f3811d90147ad8662db4375d7c",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Draw03.prefab"
+                },
+                {
+                    "Guid": "2d298bf6602be74468c5fb8a89d7efd1",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Draw04.prefab"
+                },
+                {
+                    "Guid": "1eb6c7457b214d74c92804a7c5dad5fd",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Draw05.prefab"
+                },
+                {
+                    "Guid": "cb1a9b9e761b92540be797fa32d50e29",
+                    "Path": "Assets/OldIndustry/Prefabs/Decals/Draw06.prefab"
+                },
+                {
+                    "Guid": "23ff60d96dc981c4282092b96f232a4b",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Drums/Drum01a.prefab"
+                },
+                {
+                    "Guid": "4f1fe313b47c27448ba1f13a824169b4",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Drums/Drum01b.prefab"
+                },
+                {
+                    "Guid": "7d52abde252fb9946966642096bdcd2f",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Drums/Drum01c.prefab"
+                },
+                {
+                    "Guid": "ac9ae840deb882a449c072b936c5a3f6",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Drums/Drum01d.prefab"
+                },
+                {
+                    "Guid": "7e895b44fbc1bf941a89ccd982badd94",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lockers/Locker01a.prefab"
+                },
+                {
+                    "Guid": "9407c4aaced303546b98ebc5eb2ec350",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lockers/Locker01b.prefab"
+                },
+                {
+                    "Guid": "8c6b9a4dd0e9fb1439f0ed0fe0179502",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lockers/Locker01c.prefab"
+                },
+                {
+                    "Guid": "98ad749640b3c3644bc91b52093470f7",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Lockers/Locker01d.prefab"
+                },
+                {
+                    "Guid": "3053c2edd2df1e547932fd11843419a9",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Stripes/StripesLine01.prefab"
+                },
+                {
+                    "Guid": "2d93cd62e3b804c47a56c76074e7defb",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Stripes/StripesLine02.prefab"
+                },
+                {
+                    "Guid": "670b5ee0312f9324f945e7b069baa0cd",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Stripes/StripesLine03.prefab"
+                },
+                {
+                    "Guid": "439f67b26b740a945bf445fcb699804d",
+                    "Path": "Assets/OldIndustry/Prefabs/Furniture/Stripes/StripesLine04.prefab"
+                },
+                {
+                    "Guid": "fc22e5dce0894d64989d9fb4ac42c605",
+                    "Path": "Assets/OldIndustry/Prefabs/_Dev/Human01.prefab"
+                },
+                {
+                    "Guid": "94bcd0a7a029f194e9de5ea670b35ded",
+                    "Path": "Assets/OldIndustry/Prefabs/_Dev/PlaneHigh.prefab"
+                },
+                {
+                    "Guid": "7c7c2ece3d0f00b498a3494753bcfb35",
+                    "Path": "Assets/OldIndustry/Prefabs/_Dev/PlaneLarge.prefab"
+                },
+                {
+                    "Guid": "b3166102d4affc146876d59d531d9769",
+                    "Path": "Assets/OldIndustry/Prefabs/_Dev/SphereTwoTiles.prefab"
+                },
+                {
+                    "Guid": "af458fc9b400b434a901c6ec6995803a",
+                    "Path": "Assets/OldIndustry/Prefabs/_Dev/SphereTwoTilesUVs.prefab"
+                }
+            ]
+        }
+    ],
+    "SkyboxMaterials": [
+        "Assets/OldIndustry/Textures/Skyboxes/Materials/Skybox_Industrial.mat"
+    ],
+    "GroundMaterials": [
+        "Assets/OldIndustry/Models/Architecture/Blocks/Textures/Materials/BlockConcrete01.mat",
+        "Assets/OldIndustry/Models/Architecture/ConcreteWalls/Textures/Materials/ConcreteWall01.mat",
+        "Assets/OldIndustry/Models/Architecture/ConcreteWalls/Textures/Materials/ConcreteWall01b.mat",
+        "Assets/OldIndustry/Models/Architecture/ConcreteWalls/Textures/Materials/ConcreteWall01c.mat",
+        "Assets/OldIndustry/Models/Architecture/Debris/Textures/Materials/RubbleConcrete01.mat",
+        "Assets/OldIndustry/Models/Architecture/Debris/Textures/Materials/RubbleConcrete01b.mat",
+        "Assets/OldIndustry/Models/Architecture/Debris/Textures/Materials/RubbleConcrete01c.mat",
+        "Assets/OldIndustry/Models/Architecture/Debris/Textures/Materials/RubbleConcrete01d.mat",
+        "Assets/OldIndustry/Textures/Decals/Ground/Materials/Leak01.mat",
+        "Assets/OldIndustry/Textures/Decals/Ground/Materials/Leak03.mat",
+        "Assets/OldIndustry/Textures/Decals/Ground/Materials/Puddle01.mat",
+        "Assets/OldIndustry/Textures/Decals/Ground/Materials/Puddle01_Dry.mat",
+        "Assets/OldIndustry/Textures/Decals/Ground/Materials/WetZone.mat"
+    ],
+    "PuddleMaterials": [
+        "Assets/OldIndustry/Textures/Decals/Ground/Materials/Puddle01.mat",
+        "Assets/OldIndustry/Textures/Decals/Ground/Materials/Puddle01_Dry.mat",
+        "Assets/OldIndustry/Textures/Decals/Ground/Materials/WetZone.mat"
+    ],
+    "Scripts": [
+        "Assets/OldIndustry/Scripts/Flashlight.cs",
+        "Assets/OldIndustry/Scripts/FreeCamera.cs"
+    ]
+}

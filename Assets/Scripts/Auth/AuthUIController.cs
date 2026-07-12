@@ -74,36 +74,36 @@ namespace DontDiePlease.Auth
                 return;
             }
 
-            var validationError = ValidateLoginInput();
-            if (!string.IsNullOrWhiteSpace(validationError))
+            var err = ValidateLoginInput();
+            if (!string.IsNullOrWhiteSpace(err))
             {
-                SetStatus(validationError);
+                SetStatus(err);
                 return;
             }
 
-            var shouldStayLoading = false;
+            var keepOverlay = false;
             SetSubmitting(true);
             SetStatus("Signing in...");
 
             try
             {
-                var result = await networkManager.LoginUser(emailInput.text.Trim(), passwordInput.text);
+                var res = await networkManager.LoginUser(emailInput.text.Trim(), passwordInput.text);
 
-                if (!result.Success)
+                if (!res.Success)
                 {
-                    SetStatus(result.Error);
+                    SetStatus(res.Error);
                     return;
                 }
 
-                shouldStayLoading = TryLoadMainGame();
+                keepOverlay = TryLoadMainGame();
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                SetStatus(ResolveExceptionMessage(exception));
+                SetStatus(ResolveExceptionMessage(ex));
             }
             finally
             {
-                if (!shouldStayLoading)
+                if (!keepOverlay)
                 {
                     SetSubmitting(false);
                 }
@@ -117,36 +117,36 @@ namespace DontDiePlease.Auth
                 return;
             }
 
-            var validationError = ValidateRegistrationInput();
-            if (!string.IsNullOrWhiteSpace(validationError))
+            var err = ValidateRegistrationInput();
+            if (!string.IsNullOrWhiteSpace(err))
             {
-                SetStatus(validationError);
+                SetStatus(err);
                 return;
             }
 
-            var shouldStayLoading = false;
+            var keepOverlay = false;
             SetSubmitting(true);
             SetStatus("Creating account...");
 
             try
             {
-                var result = await networkManager.RegisterUser(usernameInput.text.Trim(), emailInput.text.Trim(), passwordInput.text);
+                var res = await networkManager.RegisterUser(usernameInput.text.Trim(), emailInput.text.Trim(), passwordInput.text);
 
-                if (!result.Success)
+                if (!res.Success)
                 {
-                    SetStatus(result.Error);
+                    SetStatus(res.Error);
                     return;
                 }
 
-                shouldStayLoading = TryLoadMainGame();
+                keepOverlay = TryLoadMainGame();
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                SetStatus(ResolveExceptionMessage(exception));
+                SetStatus(ResolveExceptionMessage(ex));
             }
             finally
             {
-                if (!shouldStayLoading)
+                if (!keepOverlay)
                 {
                     SetSubmitting(false);
                 }

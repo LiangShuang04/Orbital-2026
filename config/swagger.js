@@ -2,7 +2,7 @@ import swaggerJSDoc from "swagger-jsdoc";
 
 const createSwaggerDefinition = () => {
   const port = Number(process.env.PORT) || 5000;
-  const publicApiUrl = process.env.PUBLIC_API_URL || `http://127.0.0.1:${port}`;
+  const apiUrl = process.env.PUBLIC_API_URL || `http://127.0.0.1:${port}`;
 
   return {
     openapi: "3.0.3",
@@ -14,7 +14,7 @@ const createSwaggerDefinition = () => {
     },
     servers: [
       {
-        url: publicApiUrl,
+        url: apiUrl,
         description:
           process.env.NODE_ENV === "production"
             ? "Configured deployment"
@@ -501,7 +501,7 @@ const createSwaggerDefinition = () => {
           },
           responses: {
             200: {
-              description: "The account was authenticated successfully.",
+              description: "Account authenticated.",
               content: {
                 "application/json": {
                   schema: {

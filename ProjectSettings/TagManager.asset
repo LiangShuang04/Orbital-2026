@@ -4,24 +4,26 @@
 TagManager:
   serializedVersion: 3
   tags:
+  - InputName
+  - InputPass
   - walkable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - No Player Collision
   - Water
   - UI
   - 
   - 
+  - Player
   - 
   - 
+  - Post-Procssing
+  - FPS Object
+  - Enviroment
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Iteractable
   - 
   - 
   - 

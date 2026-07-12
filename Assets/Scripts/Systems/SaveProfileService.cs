@@ -23,20 +23,20 @@ namespace DontDiePlease.Systems
             {
                 await LoadSeedIntoManager();
             }
-            catch (Exception exception)
+            catch (Exception err)
             {
-                Debug.LogWarning($"Failed to load world seed: {exception.Message}");
+                Debug.LogWarning($"Failed to load world seed: {err.Message}");
             }
         }
 
         public async Task<ApiResult<SaveProfileData>> CreateSaveWithCurrentSeed()
         {
-            var request = new SaveCreateRequest
+            var req = new SaveCreateRequest
             {
                 worldSeed = CurrentWorldSeed()
             };
 
-            var result = await networkManager.PostAuthenticatedJson<SaveCreateRequest, SaveProfileResponse>("/save", request);
+            var result = await networkManager.PostAuthenticatedJson<SaveCreateRequest, SaveProfileResponse>("/save", req);
             return ToProfileResult(result);
         }
 
@@ -49,12 +49,12 @@ namespace DontDiePlease.Systems
 
         public async Task<ApiResult<SaveProfileData>> SaveCurrentSeed()
         {
-            var request = new SaveSeedUpdateRequest
+            var req = new SaveSeedUpdateRequest
             {
                 worldSeed = CurrentWorldSeed()
             };
 
-            var result = await networkManager.PutAuthenticatedJson<SaveSeedUpdateRequest, SaveProfileResponse>("/save", request);
+            var result = await networkManager.PutAuthenticatedJson<SaveSeedUpdateRequest, SaveProfileResponse>("/save", req);
 
             if (!result.Success && result.StatusCode == 404 && createSaveIfMissing)
             {
@@ -119,14 +119,14 @@ namespace DontDiePlease.Systems
 
             if (networkManager == null)
             {
-                var networkObject = new GameObject("NetworkManager");
-                networkManager = networkObject.AddComponent<NetworkManager>();
+                var go = new GameObject("NetworkManager");
+                networkManager = go.AddComponent<NetworkManager>();
             }
 
             if (seedManager == null)
             {
-                var seedObject = new GameObject("GameSeedManager");
-                seedManager = seedObject.AddComponent<GameSeedManager>();
+                var go = new GameObject("GameSeedManager");
+                seedManager = go.AddComponent<GameSeedManager>();
             }
         }
     }

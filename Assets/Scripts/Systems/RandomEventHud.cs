@@ -45,7 +45,7 @@ namespace DontDiePlease.Systems
             }
         }
 
-        public void ShowAlert(string message)
+        public void ShowAlert(string msg)
         {
             if (alertRoot != null)
             {
@@ -54,7 +54,7 @@ namespace DontDiePlease.Systems
 
             if (alertText != null)
             {
-                alertText.text = message;
+                alertText.text = msg;
                 alertText.gameObject.SetActive(true);
             }
 
@@ -77,9 +77,9 @@ namespace DontDiePlease.Systems
             hideAt = 0f;
         }
 
-        private string ResolveMessage(RandomEventType eventType)
+        private string ResolveMessage(RandomEventType type)
         {
-            switch (eventType)
+            switch (type)
             {
                 case RandomEventType.ToxicStorm:
                     return toxicStormMessage;

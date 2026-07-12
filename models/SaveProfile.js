@@ -195,11 +195,11 @@ const saveProfileSchema = new Schema(
 );
 
 saveProfileSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString();
-    returnedObject.userId = returnedObject.userId.toString();
-    delete returnedObject._id;
-    return returnedObject;
+  transform: (doc, ret) => {
+    ret.id = ret._id.toString();
+    ret.userId = ret.userId.toString();
+    delete ret._id;
+    return ret;
   }
 });
 

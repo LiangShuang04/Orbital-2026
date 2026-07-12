@@ -21,18 +21,18 @@ namespace DontDiePlease.Systems
 
         public void ApplyVariation()
         {
-            var manager = ResolveSeedManager();
-            var random = manager.CreateRandomStream($"{streamName}:{ResolveStableKey()}");
+            var mgr = ResolveSeedManager();
+            var rng = mgr.CreateRandomStream($"{streamName}:{ResolveStableKey()}");
 
             if (chooseSingleVariant && variants != null && variants.Length > 0)
             {
-                var selectedIndex = random.Next(0, variants.Length);
+                var picked = rng.Next(0, variants.Length);
 
-                for (var index = 0; index < variants.Length; index++)
+                for (var idx = 0; idx < variants.Length; idx++)
                 {
-                    if (variants[index] != null)
+                    if (variants[idx] != null)
                     {
-                        variants[index].SetActive(index == selectedIndex);
+                        variants[idx].SetActive(idx == picked);
                     }
                 }
             }
@@ -40,13 +40,13 @@ namespace DontDiePlease.Systems
             if (randomiseYRotation)
             {
                 var rotation = transform.localEulerAngles;
-                rotation.y = Mathf.Lerp(yRotationRange.x, yRotationRange.y, (float)random.NextDouble());
+                rotation.y = Mathf.Lerp(yRotationRange.x, yRotationRange.y, (float)rng.NextDouble());
                 transform.localEulerAngles = rotation;
             }
 
             if (randomiseUniformScale)
             {
-                var scale = Mathf.Lerp(uniformScaleRange.x, uniformScaleRange.y, (float)random.NextDouble());
+                var scale = Mathf.Lerp(uniformScaleRange.x, uniformScaleRange.y, (float)rng.NextDouble());
                 transform.localScale = new Vector3(scale, scale, scale);
             }
         }
@@ -83,14 +83,14 @@ namespace DontDiePlease.Systems
                 return GameSeedManager.Instance;
             }
 
-            var existingSeedManager = FindObjectOfType<GameSeedManager>();
-            if (existingSeedManager != null)
+            var existing = FindObjectOfType<GameSeedManager>();
+            if (existing != null)
             {
-                return existingSeedManager;
+                return existing;
             }
 
-            var seedObject = new GameObject("GameSeedManager");
-            return seedObject.AddComponent<GameSeedManager>();
+            var go = new GameObject("GameSeedManager");
+            return go.AddComponent<GameSeedManager>();
         }
     }
 }

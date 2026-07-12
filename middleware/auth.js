@@ -13,8 +13,8 @@ const jwtSecret = () => {
   return secret;
 };
 
-const bearerToken = authorizationHeader => {
-  const [scheme, token] = authorizationHeader?.split(" ") || [];
+const bearerToken = header => {
+  const [scheme, token] = header?.split(" ") || [];
   return scheme === "Bearer" && token ? token : null;
 };
 
@@ -28,12 +28,12 @@ const auth = async (req, res, next) => {
       throw error;
     }
 
-    const decoded = jwt.verify(token, jwtSecret(), {
+    const claims = jwt.verify(token, jwtSecret(), {
       audience: "dont-die-please-unity",
       issuer: "dont-die-please-api"
     });
 
-    const user = await User.findById(decoded.sub).select("_id username email");
+    const user = await User.findById(claims.sub).select("_id username email");
 
     if (!user) {
       const error = new Error("Authenticated user no longer exists");
