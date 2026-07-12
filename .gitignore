@@ -33,3 +33,10 @@ sysinfo.txt
 
 node_modules/
 .env
+
+# macOS junk
+.DS_Store
+
+# WebGL build output (do not commit builds)
+Milestone 2 trial game/
+Milestone 2 trial game.zip

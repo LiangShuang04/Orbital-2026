@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03277f468982b4acab17a5dbd57328d8, type: 3}
-  m_Name: O2 canister
+  m_Name: O2 Canister
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: O2 canister
-  description: provides some oxygen
-  icon: {fileID: 21300012, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
-  isStackable: 1
-  maxStackSize: 24
-  type: 0
+  itemName: Oxygen Canister
+  description: Provides oxygen for the player
+  icon: {fileID: 0}
+  isStackable: 0
+  maxStackSize: 50
+  type: 2
