@@ -31,6 +31,8 @@ sysinfo.txt
 *.aab
 *.unitypackage
 *.unitypackage.meta
+*.zip
+*.zip.meta
 
 node_modules/
 .env
