@@ -3,21 +3,18 @@ using UnityEngine;
 using TMPro;
 
 /// <summary>
-/// Keyboard-driven crafting panel, in the same minimal text style as InventoryUI.
-/// A CraftingStation opens it; while open, number keys 1-9 craft the matching
-/// recipe and the interact key closes it. Subscribes to Inventory.OnInventoryChanged
-/// so availability markers refresh automatically after every craft or pickup.
-///
-/// Attach to the Canvas (NOT to the panel itself — a disabled panel stops
-/// receiving Update, so the close key would never work).
+/// Text based crafting panel, same style as InventoryUI
+/// Opened by a CraftingStation, number keys 1-9 craft and E closes
+/// Attach this to the Canvas and NOT the panel itself, a disabled panel stops
+/// getting Update calls so the close key would never work
 /// </summary>
 public class CraftingUI : MonoBehaviour
 {
-    [Tooltip("Panel shown while a crafting station is in use.")]
+    [Tooltip("Panel shown while a crafting station is in use")]
     [SerializeField] private GameObject panel;
-    [Tooltip("Text element that lists the recipes.")]
+    [Tooltip("Text element that lists the recipes")]
     [SerializeField] private TMP_Text contentsText;
-    [Tooltip("Key that closes the panel (same as interact feels natural).")]
+    [Tooltip("Key that closes the panel")]
     [SerializeField] private KeyCode closeKey = KeyCode.E;
 
     private CraftingStation station;
@@ -36,10 +33,10 @@ public class CraftingUI : MonoBehaviour
         if (inventory != null) inventory.OnInventoryChanged -= Refresh;
     }
 
-    /// <summary>Called by a CraftingStation when the player interacts with it.</summary>
+    /// <summary>Called by a CraftingStation when the player interacts with it</summary>
     public void Open(CraftingStation newStation, Inventory playerInventory)
     {
-        if (panel == null || newStation == null || playerInventory == null) return;
+        if (newStation == null || playerInventory == null) return;
 
         station = newStation;
         inventory = playerInventory;
@@ -60,10 +57,10 @@ public class CraftingUI : MonoBehaviour
 
     void Update()
     {
-        if (!IsOpen || station == null) return;
+        if (!IsOpen) return;
 
-        // Same key opens and closes; skip the frame it was opened on so the
-        // opening E press doesn't immediately close the panel again.
+        // same E press that opened the panel shouldn't instantly close it,
+        // so skip the frame it was opened on
         if (Input.GetKeyDown(closeKey) && Time.frameCount != openedFrame)
         {
             Close();
@@ -78,10 +75,10 @@ public class CraftingUI : MonoBehaviour
         }
     }
 
-    /// <summary>Rebuild the recipe list with per-ingredient have/need counts.</summary>
+    /// <summary>Rebuild the recipe list showing have/need counts for each ingredient</summary>
     private void Refresh()
     {
-        if (contentsText == null || station == null || inventory == null) return;
+        if (contentsText == null) return;
 
         var sb = new StringBuilder();
         sb.AppendLine(station.GetDisplayName().ToUpper());

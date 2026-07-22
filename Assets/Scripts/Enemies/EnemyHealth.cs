@@ -2,9 +2,7 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Tracks an enemy's health and raises an event when it dies. Kept separate from
-/// EnemyController (single responsibility): anything that deals damage talks to
-/// this, and the controller just listens for OnDied to switch to its Dead state.
+/// Tracks enemy health, weapons call TakeDamage and the controller listens for OnDied
 /// </summary>
 public class EnemyHealth : MonoBehaviour
 {

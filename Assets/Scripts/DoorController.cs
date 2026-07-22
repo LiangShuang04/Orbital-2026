@@ -1,23 +1,19 @@
 using UnityEngine;
 
 /// <summary>
-/// An interactable door. Plugs into the SelectionManager raycast system: look at
-/// the door, press the interact key, and it toggles open/closed
-///
-/// Animator setup expected:
-///   - A bool parameter (default name "IsOpen").
-///   - A Closed state (default) and an Open state holding your open animation,
-///     with transitions: Closed -> Open when IsOpen is true, Open -> Closed when false.
+/// Interactable door, look at it and press E to toggle open/closed
+/// Animator needs an IsOpen bool, a Closed default state and an Open state,
+/// with transitions Closed -> Open when IsOpen is true and back when false
 /// </summary>
 public class DoorController : MonoBehaviour, IInteractable
 {
-    [Tooltip("Animator that plays the open/close animation. Auto-found if left empty.")]
+    [Tooltip("Animator that plays the open/close animation, auto-found if left empty")]
     [SerializeField] private Animator animator;
 
-    [Tooltip("Name of the bool parameter in the Animator that opens the door.")]
+    [Tooltip("Name of the bool parameter in the Animator that opens the door")]
     [SerializeField] private string openParameter = "IsOpen";
 
-    [Tooltip("If locked, the door won't open until Unlock() is called.")]
+    [Tooltip("If locked, the door won't open until Unlock() is called")]
     [SerializeField] private bool isLocked = false;
 
     private bool isOpen = false;
@@ -47,7 +43,7 @@ public class DoorController : MonoBehaviour, IInteractable
         if (animator != null) animator.SetBool(openHash, isOpen);
     }
 
-    /// <summary>Unlock the door (e.g. once ship power is restored). Call from other scripts.</summary>
+    /// <summary>Call from other scripts to unlock, e.g. once ship power is restored</summary>
     public void Unlock()
     {
         isLocked = false;

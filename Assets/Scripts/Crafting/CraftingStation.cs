@@ -2,17 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// A world object the player interacts with to craft (e.g. the dematerialiser).
-/// Plugs into the SelectionManager raycast system via IInteractable, like doors
-/// and pickups. Each station carries its own recipe list, so different stations
-/// can offer different recipes (dematerialiser vs. an advanced crafting bench).
+/// A world object the player crafts at, like the dematerialiser
+/// Works through IInteractable same as doors and pickups. Each station has its
+/// own recipe list so different stations can offer different recipes
 /// </summary>
 public class CraftingStation : MonoBehaviour, IInteractable
 {
-    [Tooltip("Name shown in the interaction prompt.")]
+    [Tooltip("Name shown in the interaction prompt")]
     [SerializeField] private string stationName = "Dematerialiser";
 
-    [Tooltip("Recipes this station offers (first 9 are reachable via number keys).")]
+    [Tooltip("Recipes this station offers, first 9 are usable via number keys")]
     [SerializeField] private List<CraftingRecipe> recipes = new List<CraftingRecipe>();
 
     public IReadOnlyList<CraftingRecipe> Recipes => recipes;

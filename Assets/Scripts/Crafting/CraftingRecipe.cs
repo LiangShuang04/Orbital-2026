@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// An item plus a quantity. Used for both a recipe's ingredients and its results
+/// An item plus a quantity, used for both ingredients and results
 /// </summary>
 [Serializable]
 public class ItemStack
@@ -13,26 +13,24 @@ public class ItemStack
 }
 
 /// <summary>
-/// A crafting recipe as a data asset (same data-driven pattern as ItemData and
-/// EnemyStats): a list of ingredient stacks consumed and result stacks produced.
-/// Because results is a list, the same asset type also covers dematerialising —
-/// one ingredient in, several raw materials out.
-///
-/// Create via: right-click in Project ▸ Create ▸ Crafting ▸ Recipe.
+/// A crafting recipe as an asset, same idea as ItemData and EnemyStats
+/// results is a list so the same asset also works for dematerialising
+/// (one item in, several raw materials out)
+/// Create through Create > Crafting > Recipe
 /// </summary>
 [CreateAssetMenu(fileName = "New Recipe", menuName = "Crafting/Recipe")]
 public class CraftingRecipe : ScriptableObject
 {
-    [Tooltip("Name shown in the crafting UI. Falls back to the first result's item name if empty.")]
+    [Tooltip("Name shown in the crafting UI, falls back to the first result's item name if empty")]
     public string recipeName;
 
-    [Tooltip("Items consumed when this recipe is crafted.")]
+    [Tooltip("Items consumed when crafting")]
     public List<ItemStack> ingredients = new List<ItemStack>();
 
-    [Tooltip("Items produced. One entry for normal crafting; several for dematerialising.")]
+    [Tooltip("Items produced, one entry for normal crafting or several for dematerialising")]
     public List<ItemStack> results = new List<ItemStack>();
 
-    /// <summary>Display name for UI: explicit recipeName, or the first result's item name.</summary>
+    /// <summary>recipeName if set, otherwise the first result's item name</summary>
     public string DisplayName
     {
         get
@@ -43,7 +41,7 @@ public class CraftingRecipe : ScriptableObject
         }
     }
 
-    /// <summary>True if the inventory holds every ingredient in sufficient quantity.</summary>
+    /// <summary>true if the inventory has enough of every ingredient</summary>
     public bool CanCraft(Inventory inventory)
     {
         if (inventory == null) return false;
@@ -56,10 +54,8 @@ public class CraftingRecipe : ScriptableObject
     }
 
     /// <summary>
-    /// Consumes the ingredients and adds the results. Returns false if the
-    /// ingredients weren't available. Removing ingredients first frees slots,
-    /// so results almost always fit; if the inventory is still full, the
-    /// overflow is logged rather than blocking the craft.
+    /// Consumes the ingredients then adds the results, returns false if ingredients missing
+    /// removing ingredients first frees up slots so the results almost always fit
     /// </summary>
     public bool TryCraft(Inventory inventory)
     {
@@ -72,7 +68,7 @@ public class CraftingRecipe : ScriptableObject
         {
             if (res.item == null) continue;
             if (!inventory.AddItem(res.item, res.quantity))
-                Debug.LogWarning($"Inventory full — could not add all of {res.item.itemName} from recipe {DisplayName}");
+                Debug.LogWarning($"Inventory full, could not add all of {res.item.itemName} from recipe {DisplayName}");
         }
         return true;
     }
