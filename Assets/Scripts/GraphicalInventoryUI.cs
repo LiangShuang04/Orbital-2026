@@ -4,13 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-/// <summary>
-/// Graphical inventory panel built entirely in code, so an asset import can never
-/// overwrite it. Shows a grid of slots with each item's icon and stack count
-/// Tab opens/closes it and unlocks the cursor, click a slot to select it,
-/// press the drop key to drop the selected item into the world
-/// No editor setup needed, having this script in the project is enough
-/// </summary>
 public class GraphicalInventoryUI : MonoBehaviour
 {
     class Cell
@@ -18,10 +11,10 @@ public class GraphicalInventoryUI : MonoBehaviour
         public Image bg;
         public Image icon;
         public TextMeshProUGUI qty;
-        public TextMeshProUGUI nameLabel; // fallback when an item has no icon
+        public TextMeshProUGUI nameLabel;
     }
 
-    const int SlotCount = 24;          // should match Inventory.maxSlots
+    const int SlotCount = 24;
     const int Columns = 6;
     const int CellSize = 72;
     const int CellGap = 8;
@@ -37,7 +30,6 @@ public class GraphicalInventoryUI : MonoBehaviour
     float nextSearchTime;
     int selectedIndex = -1;
 
-    // builds the panel automatically on start, no scene object required
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static void Bootstrap()
     {
@@ -61,7 +53,6 @@ public class GraphicalInventoryUI : MonoBehaviour
 
     void Update()
     {
-        // the player may not exist yet, so keep looking until an Inventory shows up
         if (inventory == null && Time.unscaledTime >= nextSearchTime)
         {
             nextSearchTime = Time.unscaledTime + 0.5f;
@@ -79,7 +70,6 @@ public class GraphicalInventoryUI : MonoBehaviour
         if (panel.gameObject.activeSelf && Input.GetKeyDown(DropKey)) DropSelected();
     }
 
-    // opens/closes the panel and frees the cursor so slots can be clicked
     void SetOpen(bool open)
     {
         panel.gameObject.SetActive(open);
@@ -109,7 +99,7 @@ public class GraphicalInventoryUI : MonoBehaviour
                 else
                 {
                     cells[i].icon.enabled = false;
-                    cells[i].nameLabel.text = item.itemName; // no icon, show the name
+                    cells[i].nameLabel.text = item.itemName;
                 }
                 cells[i].qty.text = slots[i].quantity > 1 ? slots[i].quantity.ToString() : "";
             }
@@ -121,7 +111,6 @@ public class GraphicalInventoryUI : MonoBehaviour
             }
         }
 
-        // deselect if the selected slot is now empty
         if (selectedIndex >= slots.Count) Select(-1);
         else UpdateSelectionVisual();
     }
@@ -138,7 +127,6 @@ public class GraphicalInventoryUI : MonoBehaviour
             cells[i].bg.color = i == selectedIndex ? SelectedColor : SlotColor;
     }
 
-    // removes one of the selected item and spawns it in front of the player
     void DropSelected()
     {
         if (inventory == null) return;
@@ -148,7 +136,7 @@ public class GraphicalInventoryUI : MonoBehaviour
         var item = slots[selectedIndex].item;
         if (item == null) return;
 
-        inventory.RemoveItem(item, 1); // fires OnInventoryChanged -> Refresh
+        inventory.RemoveItem(item, 1);
         SpawnDropped(item);
     }
 
@@ -166,13 +154,11 @@ public class GraphicalInventoryUI : MonoBehaviour
         }
         else
         {
-            // fallback so a drop always produces a re-collectable object
             dropped = GameObject.CreatePrimitive(PrimitiveType.Cube);
             dropped.transform.position = pos;
             dropped.transform.localScale = Vector3.one * 0.3f;
         }
 
-        // make sure the dropped object can be picked back up
         var pickup = dropped.GetComponent<ItemPickup>();
         if (pickup == null) pickup = dropped.AddComponent<ItemPickup>();
         pickup.itemData = item;
@@ -183,16 +169,15 @@ public class GraphicalInventoryUI : MonoBehaviour
     {
         var canvas = gameObject.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 600; // above the survival HUD and the FPS framework HUD
+        canvas.sortingOrder = 600;
 
         var scaler = gameObject.AddComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920f, 1080f);
         scaler.matchWidthOrHeight = 0.5f;
 
-        gameObject.AddComponent<GraphicRaycaster>(); // needed so slots can be clicked
+        gameObject.AddComponent<GraphicRaycaster>();
 
-        // centred panel
         var gridWidth = Columns * CellSize + (Columns - 1) * CellGap;
         var rows = Mathf.CeilToInt(SlotCount / (float)Columns);
         var gridHeight = rows * CellSize + (rows - 1) * CellGap;
@@ -206,7 +191,6 @@ public class GraphicalInventoryUI : MonoBehaviour
         panelImage.color = new Color(0.05f, 0.06f, 0.08f, 0.92f);
         panelImage.raycastTarget = false;
 
-        // title
         var titleRect = NewRect("Title", panel);
         titleRect.anchorMin = new Vector2(0f, 1f);
         titleRect.anchorMax = new Vector2(1f, 1f);
@@ -221,7 +205,6 @@ public class GraphicalInventoryUI : MonoBehaviour
         title.raycastTarget = false;
         if (TMP_Settings.defaultFontAsset != null) title.font = TMP_Settings.defaultFontAsset;
 
-        // grid container
         var gridRect = NewRect("Grid", panel);
         gridRect.anchorMin = new Vector2(0.5f, 1f);
         gridRect.anchorMax = new Vector2(0.5f, 1f);
@@ -237,7 +220,6 @@ public class GraphicalInventoryUI : MonoBehaviour
         for (var i = 0; i < SlotCount; i++)
             cells.Add(CreateCell(gridRect, i));
 
-        // hint line at the bottom
         var hintRect = NewRect("Hint", panel);
         hintRect.anchorMin = new Vector2(0f, 0f);
         hintRect.anchorMax = new Vector2(1f, 0f);
@@ -258,9 +240,8 @@ public class GraphicalInventoryUI : MonoBehaviour
         var cellRect = NewRect("Slot", parent);
         var slotBg = cellRect.gameObject.AddComponent<Image>();
         slotBg.color = SlotColor;
-        slotBg.raycastTarget = true; // this is what receives the click
+        slotBg.raycastTarget = true;
 
-        // clicking the slot selects it
         var button = cellRect.gameObject.AddComponent<Button>();
         button.targetGraphic = slotBg;
         var captured = index;
@@ -304,7 +285,6 @@ public class GraphicalInventoryUI : MonoBehaviour
         return new Cell { bg = slotBg, icon = icon, qty = qty, nameLabel = nameLabel };
     }
 
-    // clicking UI needs an EventSystem, create one if the scene has none
     static void EnsureEventSystem()
     {
         if (FindObjectOfType<EventSystem>() != null) return;

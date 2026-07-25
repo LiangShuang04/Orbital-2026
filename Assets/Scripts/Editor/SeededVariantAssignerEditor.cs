@@ -10,15 +10,19 @@ namespace DontDiePlease.EditorTools
     {
         private const string UndoName = "Batch Assign Seeded Variant";
 
-        [MenuItem("Tools/Don't Die Please/Batch Assign Seeded Variant")]
+        [MenuItem("Tools/Don't Die Please/Map/Batch Assign Seeded Variant")]
         private static void BatchAssignSeededVariant()
         {
-            var selectedObjects = Selection.gameObjects
-                .Where(IsSceneObject)
-                .Distinct()
-                .ToArray();
+            var selectedObjects = Selection.gameObjects;
+            var picked = new System.Collections.Generic.List<GameObject>();
 
-            if (selectedObjects.Length == 0)
+            foreach (var obj in selectedObjects)
+            {
+                if (IsSceneObject(obj) && !picked.Contains(obj))
+                    picked.Add(obj);
+            }
+
+            if (picked.Count == 0)
             {
                 Debug.LogWarning("Select one or more scene GameObjects before assigning seeded variants.");
                 return;
@@ -27,13 +31,13 @@ namespace DontDiePlease.EditorTools
             var undoGroup = Undo.GetCurrentGroup();
             Undo.SetCurrentGroupName(UndoName);
 
-            foreach (var selectedObject in selectedObjects)
+            foreach (var obj in picked)
             {
-                var variant = selectedObject.GetComponent<SeededDecorationVariant>();
+                var variant = obj.GetComponent<SeededDecorationVariant>();
 
                 if (variant == null)
                 {
-                    variant = Undo.AddComponent<SeededDecorationVariant>(selectedObject);
+                    variant = Undo.AddComponent<SeededDecorationVariant>(obj);
                 }
                 else
                 {
@@ -43,33 +47,33 @@ namespace DontDiePlease.EditorTools
                 ApplyDefaults(variant);
                 EditorUtility.SetDirty(variant);
                 PrefabUtility.RecordPrefabInstancePropertyModifications(variant);
-                EditorSceneManager.MarkSceneDirty(selectedObject.scene);
+                EditorSceneManager.MarkSceneDirty(obj.scene);
             }
 
             Undo.CollapseUndoOperations(undoGroup);
-            Debug.Log($"Seeded variant defaults applied to {selectedObjects.Length} scene object{(selectedObjects.Length == 1 ? string.Empty : "s")}.");
+            Debug.Log($"Seeded variant defaults applied to {picked.Count} scene object{(picked.Count == 1 ? string.Empty : "s")}.");
         }
 
-        [MenuItem("Tools/Don't Die Please/Batch Assign Seeded Variant", true)]
+        [MenuItem("Tools/Don't Die Please/Map/Batch Assign Seeded Variant", true)]
         private static bool CanBatchAssignSeededVariant()
         {
             return Selection.gameObjects.Any(IsSceneObject);
         }
 
-        private static bool IsSceneObject(GameObject selectedObject)
+        private static bool IsSceneObject(GameObject obj)
         {
-            return selectedObject != null && !EditorUtility.IsPersistent(selectedObject);
+            return obj != null && !EditorUtility.IsPersistent(obj);
         }
 
         private static void ApplyDefaults(SeededDecorationVariant variant)
         {
-            var serializedVariant = new SerializedObject(variant);
-            SetBool(serializedVariant, "chooseSingleVariant", true);
-            SetBool(serializedVariant, "randomiseYRotation", true);
-            SetVector2(serializedVariant, "yRotationRange", new Vector2(0f, 360f));
-            SetBool(serializedVariant, "randomiseUniformScale", true);
-            SetVector2(serializedVariant, "uniformScaleRange", new Vector2(0.85f, 1.15f));
-            serializedVariant.ApplyModifiedProperties();
+            var so = new SerializedObject(variant);
+            SetBool(so, "chooseSingleVariant", true);
+            SetBool(so, "randomiseYRotation", true);
+            SetVector2(so, "yRotationRange", new Vector2(0f, 360f));
+            SetBool(so, "randomiseUniformScale", true);
+            SetVector2(so, "uniformScaleRange", new Vector2(0.85f, 1.15f));
+            so.ApplyModifiedProperties();
         }
 
         private static void SetBool(SerializedObject serializedObject, string propertyName, bool value)

@@ -13,14 +13,14 @@ import saveRoutes from "#routes/saveRoutes";
 
 const app = express();
 const port = Number(process.env.PORT) || 5000;
-const configuredOrigins = process.env.CORS_ORIGIN?.split(",")
+const origins = process.env.CORS_ORIGIN?.split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
 const swaggerSpec = createSwaggerSpec();
 
 app.use(
   cors({
-    origin: configuredOrigins?.length ? configuredOrigins : true,
+    origin: origins?.length ? origins : true,
     credentials: true,
   }),
 );

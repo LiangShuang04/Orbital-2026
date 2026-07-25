@@ -56,59 +56,57 @@ namespace DontDiePlease.Auth
                 await Task.Delay(Mathf.RoundToInt(mockDelaySeconds * 1000f));
             }
 
-            var username = GetUsernameFromInput(emailOrUsername);
+            var username = NameFromLogin(emailOrUsername);
             return AuthResponse.Success(
                 $"mock-token-{Guid.NewGuid():N}",
                 $"mock-user-{Guid.NewGuid():N}",
                 username);
         }
 
-        private async Task<AuthResponse> PostJsonAsync(string url, object payload, string fallbackErrorMessage)
+        private async Task<AuthResponse> PostJsonAsync(string url, object payload, string fallback)
         {
             var json = JsonUtility.ToJson(payload);
-            using (var request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST))
+            using (var req = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST))
             {
-                request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json));
-                request.downloadHandler = new DownloadHandlerBuffer();
-                request.SetRequestHeader("Content-Type", "application/json");
+                req.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json));
+                req.downloadHandler = new DownloadHandlerBuffer();
+                req.SetRequestHeader("Content-Type", "application/json");
 
-                await SendWebRequestAsync(request);
+                await SendWebRequestAsync(req);
 
-                if (request.result != UnityWebRequest.Result.Success)
+                if (req.result != UnityWebRequest.Result.Success)
                 {
-                    return AuthResponse.Failure(string.IsNullOrWhiteSpace(request.error)
-                        ? fallbackErrorMessage
-                        : request.error);
+                    return AuthResponse.Failure(string.IsNullOrWhiteSpace(req.error) ? fallback : req.error);
                 }
 
                 try
                 {
-                    var response = JsonUtility.FromJson<AuthResponse>(request.downloadHandler.text);
-                    if (response == null)
+                    var resp = JsonUtility.FromJson<AuthResponse>(req.downloadHandler.text);
+                    if (resp == null)
                     {
-                        return AuthResponse.Failure(fallbackErrorMessage);
+                        return AuthResponse.Failure(fallback);
                     }
 
-                    if (!response.success && string.IsNullOrWhiteSpace(response.errorMessage))
+                    if (!resp.success && string.IsNullOrWhiteSpace(resp.errorMessage))
                     {
-                        response.errorMessage = fallbackErrorMessage;
+                        resp.errorMessage = fallback;
                     }
 
-                    return response;
+                    return resp;
                 }
                 catch (Exception)
                 {
-                    return AuthResponse.Failure(fallbackErrorMessage);
+                    return AuthResponse.Failure(fallback);
                 }
             }
         }
 
-        private static Task SendWebRequestAsync(UnityWebRequest request)
+        private static Task SendWebRequestAsync(UnityWebRequest req)
         {
-            var completion = new TaskCompletionSource<bool>();
-            var operation = request.SendWebRequest();
-            operation.completed += _ => completion.TrySetResult(true);
-            return completion.Task;
+            var tcs = new TaskCompletionSource<bool>();
+            var op = req.SendWebRequest();
+            op.completed += _ => tcs.TrySetResult(true);
+            return tcs.Task;
         }
 
         private string BuildUrl(string endpoint)
@@ -118,7 +116,7 @@ namespace DontDiePlease.Auth
             return $"{trimmedBase}{trimmedEndpoint}";
         }
 
-        private static string GetUsernameFromInput(string emailOrUsername)
+        private static string NameFromLogin(string emailOrUsername)
         {
             if (string.IsNullOrWhiteSpace(emailOrUsername))
             {

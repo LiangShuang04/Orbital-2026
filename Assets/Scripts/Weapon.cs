@@ -1,12 +1,6 @@
 using System;
 using UnityEngine;
 
-/// <summary>
-/// Self-contained hitscan weapon that works with any controller (Vattalus, Akila)
-/// because it just fires from the main camera. Handles fire rate, ammo, reload
-/// and deals damage to anything with an EnemyHealth
-/// Left mouse to fire, R to reload
-/// </summary>
 public class Weapon : MonoBehaviour
 {
     [Header("Damage")]
@@ -36,7 +30,6 @@ public class Weapon : MonoBehaviour
     public int ReserveAmmo => reserveAmmo;
     public bool IsReloading { get; private set; }
 
-    // lets a HUD refresh only when ammo actually changes
     public event Action OnAmmoChanged;
 
     private Camera cam;
@@ -51,7 +44,7 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         if (cam == null) cam = Camera.main;
-        if (cam == null) return; // no camera yet, e.g. during scene load
+        if (cam == null) return;
 
         if (IsReloading)
         {
@@ -80,7 +73,6 @@ public class Weapon : MonoBehaviour
         if (muzzleFlash != null) muzzleFlash.Play();
         if (fireSound != null) fireSound.Play();
 
-        // ray straight out of the screen centre
         var ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         if (Physics.Raycast(ray, out var hit, range, hitMask, QueryTriggerInteraction.Ignore))
         {

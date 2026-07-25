@@ -113,25 +113,56 @@ namespace DontDiePlease.Systems
             isRunning = false;
         }
 
+        public void SetSpawnPoints(RandomEventSpawnPoint[] points)
+        {
+            spawnPoints = points ?? new RandomEventSpawnPoint[0];
+        }
+
         public void TriggerNextEvent()
         {
-            var definition = PickDefinition(eventRandom);
+            var def = PickDefinition(eventRandom);
 
-            if (definition == null)
+            if (def == null)
             {
                 return;
             }
 
+            TriggerDefinition(def);
+        }
+
+        public bool TriggerEvent(RandomEventType eventType)
+        {
+            if (activeTimedEvent != null)
+            {
+                return false;
+            }
+
+            EnsureDefinitions();
+
+            foreach (var def in eventDefinitions)
+            {
+                if (def != null && def.eventType == eventType)
+                {
+                    TriggerDefinition(def);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void TriggerDefinition(RandomEventDefinition def)
+        {
             eventSequenceNumber++;
 
             var context = new RandomEventContext
             {
-                EventType = definition.eventType,
-                DisplayName = CleanDisplayName(definition),
+                EventType = def.eventType,
+                DisplayName = CleanDisplayName(def),
                 Seed = seedManager.CurrentSeed,
                 SequenceNumber = eventSequenceNumber,
-                DurationSeconds = Mathf.Max(0f, definition.durationSeconds),
-                Intensity = Mathf.Max(0f, definition.intensity)
+                DurationSeconds = Mathf.Max(0f, def.durationSeconds),
+                Intensity = Mathf.Max(0f, def.intensity)
             };
 
             ApplyEvent(context);
@@ -153,8 +184,8 @@ namespace DontDiePlease.Systems
 
             for (var index = 0; index < count; index++)
             {
-                var definition = PickDefinition(previewRandom);
-                var eventName = definition != null ? CleanDisplayName(definition) : "none";
+                var def = PickDefinition(previewRandom);
+                var eventName = def != null ? CleanDisplayName(def) : "none";
                 builder.Append(index == 0 ? " " : " -> ");
                 builder.Append($"{eventName} in {delay:0.0}s");
                 delay = NextInterval(previewRandom);
@@ -166,11 +197,11 @@ namespace DontDiePlease.Systems
         public void RefreshListeners()
         {
             listeners.Clear();
-            var behaviours = FindObjectsOfType<MonoBehaviour>();
+            var mbs = FindObjectsOfType<MonoBehaviour>();
 
-            foreach (var behaviour in behaviours)
+            foreach (var mb in mbs)
             {
-                if (behaviour is IRandomEventListener listener && !ReferenceEquals(listener, this))
+                if (mb is IRandomEventListener listener && !ReferenceEquals(listener, this))
                 {
                     listeners.Add(listener);
                 }
@@ -203,34 +234,34 @@ namespace DontDiePlease.Systems
 
         private GameObject SpawnEventObject(RandomEventContext context, GameObject prefab, string fallbackName, Color fallbackColor)
         {
-            var spawnRandom = seedManager.GetRandomStream($"spawn-{context.EventType}");
-            var spawnPoint = PickSpawnPoint(context.EventType, spawnRandom);
-            var position = spawnPoint != null ? spawnPoint.GetSpawnPosition(spawnRandom) : transform.position + DeterministicOffset(spawnRandom);
-            var rotation = spawnPoint != null ? spawnPoint.transform.rotation : Quaternion.identity;
-            context.SpawnPosition = position;
+            var spawnRng = seedManager.GetRandomStream($"spawn-{context.EventType}");
+            var point = PickSpawnPoint(context.EventType, spawnRng);
+            var pos = point != null ? point.GetSpawnPosition(spawnRng) : transform.position + DeterministicOffset(spawnRng);
+            var rot = point != null ? point.transform.rotation : Quaternion.identity;
+            context.SpawnPosition = pos;
 
             if (prefab != null)
             {
-                return Instantiate(prefab, position, rotation);
+                return Instantiate(prefab, pos, rot);
             }
 
-            return CreateFallbackObject(fallbackName, position, rotation, fallbackColor);
+            return CreateFallbackObject(fallbackName, pos, rot, fallbackColor);
         }
 
-        private GameObject CreateFallbackObject(string objectName, Vector3 position, Quaternion rotation, Color color)
+        private GameObject CreateFallbackObject(string objectName, Vector3 pos, Quaternion rot, Color color)
         {
-            var instance = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            instance.name = objectName;
-            instance.transform.SetPositionAndRotation(position, rotation);
-            instance.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            obj.name = objectName;
+            obj.transform.SetPositionAndRotation(pos, rot);
+            obj.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
 
-            var renderer = instance.GetComponent<Renderer>();
+            var renderer = obj.GetComponent<Renderer>();
             if (renderer != null)
             {
                 renderer.material.color = color;
             }
 
-            return instance;
+            return obj;
         }
 
         private RandomEventSpawnPoint PickSpawnPoint(RandomEventType eventType, System.Random random)
@@ -240,22 +271,22 @@ namespace DontDiePlease.Systems
                 return null;
             }
 
-            var validPoints = new List<RandomEventSpawnPoint>();
+            var valid = new List<RandomEventSpawnPoint>();
 
-            foreach (var spawnPoint in spawnPoints)
+            foreach (var point in spawnPoints)
             {
-                if (spawnPoint != null && spawnPoint.EventType == eventType)
+                if (point != null && point.EventType == eventType)
                 {
-                    validPoints.Add(spawnPoint);
+                    valid.Add(point);
                 }
             }
 
-            if (validPoints.Count == 0)
+            if (valid.Count == 0)
             {
                 return null;
             }
 
-            return validPoints[random.Next(0, validPoints.Count)];
+            return valid[random.Next(0, valid.Count)];
         }
 
         private Vector3 DeterministicOffset(System.Random random)
@@ -285,18 +316,15 @@ namespace DontDiePlease.Systems
 
         private RandomEventDefinition PickDefinition(System.Random random)
         {
-            if (eventDefinitions == null || eventDefinitions.Length == 0)
-            {
-                Reset();
-            }
+            EnsureDefinitions();
 
             var totalWeight = 0;
 
-            foreach (var definition in eventDefinitions)
+            foreach (var def in eventDefinitions)
             {
-                if (definition != null)
+                if (def != null)
                 {
-                    totalWeight += Mathf.Max(0, definition.weight);
+                    totalWeight += Mathf.Max(0, def.weight);
                 }
             }
 
@@ -308,22 +336,30 @@ namespace DontDiePlease.Systems
             var roll = random.Next(0, totalWeight);
             var cursor = 0;
 
-            foreach (var definition in eventDefinitions)
+            foreach (var def in eventDefinitions)
             {
-                if (definition == null)
+                if (def == null)
                 {
                     continue;
                 }
 
-                cursor += Mathf.Max(0, definition.weight);
+                cursor += Mathf.Max(0, def.weight);
 
                 if (roll < cursor)
                 {
-                    return definition;
+                    return def;
                 }
             }
 
             return eventDefinitions[eventDefinitions.Length - 1];
+        }
+
+        private void EnsureDefinitions()
+        {
+            if (eventDefinitions == null || eventDefinitions.Length == 0)
+            {
+                Reset();
+            }
         }
 
         private void EndTimedEvent()

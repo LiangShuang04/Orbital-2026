@@ -37,7 +37,7 @@ namespace DontDiePlease.Auth
             };
         }
 
-        public static AuthResponse Failure(string message)
+        public static AuthResponse Failure(string msg)
         {
             return new AuthResponse
             {
@@ -45,7 +45,7 @@ namespace DontDiePlease.Auth
                 token = string.Empty,
                 userId = string.Empty,
                 username = string.Empty,
-                errorMessage = message
+                errorMessage = msg
             };
         }
     }

@@ -2,12 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Survival stat HUD built entirely in code so an asset import can never overwrite it
-/// Creates itself when the game starts, finds the PlayerStats in the scene and draws
-/// health, oxygen, food and toxicity bars
-/// No setup needed, having this script in the project is enough
-/// </summary>
 public class SurvivalHUD : MonoBehaviour
 {
     class Bar
@@ -20,7 +14,6 @@ public class SurvivalHUD : MonoBehaviour
         public bool dangerWhenHigh;
     }
 
-    // tweak these if the bars overlap the FPS framework HUD
     const int BarWidth = 260;
     const int BarHeight = 20;
     const int Gap = 6;
@@ -32,7 +25,6 @@ public class SurvivalHUD : MonoBehaviour
     PlayerStats stats;
     float nextSearchTime;
 
-    // builds the HUD automatically on start, no scene object required
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static void Bootstrap()
     {
@@ -54,7 +46,6 @@ public class SurvivalHUD : MonoBehaviour
 
     void Update()
     {
-        // the player may not exist yet in menus or during scene loads, so keep looking
         if (stats == null)
         {
             if (Time.unscaledTime < nextSearchTime) return;
@@ -77,7 +68,6 @@ public class SurvivalHUD : MonoBehaviour
         bar.fill.anchorMax = new Vector2(fraction, 1f);
         bar.label.text = $"{bar.title}   {Mathf.RoundToInt(current)}";
 
-        // turn red as a depleting bar empties, or as toxicity climbs
         var danger = bar.dangerWhenHigh ? fraction > 0.75f : fraction < 0.25f;
         bar.fillImage.color = danger
             ? Color.Lerp(bar.baseColor, new Color(0.9f, 0.15f, 0.15f), 0.75f)
@@ -93,13 +83,12 @@ public class SurvivalHUD : MonoBehaviour
     {
         var canvas = gameObject.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 500; // sit above whatever HUD the FPS framework draws
+        canvas.sortingOrder = 500;
 
         var scaler = gameObject.AddComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920f, 1080f);
         scaler.matchWidthOrHeight = 0.5f;
-
         var rootGO = new GameObject("Bars", typeof(RectTransform));
         root = rootGO.GetComponent<RectTransform>();
         root.SetParent(transform, false);

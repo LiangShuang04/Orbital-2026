@@ -59,3 +59,7 @@ node_modules/
 # WebGL build output — never commit builds
 /Milestone 2 trial game/
 /Milestone 2 trial game.zip
+Assets/_Recovery/Demo_Combat_PreMerge_Backup.unity
+Assets/_Recovery/Demo_Combat_PreMerge_Backup.unity.meta
+Assets/_MergeSources/
+Assets/_MergeSources.meta

@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - PW - Prop
-  - PW - Nature
+  - InputName
+  - InputPass
+  - walkable
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - No Player Collision
   - Water
   - UI
-  - 
+  - Ground
   - 
   - Player
   - 

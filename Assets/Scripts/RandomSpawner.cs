@@ -2,11 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-/// <summary>
-/// Spawns random prefabs around this object at intervals, up to a max count
-/// Works for both enemies and items, points are snapped onto the NavMesh so
-/// things spawn on walkable ground. Place a few of these around the map
-/// </summary>
 public class RandomSpawner : MonoBehaviour
 {
     [Header("What to spawn")]
@@ -38,7 +33,6 @@ public class RandomSpawner : MonoBehaviour
 
     void Update()
     {
-        // drop references to anything that died / got picked up
         spawned.RemoveAll(o => o == null);
 
         if (spawned.Count >= maxAlive) return;
@@ -62,7 +56,6 @@ public class RandomSpawner : MonoBehaviour
         spawned.Add(go);
     }
 
-    // pick a random point in the radius and snap it to the nearest NavMesh position
     bool TryGetSpawnPoint(out Vector3 result)
     {
         for (var attempt = 0; attempt < 12; attempt++)
@@ -80,7 +73,6 @@ public class RandomSpawner : MonoBehaviour
         return false;
     }
 
-    // shows the spawn radius in the editor when the spawner is selected
     void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(0.2f, 0.8f, 1f, 0.4f);

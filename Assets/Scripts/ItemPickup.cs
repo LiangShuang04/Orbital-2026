@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ItemPickup : MonoBehaviour, IInteractable
@@ -5,6 +6,9 @@ public class ItemPickup : MonoBehaviour, IInteractable
     public ItemData itemData;
 
     [Min(1)] public int quantity = 1;
+
+    public static event Action<ItemData, int> PickedUp;
+    public static event Action<ItemData, int> PickupRejected;
 
     public string GetDisplayName()
     {
@@ -29,11 +33,15 @@ public class ItemPickup : MonoBehaviour, IInteractable
             return;
         }
 
-        if (inventory.AddItem(itemData, quantity)){
-            Debug.Log("picked up " + GetDisplayName());
+        if (inventory.AddItem(itemData, quantity))
+        {
+            PickedUp?.Invoke(itemData, quantity);
             Destroy(gameObject);
         }
         else
+        {
+            PickupRejected?.Invoke(itemData, quantity);
             Debug.Log("Inventory full, cannot pick up " + GetDisplayName());
+        }
     }
 }

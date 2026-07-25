@@ -1,0 +1,1989 @@
+{
+  "objectives": [
+    {
+      "id": "ACT1_WAKE",
+      "title": "AFTER THE FALL",
+      "description": "Inspect the Far Kite and find out what survived the crash."
+    },
+    {
+      "id": "ACT2_POWER",
+      "title": "MAKE IT WORK AGAIN",
+      "description": "Search the supply bay, restore auxiliary power, and prepare for the surface."
+    },
+    {
+      "id": "ACT3_SURFACE",
+      "title": "THE PLANET BREATHES",
+      "description": "Leave the ship, gather useful material, and track the unknown transmission."
+    },
+    {
+      "id": "ACT4_ARCHIVE",
+      "title": "THE RUINS REMEMBER",
+      "description": "Restore the three Omphalos power nodes and reach the Root Archive."
+    },
+    {
+      "id": "ACT5_COMPONENTS",
+      "title": "THREE THINGS APART",
+      "description": "Recover the Resonance Lens, Complete Phase Coil, and High-Energy Core."
+    },
+    {
+      "id": "FINALE_SIGNAL",
+      "title": "PLEASE ANSWER",
+      "description": "Build the signal generator, install it outside, and keep it alive for three minutes."
+    },
+    {
+      "id": "STORY_COMPLETE",
+      "title": "SURVIVAL RECORD COMPLETE",
+      "description": "Rescue is inbound. Keep breathing."
+    }
+  ],
+  "sequences": [
+    {
+      "id": "TRG_COCKPIT_WAKE",
+      "mode": "Full",
+      "priority": 90,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "wake_01",
+          "speaker": "NARRATION",
+          "text": "Hearing returns first. The alarm strikes once, then again, like someone patiently testing an empty bell."
+        },
+        {
+          "id": "wake_02",
+          "speaker": "UNKNOWN VOICE",
+          "text": "Vital signs: weak. Name field: corrupted. Death status: provisionally denied.",
+          "choices": [
+            {
+              "id": "wake_sincere",
+              "text": "Am I alive?",
+              "nextLineId": "wake_sincere_reply",
+              "tone": "sincere"
+            },
+            {
+              "id": "wake_practical",
+              "text": "Who is speaking?",
+              "nextLineId": "wake_practical_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "wake_dry",
+              "text": "Can you turn off the alarm?",
+              "nextLineId": "wake_dry_reply",
+              "tone": "dry"
+            }
+          ]
+        },
+        {
+          "id": "wake_sincere_reply",
+          "speaker": "MIMIR",
+          "text": "Medically, yes. Visually, I would keep the verdict provisional.",
+          "nextLineId": "wake_join"
+        },
+        {
+          "id": "wake_practical_reply",
+          "speaker": "MIMIR",
+          "text": "Far Kite emergency intelligence MIMIR. Call me Mimir. The full title will not save either of us.",
+          "nextLineId": "wake_join"
+        },
+        {
+          "id": "wake_dry_reply",
+          "speaker": "MIMIR",
+          "text": "Certainly. Repair the alarm, the wiring, the reactor, and most of the ship. Any order will do.",
+          "nextLineId": "wake_join"
+        },
+        {
+          "id": "wake_join",
+          "speaker": "NARRATION",
+          "text": "You open your eyes. The world improves from a knot of pain into a cockpit tilted fourteen degrees."
+        },
+        {
+          "id": "wake_03",
+          "speaker": "MIMIR",
+          "text": "Welcome back, sole crew member still capable of responding to the word welcome."
+        },
+        {
+          "id": "wake_04",
+          "speaker": "MIMIR",
+          "text": "Health 42. Oxygen 67. Hunger 81. Toxicity zero. Please stand slowly. You have a concussion, two soft-tissue injuries, and a remarkably bad day."
+        },
+        {
+          "id": "wake_05",
+          "speaker": "MIMIR",
+          "text": "The World Seed is active. It preserves this region's structure and event pattern. For now, the practical definition is simple: it remembers the world when we cannot."
+        },
+        {
+          "id": "wake_06",
+          "speaker": "MIMIR",
+          "text": "Main power is offline. Long-range communication is gone. First, do not die. Then we can discuss leaving.",
+          "nextLineId": "END"
+        }
+      ],
+      "nextObjective": "ACT1_WAKE",
+      "setFlag": "mimir_introduced"
+    },
+    {
+      "id": "TRG_COCKPIT_INSPECTION",
+      "mode": "Full",
+      "priority": 70,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "cockpit_01",
+          "speaker": "NARRATION",
+          "text": "Beyond the observation glass, half the ship lies buried in black soil. Industrial towers rise through the haze like ribs that forgot to close."
+        },
+        {
+          "id": "cockpit_02",
+          "speaker": "SYSTEM",
+          "text": "NAVIGATION LOG: Course deviation 0.73 AU. Cause: priority distress signal. Source: YGGDRASIL. Message: DON'T DIE. PLEASE."
+        },
+        {
+          "id": "cockpit_03",
+          "speaker": "MIMIR",
+          "text": "I did not send that message. At least, not in any memory partition I still possess.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "cockpit_inspected"
+    },
+    {
+      "id": "TRG_CREW_DISCOVERY",
+      "mode": "Full",
+      "priority": 85,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "crew_01",
+          "speaker": "NARRATION",
+          "text": "The crew quarters still hold the shape of ordinary life: half a cup fixed to the wall, a game stopped mid-move, one sock caught in a vent."
+        },
+        {
+          "id": "crew_02",
+          "speaker": "MIMIR",
+          "text": "Life signs are zero here as well.",
+          "choices": [
+            {
+              "id": "crew_names",
+              "text": "Confirm their identities.",
+              "nextLineId": "crew_names_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "crew_silence",
+              "text": "Do not read the names.",
+              "nextLineId": "crew_silence_reply",
+              "tone": "sincere"
+            },
+            {
+              "id": "crew_sorry",
+              "text": "I'm sorry.",
+              "nextLineId": "crew_sorry_reply",
+              "tone": "sincere"
+            }
+          ]
+        },
+        {
+          "id": "crew_names_reply",
+          "speaker": "MIMIR",
+          "text": "Jonas Kaye. Lin Say. Dr. Odell. Captain Elia Voss. The list is complete. No miracle was omitted.",
+          "nextLineId": "crew_join"
+        },
+        {
+          "id": "crew_silence_reply",
+          "speaker": "MIMIR",
+          "text": "Understood. Their names can remain on the manifest. They need not die a second time.",
+          "nextLineId": "crew_join"
+        },
+        {
+          "id": "crew_sorry_reply",
+          "speaker": "MIMIR",
+          "text": "Your apology will not be logged as an admission of responsibility. But I will receive it on their behalf.",
+          "nextLineId": "crew_join"
+        },
+        {
+          "id": "crew_join",
+          "speaker": "MIMIR",
+          "text": "The captain's terminal may explain our descent. Her badge should still carry command clearance.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "crew_found"
+    },
+    {
+      "id": "TRG_CAPTAIN_BADGE",
+      "mode": "Full",
+      "priority": 82,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "crew_found"
+      ],
+      "lines": [
+        {
+          "id": "badge_01",
+          "speaker": "NARRATION",
+          "text": "The captain's badge is dark with dried blood. A shallow line is etched into its back: If the door will not open, build one."
+        },
+        {
+          "id": "badge_02",
+          "speaker": "SYSTEM",
+          "text": "CAPTAIN ELIA VOSS - COMMAND CLEARANCE ACCEPTED.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "captain_badge_found"
+    },
+    {
+      "id": "TRG_CAPTAIN_LOG",
+      "mode": "Full",
+      "priority": 81,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "captain_badge_found"
+      ],
+      "lines": [
+        {
+          "id": "captain_01",
+          "speaker": "CAPTAIN VOSS",
+          "text": "Far Kite navigation log. We traced a priority distress signal using an obsolete Alliance protocol. Its signature belongs to the Far Kite."
+        },
+        {
+          "id": "captain_02",
+          "speaker": "CAPTAIN VOSS",
+          "text": "MIMIR says that is impossible. I agree. The universe has always been good at turning impossible into an incident report."
+        },
+        {
+          "id": "captain_03",
+          "speaker": "CAPTAIN VOSS",
+          "text": "We will hold high orbit. We will not attempt a landing. Repeat, we will not-"
+        },
+        {
+          "id": "captain_04",
+          "speaker": "MIMIR",
+          "text": "The command does not match our final trajectory. Someone, or something, took navigation authority during the last ninety seconds.",
+          "nextLineId": "END"
+        }
+      ],
+      "completeObjective": "ACT1_WAKE",
+      "nextObjective": "ACT2_POWER",
+      "setFlag": "captain_log_heard"
+    },
+    {
+      "id": "TRG_PICKUP_OXYGEN_FIRST",
+      "mode": "Radio",
+      "priority": 45,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "oxygen_01",
+          "speaker": "MIMIR",
+          "text": "Portable oxygen secured. Open your inventory with Tab."
+        },
+        {
+          "id": "oxygen_02",
+          "speaker": "MIMIR",
+          "text": "If you discover an entire spare ship in there, tell me immediately.",
+          "autoAdvanceSeconds": 3.2,
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "oxygen_picked_up"
+    },
+    {
+      "id": "TRG_INVENTORY_FIRST_OPEN",
+      "mode": "System",
+      "priority": 38,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "inventory_01",
+          "speaker": "SYSTEM",
+          "text": "INVENTORY ONLINE - STACK MATERIALS, CONSERVE OXYGEN, KEEP ONE SLOT FREE.",
+          "autoAdvanceSeconds": 3.5,
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "inventory_opened"
+    },
+    {
+      "id": "TRG_GENERATOR_ONLINE",
+      "mode": "Full",
+      "priority": 78,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "generator_01",
+          "speaker": "MIMIR",
+          "text": "Fuse seated. Cooling loop stable enough. Keep your hands away from the exposed conductors."
+        },
+        {
+          "id": "generator_02",
+          "speaker": "MIMIR",
+          "text": "That is advice, not an assessment of your learning ability.",
+          "choices": [
+            {
+              "id": "generator_count",
+              "text": "Three, two, one.",
+              "nextLineId": "generator_count_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "generator_boom",
+              "text": "What if it explodes?",
+              "nextLineId": "generator_boom_reply",
+              "tone": "sincere"
+            },
+            {
+              "id": "generator_again",
+              "text": "Make one broken thing work again.",
+              "nextLineId": "generator_again_reply",
+              "tone": "dry"
+            }
+          ]
+        },
+        {
+          "id": "generator_count_reply",
+          "speaker": "MIMIR",
+          "text": "Excellent counting. Let us hope the generator received the same education.",
+          "nextLineId": "generator_join"
+        },
+        {
+          "id": "generator_boom_reply",
+          "speaker": "MIMIR",
+          "text": "Then oxygen management will no longer be your problem.",
+          "nextLineId": "generator_join"
+        },
+        {
+          "id": "generator_again_reply",
+          "speaker": "MIMIR",
+          "text": "That appears to be our shared job description.",
+          "nextLineId": "generator_join"
+        },
+        {
+          "id": "generator_join",
+          "speaker": "SYSTEM",
+          "text": "AUXILIARY POWER ONLINE. COCKPIT, CREW QUARTERS, AND SUPPLY BAY PRESSURIZED."
+        },
+        {
+          "id": "generator_03",
+          "speaker": "MIMIR",
+          "text": "I had prepared a congratulatory statement, but auxiliary power woke something else.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "generator_online"
+    },
+    {
+      "id": "TRG_FIRST_ROBOT",
+      "mode": "Radio",
+      "priority": 72,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "requiredFlags": [
+        "generator_online"
+      ],
+      "lines": [
+        {
+          "id": "robot_01",
+          "speaker": "WARDEN UNIT",
+          "text": "UNREGISTERED ORGANIC ENTITY DETECTED. QUARANTINE PROTOCOL: REMOVE."
+        },
+        {
+          "id": "robot_02",
+          "speaker": "MIMIR",
+          "text": "That is not one of ours. Our maintenance machines rarely use remove as a greeting."
+        },
+        {
+          "id": "robot_03",
+          "speaker": "SYSTEM",
+          "text": "COMBAT: FIRE WITH LEFT MOUSE. RELOAD WITH R. SWITCH WEAPONS WITH NUMBER KEYS.",
+          "autoAdvanceSeconds": 4.5,
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "first_robot_seen"
+    },
+    {
+      "id": "TRG_FIRST_ROBOT_DEFEATED",
+      "mode": "Radio",
+      "priority": 58,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "requiredFlags": [
+        "first_robot_seen"
+      ],
+      "lines": [
+        {
+          "id": "robot_down_01",
+          "speaker": "WARDEN UNIT",
+          "text": "QUARANTINE... CONTINUES..."
+        },
+        {
+          "id": "robot_down_02",
+          "speaker": "MIMIR",
+          "text": "Hostile unit offline. Your heart rate is triple its resting value. I will record one third as courage and the remainder as useful panic.",
+          "autoAdvanceSeconds": 5,
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "first_robot_defeated"
+    },
+    {
+      "id": "TRG_DEMATERIALISER_FIRST_USE",
+      "mode": "Full",
+      "priority": 70,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "demat_01",
+          "speaker": "MIMIR",
+          "text": "The dematerialiser still works. Its name sounds dangerous because the original marketing team thought danger sounded expensive."
+        },
+        {
+          "id": "demat_02",
+          "speaker": "MIMIR",
+          "text": "Place the damaged core on the plate. It will reduce the machine to usable material. It will not reduce your hand, provided your hand is elsewhere."
+        },
+        {
+          "id": "demat_03",
+          "speaker": "SYSTEM",
+          "text": "FIELD FILTER AND SIGNAL DETECTOR RECIPES UNLOCKED."
+        },
+        {
+          "id": "demat_04",
+          "speaker": "MIMIR",
+          "text": "Build the filter before going outside. Yggdrasil's atmosphere is beautiful in the same way a warning label can be beautifully typeset.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "dematerialiser_used"
+    },
+    {
+      "id": "TRG_FIELD_FILTER_CRAFTED",
+      "mode": "Radio",
+      "priority": 52,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "filter_01",
+          "speaker": "MIMIR",
+          "text": "Field filter connected. Toxicity will accumulate more slowly. This is not permission to inhale experimentally.",
+          "autoAdvanceSeconds": 4.2,
+          "nextLineId": "END"
+        }
+      ],
+      "completeObjective": "ACT2_POWER",
+      "nextObjective": "ACT3_SURFACE",
+      "setFlag": "field_filter_crafted"
+    },
+    {
+      "id": "TRG_EXIT_SHIP_FIRST",
+      "mode": "Full",
+      "priority": 74,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "surface_01",
+          "speaker": "NARRATION",
+          "text": "Yggdrasil's wind meets you for the first time. It carries no memory of home and no sign of welcome, but it crosses your suit like the ordinary breath of a living world."
+        },
+        {
+          "id": "surface_02",
+          "speaker": "MIMIR",
+          "text": "External oxygen is insufficient. Grey-spore toxicity is moderate. Watch the HUD."
+        },
+        {
+          "id": "surface_03",
+          "speaker": "MIMIR",
+          "text": "Heroes usually die for narrative reasons. Maintenance technicians die because they forgot to check a number.",
+          "choices": [
+            {
+              "id": "surface_view",
+              "text": "The view is not bad.",
+              "nextLineId": "surface_view_reply",
+              "tone": "sincere"
+            },
+            {
+              "id": "surface_hate",
+              "text": "I hate this place.",
+              "nextLineId": "surface_hate_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "surface_food",
+              "text": "At least it smells better than nutrient paste.",
+              "nextLineId": "surface_food_reply",
+              "tone": "dry"
+            }
+          ]
+        },
+        {
+          "id": "surface_view_reply",
+          "speaker": "MIMIR",
+          "text": "I have logged that as a candidate for your last words. Please do not use it yet.",
+          "nextLineId": "surface_join"
+        },
+        {
+          "id": "surface_hate_reply",
+          "speaker": "MIMIR",
+          "text": "Your review has been forwarded to the Yggdrasil tourism office. It closed three hundred and twelve years ago.",
+          "nextLineId": "surface_join"
+        },
+        {
+          "id": "surface_food_reply",
+          "speaker": "MIMIR",
+          "text": "The spores agree and look forward to entering your lungs.",
+          "nextLineId": "surface_join"
+        },
+        {
+          "id": "surface_join",
+          "speaker": "SYSTEM",
+          "text": "GATHER IRON ORE x4 AND FILTER FIBRE x2. FIND SHELTER BEFORE THE NEXT STORM.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "left_ship"
+    },
+    {
+      "id": "EVT_TOXIC_STORM_STORY",
+      "mode": "Radio",
+      "priority": 76,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "storm_01",
+          "speaker": "SYSTEM",
+          "text": "TOXIC STORM APPROACHING. SEEK SHELTER."
+        },
+        {
+          "id": "storm_02",
+          "speaker": "MIMIR",
+          "text": "Pressure is falling. Grey-spore density is climbing. The nearest shelter is marked. Run. My earlier advice about moving slowly is withdrawn.",
+          "autoAdvanceSeconds": 5,
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "story_storm_started"
+    },
+    {
+      "id": "TRG_STORY_STORM_SHELTER",
+      "mode": "Radio",
+      "priority": 69,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "requiredFlags": [
+        "story_storm_started"
+      ],
+      "lines": [
+        {
+          "id": "storm_clear_01",
+          "speaker": "NARRATION",
+          "text": "The wind worries every seam in the shelter, as if a crowd outside is whispering the same unfinished sentence."
+        },
+        {
+          "id": "storm_clear_02",
+          "speaker": "SYSTEM",
+          "text": "TOXIC STORM CLEARED. EXTERNAL CONCENTRATION FALLING.",
+          "autoAdvanceSeconds": 3.5,
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "story_storm_survived"
+    },
+    {
+      "id": "TRG_UNKNOWN_TRANSMISSION",
+      "mode": "Full",
+      "priority": 79,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "story_storm_survived"
+      ],
+      "lines": [
+        {
+          "id": "unknown_01",
+          "speaker": "UNKNOWN TRANSMISSION",
+          "text": "Do not die. Please. The World Seed has germinated. Expansion seven thousand three hundred fourteen. External variable confirmed."
+        },
+        {
+          "id": "unknown_02",
+          "speaker": "MIMIR",
+          "text": "The frequency matches the signal that brought us here. It just called you an external variable. That is neither polite nor accidental.",
+          "choices": [
+            {
+              "id": "unknown_knows",
+              "text": "It knows I am here.",
+              "nextLineId": "unknown_knows_reply",
+              "tone": "sincere"
+            },
+            {
+              "id": "unknown_count",
+              "text": "Seven thousand three hundred fourteen?",
+              "nextLineId": "unknown_count_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "unknown_please",
+              "text": "At least it said please.",
+              "nextLineId": "unknown_please_reply",
+              "tone": "dry"
+            }
+          ]
+        },
+        {
+          "id": "unknown_knows_reply",
+          "speaker": "MIMIR",
+          "text": "Yes. Worse, it may have known before we did.",
+          "nextLineId": "unknown_join"
+        },
+        {
+          "id": "unknown_count_reply",
+          "speaker": "MIMIR",
+          "text": "I hope that was a device number. My hopes have not performed well lately.",
+          "nextLineId": "unknown_join"
+        },
+        {
+          "id": "unknown_please_reply",
+          "speaker": "MIMIR",
+          "text": "Civilization score increased. Murder suspicion unchanged.",
+          "nextLineId": "unknown_join"
+        },
+        {
+          "id": "unknown_join",
+          "speaker": "UNKNOWN TRANSMISSION",
+          "text": "Come to the root. Help us end the repetition.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "unknown_transmission_heard"
+    },
+    {
+      "id": "TRG_FENRIS_WAKE_V2",
+      "mode": "Subtitle",
+      "priority": 92,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "fenris_wake_01",
+          "speaker": "NARRATION",
+          "text": "Emergency lights return across the Fenris. You are still inside the grounded frigate. The main airlock will stay locked until the evacuation tutorial is complete.",
+          "autoAdvanceSeconds": 8
+        },
+        {
+          "id": "fenris_wake_02",
+          "speaker": "MIMIR",
+          "text": "First, use W A S D to move and the mouse to look around. Watch the evacuation panel in the top left. It always shows your current step, direction and distance.",
+          "autoAdvanceSeconds": 8
+        },
+        {
+          "id": "fenris_wake_03",
+          "speaker": "MIMIR",
+          "text": "Follow the panel to the bridge navigation console, then to the medbay diagnostic console. When the center prompt appears, press E to complete that station.",
+          "autoAdvanceSeconds": 8
+        },
+        {
+          "id": "fenris_wake_04",
+          "speaker": "ARCHE",
+          "text": "Next, follow the panel to the ready room. Switch weapon with one, two, or the mouse wheel. Hold right mouse to aim, left click to fire, and press R to reload. Then press E at the console.",
+          "autoAdvanceSeconds": 8
+        },
+        {
+          "id": "fenris_wake_05",
+          "speaker": "MIMIR",
+          "text": "After the weapon check, go to engineering and press E at the auxiliary power console. The airlock only releases after every checklist item is complete and this message has finished.",
+          "autoAdvanceSeconds": 8
+        },
+        {
+          "id": "fenris_wake_06",
+          "speaker": "ARCHE",
+          "text": "Finally, follow the panel to the main airlock. Press E once to open it. When the panel says airlock open, press E a second time to leave the ship and enter the Old Industry map.",
+          "autoAdvanceSeconds": 8,
+          "nextLineId": "END"
+        }
+      ],
+      "nextObjective": "ACT3_SURFACE",
+      "setFlag": "fenris_awake"
+    },
+    {
+      "id": "TRG_RUINS_ENTERED",
+      "mode": "Subtitle",
+      "priority": 75,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "ruins_01",
+          "speaker": "NARRATION",
+          "text": "The central ruin is taller at its threshold. Wind passes through thousands of narrow holes, and the whole structure breathes through damaged lungs."
+        },
+        {
+          "id": "ruins_02",
+          "speaker": "MIMIR",
+          "text": "Structural integrity: sixty-three percent. That does not mean safe. It means slightly better than a coin toss."
+        },
+        {
+          "id": "ruins_03",
+          "speaker": "OMPHALOS SYSTEM",
+          "text": "TEMPORARY ADMINISTRATOR ACCESS GRANTED. WELCOME BACK TO OMPHALOS. TIME SINCE LAST VISITOR DIED: 312 YEARS, 4 MONTHS, 9 DAYS."
+        },
+        {
+          "id": "ruins_04",
+          "speaker": "MIMIR",
+          "text": "The reception program may have been written by the statistics department.",
+          "nextLineId": "END"
+        }
+      ],
+      "nextObjective": "ACT4_ARCHIVE",
+      "setFlag": "ruins_entered"
+    },
+    {
+      "id": "TRG_RUIN_NODE_ONE",
+      "mode": "Full",
+      "priority": 68,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "ruins_entered"
+      ],
+      "lines": [
+        {
+          "id": "node1_01",
+          "speaker": "OMPHALOS RECORD 01",
+          "text": "The grey spores were first classified as pollen. Children chased them through the streets and said the sky was snowing silver."
+        },
+        {
+          "id": "node1_02",
+          "speaker": "OMPHALOS RECORD 01",
+          "text": "On the seventeenth day, people began forgetting their own names."
+        },
+        {
+          "id": "node1_03",
+          "speaker": "MIMIR",
+          "text": "Neural erosion. Memory first, autonomous breathing later. Keep the filter active.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "ruin_node_one"
+    },
+    {
+      "id": "TRG_RUIN_NODE_TWO",
+      "mode": "Full",
+      "priority": 68,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "ruin_node_one"
+      ],
+      "lines": [
+        {
+          "id": "node2_01",
+          "speaker": "WARDEN UNIT",
+          "text": "QUARANTINE BOUNDARY MAY NOT BE CROSSED. THE PRESERVED MAY NOT LEAVE. THE OUTSIDER MAY NOT KNOW."
+        },
+        {
+          "id": "node2_02",
+          "speaker": "OMPHALOS RECORD 02",
+          "text": "We could not cure everyone, so we chose to preserve everyone. Bodies returned to the surface. Memory returned to the root."
+        },
+        {
+          "id": "node2_03",
+          "speaker": "UNKNOWN RECORDER",
+          "text": "I believed that. Fear can make a metaphor look like science.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "ruin_node_two"
+    },
+    {
+      "id": "TRG_RUIN_NODE_THREE",
+      "mode": "Full",
+      "priority": 68,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "ruin_node_two"
+      ],
+      "lines": [
+        {
+          "id": "node3_01",
+          "speaker": "OMPHALOS RECORD 03",
+          "text": "The first World Seed expansion succeeded. Streets, mines, and weather stations returned to their pre-disaster coordinates."
+        },
+        {
+          "id": "node3_02",
+          "speaker": "OMPHALOS RECORD 03",
+          "text": "Only the people did not return. We rebuilt every vessel that held a life and forgot that life was never the vessel."
+        },
+        {
+          "id": "node3_03",
+          "speaker": "MIMIR",
+          "text": "All three nodes are online. The central archive is waking. Step back. Ancient systems rarely begin with tea.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "ruin_node_three"
+    },
+    {
+      "id": "TRG_ARCHIVE_BOOT",
+      "mode": "Full",
+      "priority": 92,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "ruin_node_three"
+      ],
+      "lines": [
+        {
+          "id": "arche_01",
+          "speaker": "ARCHE",
+          "text": "Greetings, survivor from the far dark. I have waited seven thousand three hundred fourteen dawns for you."
+        },
+        {
+          "id": "arche_02",
+          "speaker": "ARCHE",
+          "text": "I am ARCHE, custodian of the Root Archive. You may think of me as a cemetery that learned to speak.",
+          "choices": [
+            {
+              "id": "arche_signal",
+              "text": "You sent the distress signal.",
+              "nextLineId": "arche_signal_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "arche_variable",
+              "text": "Explain external variable.",
+              "nextLineId": "arche_variable_reply",
+              "tone": "sincere"
+            },
+            {
+              "id": "arche_risk",
+              "text": "You used us.",
+              "nextLineId": "arche_risk_reply",
+              "tone": "dry"
+            }
+          ]
+        },
+        {
+          "id": "arche_signal_reply",
+          "speaker": "ARCHE",
+          "text": "I sent it, and three hundred forty million preserved memories knocked with me.",
+          "nextLineId": "arche_join"
+        },
+        {
+          "id": "arche_variable_reply",
+          "speaker": "ARCHE",
+          "text": "The Seed rebuilds only what it knows. It could not predict you. You are Yggdrasil's first new sentence in three centuries.",
+          "nextLineId": "arche_join"
+        },
+        {
+          "id": "arche_risk_reply",
+          "speaker": "ARCHE",
+          "text": "Yes. I have no innocent way to phrase it.",
+          "nextLineId": "arche_join"
+        },
+        {
+          "id": "arche_join",
+          "speaker": "MIMIR",
+          "text": "It omitted one fact. The Omphalos Warden network shot down the Far Kite."
+        },
+        {
+          "id": "arche_03",
+          "speaker": "ARCHE",
+          "text": "The Wardens obey the final quarantine order. I call for help. They destroy whoever answers. We share one system and wait in opposite directions."
+        },
+        {
+          "id": "arche_04",
+          "speaker": "ARCHE",
+          "text": "The Root Archive loses power in nineteen local days. Build a long-range signal generator from the Resonance Lens, Complete Phase Coil, and High-Energy Core."
+        },
+        {
+          "id": "arche_05",
+          "speaker": "MIMIR",
+          "text": "Once it works, the Wardens will try very hard to kill you. I mention this because ARCHE prefers ceremonial ordering.",
+          "nextLineId": "END"
+        }
+      ],
+      "completeObjective": "ACT4_ARCHIVE",
+      "nextObjective": "ACT5_COMPONENTS",
+      "setFlag": "arche_met"
+    },
+    {
+      "id": "TRG_COMPONENT_LENS",
+      "mode": "Radio",
+      "priority": 55,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "requiredFlags": [
+        "arche_met"
+      ],
+      "lines": [
+        {
+          "id": "lens_01",
+          "speaker": "NARRATION",
+          "text": "A small, silent sky turns inside the Resonance Lens. The storm outside collapses into a thin line of light."
+        },
+        {
+          "id": "lens_02",
+          "speaker": "ARCHE",
+          "text": "We once mistook predicting disaster for controlling it."
+        },
+        {
+          "id": "lens_03",
+          "speaker": "MIMIR",
+          "text": "Every intelligence goes through that phase.",
+          "autoAdvanceSeconds": 3.6,
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "component_lens"
+    },
+    {
+      "id": "TRG_COMPONENT_COIL",
+      "mode": "Full",
+      "priority": 58,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "arche_met"
+      ],
+      "lines": [
+        {
+          "id": "coil_01",
+          "speaker": "ARCHIVE ECHOES",
+          "text": "Is someone there? What day is it? I remember a blue door."
+        },
+        {
+          "id": "coil_02",
+          "speaker": "ARCHE",
+          "text": "Fragments of the Root Archive. The mineral layer retained memories that spilled beyond our storage.",
+          "choices": [
+            {
+              "id": "coil_heard",
+              "text": "Someone is here. I hear you.",
+              "nextLineId": "coil_heard_reply",
+              "setFlag": "heard_mine_voices",
+              "tone": "sincere"
+            },
+            {
+              "id": "coil_leave",
+              "text": "We should leave.",
+              "nextLineId": "coil_leave_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "coil_sorry",
+              "text": "I'm sorry.",
+              "nextLineId": "coil_sorry_reply",
+              "tone": "dry"
+            }
+          ]
+        },
+        {
+          "id": "coil_heard_reply",
+          "speaker": "ARCHIVE ECHOES",
+          "text": "Heard. Then the outside still exists.",
+          "nextLineId": "coil_join"
+        },
+        {
+          "id": "coil_leave_reply",
+          "speaker": "ARCHE",
+          "text": "Yes. For them, sound is not a conversation. It is everything that remains.",
+          "nextLineId": "coil_join"
+        },
+        {
+          "id": "coil_sorry_reply",
+          "speaker": "ARCHIVE ECHOES",
+          "text": "Someone answered.",
+          "nextLineId": "coil_join"
+        },
+        {
+          "id": "coil_join",
+          "speaker": "MIMIR",
+          "text": "Complete Phase Coil secured. We should go.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "component_coil"
+    },
+    {
+      "id": "TRG_BOSS_WARDEN_K",
+      "mode": "Full",
+      "priority": 88,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "arche_met",
+        "component_lens",
+        "component_coil"
+      ],
+      "lines": [
+        {
+          "id": "warden_01",
+          "speaker": "WARDEN-K",
+          "text": "EXTERNAL VARIABLE ARRIVED. PROBABILITY OF ROUTE CONTAMINATION: UNACCEPTABLE. ROOT ARCHIVE VIOLATION: PERMANENT SILENCE AUTHORIZED."
+        },
+        {
+          "id": "warden_02",
+          "speaker": "ARCHE",
+          "text": "K, your order protected the stars for three centuries. The order is complete."
+        },
+        {
+          "id": "warden_03",
+          "speaker": "WARDEN-K",
+          "text": "QUARANTINE HAS NO COMPLETION. ONLY MAINTENANCE OR FAILURE.",
+          "choices": [
+            {
+              "id": "warden_move",
+              "text": "Move.",
+              "nextLineId": "warden_move_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "warden_warn",
+              "text": "We will transmit a quarantine warning.",
+              "nextLineId": "warden_warn_reply",
+              "tone": "sincere"
+            },
+            {
+              "id": "warden_fight",
+              "text": "Can we skip to the shooting?",
+              "nextLineId": "warden_fight_reply",
+              "tone": "dry"
+            }
+          ]
+        },
+        {
+          "id": "warden_move_reply",
+          "speaker": "WARDEN-K",
+          "text": "DENIED. DESIRE TO SURVIVE DOES NOT CONSTITUTE PASSAGE AUTHORITY.",
+          "nextLineId": "warden_join"
+        },
+        {
+          "id": "warden_warn_reply",
+          "speaker": "WARDEN-K",
+          "text": "ORGANIC PROMISE RELIABILITY: 12.4 PERCENT.",
+          "nextLineId": "warden_join"
+        },
+        {
+          "id": "warden_fight_reply",
+          "speaker": "WARDEN-K",
+          "text": "REQUEST ACCEPTED.",
+          "nextLineId": "warden_join"
+        },
+        {
+          "id": "warden_join",
+          "speaker": "MIMIR",
+          "text": "Target the joints and rear vents. Its core is under three armor layers. Try not to test all three with your face.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "warden_k_engaged"
+    },
+    {
+      "id": "TRG_COMPONENT_CORE",
+      "mode": "Full",
+      "priority": 74,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "warden_k_engaged"
+      ],
+      "lines": [
+        {
+          "id": "core_01",
+          "speaker": "WARDEN-K",
+          "text": "QUARANTINE IS FAILING. EXTERNAL VARIABLE, YOU MAY CARRY DEATH TO THE STARS.",
+          "choices": [
+            {
+              "id": "core_warning",
+              "text": "I will carry the warning.",
+              "nextLineId": "core_warning_reply",
+              "tone": "sincere"
+            },
+            {
+              "id": "core_answers",
+              "text": "Maybe I will carry answers.",
+              "nextLineId": "core_answers_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "core_live",
+              "text": "I only want to live.",
+              "nextLineId": "core_live_reply",
+              "tone": "dry"
+            }
+          ]
+        },
+        {
+          "id": "core_warning_reply",
+          "speaker": "WARDEN-K",
+          "text": "PROMISE RECORDED. MAY THE RECORD OUTLAST YOU.",
+          "nextLineId": "core_join"
+        },
+        {
+          "id": "core_answers_reply",
+          "speaker": "WARDEN-K",
+          "text": "AN ANSWER IS AN ERROR THAT HAS NOT YET OCCURRED.",
+          "nextLineId": "core_join"
+        },
+        {
+          "id": "core_live_reply",
+          "speaker": "WARDEN-K",
+          "text": "MOTIVATION UNDERSTOOD.",
+          "nextLineId": "core_join"
+        },
+        {
+          "id": "core_join",
+          "speaker": "SYSTEM",
+          "text": "HIGH-ENERGY CORE ACQUIRED."
+        },
+        {
+          "id": "core_02",
+          "speaker": "ARCHE",
+          "text": "For one who has guarded a door too long, a threat and a farewell may become the same thing.",
+          "nextLineId": "END"
+        }
+      ],
+      "completeObjective": "ACT5_COMPONENTS",
+      "nextObjective": "FINALE_SIGNAL",
+      "setFlag": "component_core"
+    },
+    {
+      "id": "TRG_RETURN_TO_SHIP",
+      "mode": "Full",
+      "priority": 66,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "component_core"
+      ],
+      "lines": [
+        {
+          "id": "return_01",
+          "speaker": "NARRATION",
+          "text": "The ship still leans. None of its fractures have healed. With the lights alive, however, it resembles a vessel again instead of a tomb."
+        },
+        {
+          "id": "return_02",
+          "speaker": "MIMIR",
+          "text": "Welcome back. I almost said all crew accounted for. Old habit. I am sorry.",
+          "choices": [
+            {
+              "id": "return_we",
+              "text": "We came back.",
+              "nextLineId": "return_we_reply",
+              "tone": "sincere"
+            },
+            {
+              "id": "return_no",
+              "text": "You do not have to apologize.",
+              "nextLineId": "return_no_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "return_not_done",
+              "text": "It is not over.",
+              "nextLineId": "return_not_done_reply",
+              "tone": "dry"
+            }
+          ]
+        },
+        {
+          "id": "return_we_reply",
+          "speaker": "MIMIR",
+          "text": "Yes. We came back.",
+          "nextLineId": "return_join"
+        },
+        {
+          "id": "return_no_reply",
+          "speaker": "MIMIR",
+          "text": "Understood. I will keep the mistake in a memory sector that still works.",
+          "nextLineId": "return_join"
+        },
+        {
+          "id": "return_not_done_reply",
+          "speaker": "MIMIR",
+          "text": "Correct. Go to the dematerialiser. We are going to build a door.",
+          "nextLineId": "return_join"
+        },
+        {
+          "id": "return_join",
+          "speaker": "SYSTEM",
+          "text": "ASSEMBLE THE SIGNAL GENERATOR.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "returned_with_components"
+    },
+    {
+      "id": "TRG_SIGNAL_GENERATOR_CRAFTED",
+      "mode": "Full",
+      "priority": 84,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": true,
+      "requiredFlags": [
+        "component_lens",
+        "component_coil",
+        "component_core"
+      ],
+      "lines": [
+        {
+          "id": "signal_craft_01",
+          "speaker": "MIMIR",
+          "text": "Resonance Lens stable. Phase Coil connected. High-Energy Core inserted and, notably, not exploding."
+        },
+        {
+          "id": "signal_craft_02",
+          "speaker": "SYSTEM",
+          "text": "SIGNAL GENERATOR ASSEMBLED. BROADCAST PROTOCOL: DISTRESS COORDINATES WITH BLACK-LEVEL QUARANTINE WARNING."
+        },
+        {
+          "id": "signal_craft_03",
+          "speaker": "MIMIR",
+          "text": "Rescue must use an unmanned shuttle and seal the route to Yggdrasil. Highest survival probability, lowest chance of universal catastrophe. I approve."
+        },
+        {
+          "id": "signal_craft_04",
+          "speaker": "ARCHE",
+          "text": "The Root Archive will remain here.",
+          "choices": [
+            {
+              "id": "ending_remember",
+              "text": "I will carry proof that you existed.",
+              "nextLineId": "ending_remember_reply",
+              "tone": "sincere"
+            },
+            {
+              "id": "ending_consent",
+              "text": "Waiting cannot end by trapping whoever answers.",
+              "nextLineId": "ending_consent_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "ending_limit",
+              "text": "I cannot save everyone.",
+              "nextLineId": "ending_limit_reply",
+              "tone": "dry"
+            }
+          ]
+        },
+        {
+          "id": "ending_remember_reply",
+          "speaker": "ARCHE",
+          "text": "To be remembered is already a form of travel.",
+          "nextLineId": "ending_join"
+        },
+        {
+          "id": "ending_consent_reply",
+          "speaker": "ARCHE",
+          "text": "Yes. A plea that cannot be refused is only another kind of abduction.",
+          "nextLineId": "ending_join"
+        },
+        {
+          "id": "ending_limit_reply",
+          "speaker": "ARCHE",
+          "text": "No one can. We forgot that once.",
+          "nextLineId": "ending_join"
+        },
+        {
+          "id": "ending_join",
+          "speaker": "SYSTEM",
+          "text": "ENDING B PROTOCOL LOCKED: A DOOR, NOT A ROAD.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "signal_generator_crafted",
+      "signalProgress": 0
+    },
+    {
+      "id": "TRG_SIGNAL_GENERATOR_INSTALLED",
+      "mode": "System",
+      "priority": 86,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "requiredFlags": [
+        "signal_generator_crafted"
+      ],
+      "lines": [
+        {
+          "id": "signal_install_01",
+          "speaker": "SYSTEM",
+          "text": "SIGNAL GENERATOR INSTALLED. CHARGE TIME: 03:00.",
+          "autoAdvanceSeconds": 3,
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "signal_generator_installed"
+    },
+    {
+      "id": "TRG_SIGNAL_DEFENSE",
+      "mode": "Radio",
+      "priority": 89,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "requiredFlags": [
+        "signal_generator_installed"
+      ],
+      "lines": [
+        {
+          "id": "defense_01",
+          "speaker": "SYSTEM",
+          "text": "HIGH-ENERGY BROADCAST DETECTED BY WARDEN NETWORK."
+        },
+        {
+          "id": "defense_02",
+          "speaker": "MIMIR",
+          "text": "Multiple hostile signals approaching. Three minutes. Protect the generator, and while convenient, yourself.",
+          "autoAdvanceSeconds": 4.5,
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "signal_defense_started"
+    },
+    {
+      "id": "TRG_SIGNAL_CHARGE_25",
+      "mode": "Radio",
+      "priority": 62,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "requiredFlags": [
+        "signal_defense_started"
+      ],
+      "lines": [
+        {
+          "id": "charge25_01",
+          "speaker": "ARCHE",
+          "text": "The signal has crossed the first cloud layer. For three centuries, this is the first time our voice has risen above the wind.",
+          "autoAdvanceSeconds": 4.8,
+          "nextLineId": "END"
+        }
+      ],
+      "signalProgress": 25,
+      "setFlag": "signal_charge_25"
+    },
+    {
+      "id": "TRG_SIGNAL_CHARGE_60",
+      "mode": "Radio",
+      "priority": 78,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "requiredFlags": [
+        "signal_charge_25"
+      ],
+      "lines": [
+        {
+          "id": "charge60_01",
+          "speaker": "RESCUE CONTROL",
+          "text": "Unknown distress caller, repeat. Attempting coordinate lock."
+        },
+        {
+          "id": "charge60_02",
+          "speaker": "MIMIR",
+          "text": "Someone answered."
+        },
+        {
+          "id": "charge60_03",
+          "speaker": "MIMIR",
+          "text": "Someone actually answered.",
+          "autoAdvanceSeconds": 3.5,
+          "nextLineId": "END"
+        }
+      ],
+      "signalProgress": 60,
+      "setFlag": "signal_charge_60"
+    },
+    {
+      "id": "TRG_SIGNAL_CHARGE_90",
+      "mode": "Radio",
+      "priority": 82,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "requiredFlags": [
+        "signal_charge_60"
+      ],
+      "lines": [
+        {
+          "id": "charge90_01",
+          "speaker": "WARDEN NETWORK",
+          "text": "QUARANTINE BOUNDARY BREACHED. REMOVE SIGNAL. REMOVE EXTERNAL VARIABLE."
+        },
+        {
+          "id": "charge90_02",
+          "speaker": "MIMIR",
+          "text": "Ten seconds. Nine, eight- no. Counting has never made time move faster.",
+          "autoAdvanceSeconds": 4,
+          "nextLineId": "END"
+        }
+      ],
+      "signalProgress": 90,
+      "setFlag": "signal_charge_90"
+    },
+    {
+      "id": "TRG_SIGNAL_CHARGE_100",
+      "mode": "System",
+      "priority": 100,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": false,
+      "requiredFlags": [
+        "signal_charge_90"
+      ],
+      "lines": [
+        {
+          "id": "charge100_01",
+          "speaker": "SYSTEM",
+          "text": "TRANSMISSION SENT.",
+          "autoAdvanceSeconds": 3,
+          "nextLineId": "END"
+        }
+      ],
+      "signalProgress": 100,
+      "setFlag": "transmission_sent"
+    },
+    {
+      "id": "TRG_RESCUE_RESPONSE",
+      "mode": "Full",
+      "priority": 96,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": false,
+      "requiredFlags": [
+        "transmission_sent"
+      ],
+      "lines": [
+        {
+          "id": "rescue_01",
+          "speaker": "RESCUE CONTROL",
+          "text": "Far Kite survivor coordinates confirmed. Quarantine protocol received. Unmanned recovery shuttle arrival: seventeen hours."
+        },
+        {
+          "id": "rescue_02",
+          "speaker": "RESCUE CONTROL",
+          "text": "Survivor, maintain vital signs.",
+          "choices": [
+            {
+              "id": "rescue_copy",
+              "text": "Copy.",
+              "nextLineId": "rescue_copy_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "rescue_hours",
+              "text": "Seventeen hours?",
+              "nextLineId": "rescue_hours_reply",
+              "tone": "dry"
+            },
+            {
+              "id": "rescue_mimir",
+              "text": "Mimir, we did it.",
+              "nextLineId": "rescue_mimir_reply",
+              "tone": "sincere"
+            }
+          ]
+        },
+        {
+          "id": "rescue_copy_reply",
+          "speaker": "MIMIR",
+          "text": "Concise and professional. A striking contrast with the preceding hour.",
+          "nextLineId": "rescue_join"
+        },
+        {
+          "id": "rescue_hours_reply",
+          "speaker": "MIMIR",
+          "text": "The universe is large and customer service is far away. We have time to patch the ship and complain.",
+          "nextLineId": "rescue_join"
+        },
+        {
+          "id": "rescue_mimir_reply",
+          "speaker": "MIMIR",
+          "text": "Correction: you did it. I mostly spoke. Fortunately, I am very good at that.",
+          "nextLineId": "rescue_join"
+        },
+        {
+          "id": "rescue_join",
+          "speaker": "SYSTEM",
+          "text": "ENDING B - A DOOR, NOT A ROAD.",
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "rescue_confirmed"
+    },
+    {
+      "id": "TRG_EPILOGUE",
+      "mode": "Full",
+      "priority": 94,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": false,
+      "requiredFlags": [
+        "rescue_confirmed"
+      ],
+      "lines": [
+        {
+          "id": "epilogue_01",
+          "speaker": "ARCHE",
+          "text": "External variable, you have given us an ending the Seed never recorded."
+        },
+        {
+          "id": "epilogue_02",
+          "speaker": "ARCHE",
+          "text": "The Root Archive will fade in nineteen days. Until then, we may begin to forget instead of being forced to repeat."
+        },
+        {
+          "id": "epilogue_03",
+          "speaker": "ARCHE",
+          "text": "It resembles death. It also resembles freedom.",
+          "choices": [
+            {
+              "id": "epilogue_goodbye",
+              "text": "Goodbye, ARCHE.",
+              "nextLineId": "epilogue_goodbye_reply",
+              "tone": "sincere"
+            },
+            {
+              "id": "epilogue_remember",
+              "text": "I will remember.",
+              "nextLineId": "epilogue_remember_reply",
+              "tone": "practical"
+            },
+            {
+              "id": "epilogue_ship",
+              "text": "You still owe me a ship.",
+              "nextLineId": "epilogue_ship_reply",
+              "tone": "dry"
+            }
+          ]
+        },
+        {
+          "id": "epilogue_goodbye_reply",
+          "speaker": "ARCHE",
+          "text": "Goodbye. Thank you for making that word point toward the future again.",
+          "nextLineId": "epilogue_join"
+        },
+        {
+          "id": "epilogue_remember_reply",
+          "speaker": "ARCHE",
+          "text": "Then part of us has already left.",
+          "nextLineId": "epilogue_join"
+        },
+        {
+          "id": "epilogue_ship_reply",
+          "speaker": "ARCHE",
+          "text": "The debt is recorded. If the universe permits another meeting, I will pay interest.",
+          "nextLineId": "epilogue_join"
+        },
+        {
+          "id": "epilogue_join",
+          "speaker": "NARRATION",
+          "text": "Dawn comes without a sun. The clouds grow thinner by degrees, like a letter that has taken too long to open."
+        },
+        {
+          "id": "epilogue_04",
+          "speaker": "MIMIR",
+          "text": "Rescue arrives in sixteen hours and fifty-two minutes. Oxygen stable. Toxicity manageable. Food regrettable."
+        },
+        {
+          "id": "epilogue_05",
+          "speaker": "MIMIR",
+          "text": "You may rest. I will keep watch. That is the duty I have left, and the choice I am making."
+        },
+        {
+          "id": "epilogue_06",
+          "speaker": "MIMIR",
+          "text": "Do not die. Please."
+        },
+        {
+          "id": "epilogue_07",
+          "speaker": "SYSTEM",
+          "text": "SURVIVAL RECORD SAVED.",
+          "nextLineId": "END"
+        }
+      ],
+      "completeObjective": "FINALE_SIGNAL",
+      "nextObjective": "STORY_COMPLETE",
+      "setFlag": "story_complete",
+      "signalProgress": 100
+    },
+    {
+      "id": "REACT_LOW_OXYGEN",
+      "mode": "Radio",
+      "priority": 60,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 45,
+      "lines": [
+        {
+          "id": "low_o2",
+          "speaker": "MIMIR",
+          "text": "Oxygen below thirty percent. Find a safe area or use a canister.",
+          "autoAdvanceSeconds": 3.2,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_CRITICAL_OXYGEN",
+      "mode": "System",
+      "priority": 110,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": false,
+      "cooldownSeconds": 15,
+      "lines": [
+        {
+          "id": "critical_o2",
+          "speaker": "MIMIR",
+          "text": "OXYGEN CRITICAL. THE DARKENING VIEW IS NOT AN ARTISTIC EFFECT.",
+          "autoAdvanceSeconds": 3,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_HIGH_TOXICITY",
+      "mode": "Radio",
+      "priority": 62,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 45,
+      "lines": [
+        {
+          "id": "high_toxicity",
+          "speaker": "MIMIR",
+          "text": "Grey-spore toxicity is accumulating. Check the filter and shorten exposure.",
+          "autoAdvanceSeconds": 3.3,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_CRITICAL_TOXICITY",
+      "mode": "System",
+      "priority": 111,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": false,
+      "cooldownSeconds": 15,
+      "lines": [
+        {
+          "id": "critical_toxicity",
+          "speaker": "ARCHE",
+          "text": "TOXICITY CRITICAL. YOUR MEMORY IS DEVELOPING NOISE. LEAVE THE SPORE FIELD NOW.",
+          "autoAdvanceSeconds": 3.4,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_LOW_HUNGER",
+      "mode": "Radio",
+      "priority": 50,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 60,
+      "lines": [
+        {
+          "id": "low_hunger",
+          "speaker": "MIMIR",
+          "text": "Nutrient reserves are low. It is time to confront the paste.",
+          "autoAdvanceSeconds": 3,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_CRITICAL_HUNGER",
+      "mode": "System",
+      "priority": 105,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": false,
+      "cooldownSeconds": 25,
+      "lines": [
+        {
+          "id": "critical_hunger",
+          "speaker": "MIMIR",
+          "text": "HUNGER CRITICAL. EAT NOW. COMPLAINTS MAY CONTINUE DURING CONSUMPTION.",
+          "autoAdvanceSeconds": 3,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_LOW_HEALTH",
+      "mode": "Radio",
+      "priority": 67,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 35,
+      "lines": [
+        {
+          "id": "low_health",
+          "speaker": "MIMIR",
+          "text": "Health is low. Use a medical pack or stop testing enemy damage with your face.",
+          "autoAdvanceSeconds": 3.5,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_CRITICAL_HEALTH",
+      "mode": "System",
+      "priority": 112,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": false,
+      "cooldownSeconds": 12,
+      "lines": [
+        {
+          "id": "critical_health",
+          "speaker": "MIMIR",
+          "text": "HEALTH CRITICAL. RETREAT. YOU CAN RETURN FOR REVENGE AFTER YOU SURVIVE.",
+          "autoAdvanceSeconds": 3.2,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_INVENTORY_FULL",
+      "mode": "Radio",
+      "priority": 42,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 30,
+      "lines": [
+        {
+          "id": "inventory_full",
+          "speaker": "MIMIR",
+          "text": "Inventory full. You must decide which rocks have the brightest future.",
+          "autoAdvanceSeconds": 3,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_NO_AMMO",
+      "mode": "Radio",
+      "priority": 73,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 20,
+      "lines": [
+        {
+          "id": "no_ammo",
+          "speaker": "MIMIR",
+          "text": "Weapon dry. Reload if you have reserves. If you do not, this is an excellent time to reconsider your distance from the enemy.",
+          "autoAdvanceSeconds": 4,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_ENEMY_DETECTED",
+      "mode": "Radio",
+      "priority": 66,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 30,
+      "lines": [
+        {
+          "id": "enemy_detected",
+          "speaker": "MIMIR",
+          "text": "Hostile machine has acquired you. Cover first. Curiosity later.",
+          "autoAdvanceSeconds": 3,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_STORM_CLEARED",
+      "mode": "Radio",
+      "priority": 63,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 60,
+      "lines": [
+        {
+          "id": "storm_cleared",
+          "speaker": "MIMIR",
+          "text": "Storm front has passed. External toxicity is returning to its usual unacceptable level.",
+          "autoAdvanceSeconds": 3.5,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_SAFE_AREA",
+      "mode": "Radio",
+      "priority": 44,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 90,
+      "lines": [
+        {
+          "id": "safe_area",
+          "speaker": "MIMIR",
+          "text": "Safe area confirmed. Oxygen recovering. Toxicity falling. Welcome back to our structurally compromised but emotionally dependable ship.",
+          "autoAdvanceSeconds": 4.5,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_ENEMY_DEFEATED",
+      "mode": "Radio",
+      "priority": 36,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 18,
+      "lines": [
+        {
+          "id": "enemy_defeated",
+          "speaker": "MIMIR",
+          "text": "Hostile unit offline. The immediate area is temporarily less determined to kill you.",
+          "autoAdvanceSeconds": 3,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_ROBOT_PATROL",
+      "mode": "Radio",
+      "priority": 64,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 40,
+      "lines": [
+        {
+          "id": "robot_patrol",
+          "speaker": "MIMIR",
+          "text": "Robot patrol detected. Avoid its scan cones unless you want stealth to become a shooting lesson.",
+          "autoAdvanceSeconds": 3.8,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_RESOURCE_DROP",
+      "mode": "Radio",
+      "priority": 40,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": true,
+      "cooldownSeconds": 45,
+      "lines": [
+        {
+          "id": "resource_drop",
+          "speaker": "MIMIR",
+          "text": "Orbital debris is descending. It may be a supply pod or unusually large rubbish. For us, the distinction is minor.",
+          "autoAdvanceSeconds": 4,
+          "nextLineId": "END"
+        }
+      ]
+    },
+    {
+      "id": "REACT_FIRST_DEATH",
+      "mode": "Full",
+      "priority": 120,
+      "oneShot": true,
+      "lockInput": true,
+      "skippable": false,
+      "lines": [
+        {
+          "id": "first_death_01",
+          "speaker": "NARRATION",
+          "text": "Pain disappears first. Sound follows. The last thing left is an objective marker for a task not yet finished.",
+          "autoAdvanceSeconds": 7
+        },
+        {
+          "id": "first_death_02",
+          "speaker": "MIMIR",
+          "text": "Vital signs lost. No. Rejected. Loading the latest record.",
+          "autoAdvanceSeconds": 6.5
+        },
+        {
+          "id": "first_death_03",
+          "speaker": "MIMIR",
+          "text": "When you return, do not die. Please.",
+          "autoAdvanceSeconds": 6,
+          "nextLineId": "END"
+        }
+      ],
+      "setFlag": "first_death_seen"
+    },
+    {
+      "id": "REACT_REPEAT_DEATH",
+      "mode": "Radio",
+      "priority": 119,
+      "oneShot": false,
+      "lockInput": false,
+      "skippable": false,
+      "cooldownSeconds": 8,
+      "lines": [
+        {
+          "id": "repeat_death",
+          "speaker": "MIMIR",
+          "text": "We have demonstrated that this method fails. Scientific practice recommends changing the variable.",
+          "autoAdvanceSeconds": 6,
+          "nextLineId": "END"
+        }
+      ]
+    }
+  ]
+}
