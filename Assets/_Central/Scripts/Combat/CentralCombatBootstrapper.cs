@@ -33,6 +33,7 @@ namespace DontDiePlease.Central.Combat
         private const string FrameworkGameManagerPath = "Assets/Akila/FPS Framework/Prefabs/World/Game Manager.prefab";
         private const string FrameworkHudPath = "Assets/Akila/FPS Framework/Prefabs/HUD/HUD.prefab";
         private const string AssetCatalogPath = "Combat/CentralCombatAssetCatalog";
+        private const float PlayerSpawnHeight = 1.08f;
 
         private CentralCombatAssetCatalog assetCatalog;
 
@@ -95,7 +96,7 @@ namespace DontDiePlease.Central.Combat
             if (player == null)
                 yield break;
 
-            EnsureEquippedWeapons(player);
+            yield return FinishPlayerSetup(player);
             if (SceneManager.GetActiveScene().name == "Demo_Combat")
             {
                 var demoSpawner = EnsureSpawner();
@@ -338,6 +339,13 @@ namespace DontDiePlease.Central.Combat
 
             recovery.Configure(this);
 
+            var grounding = player.GetComponent<CentralPlayerGrounding>();
+
+            if (grounding == null)
+                grounding = player.AddComponent<CentralPlayerGrounding>();
+
+            grounding.Configure(player.transform.position);
+
             var inv = player.GetComponentInChildren<FrameworkInventory>(true);
 
             if (inv == null)
@@ -373,6 +381,56 @@ namespace DontDiePlease.Central.Combat
             inventory.Switch(0);
         }
 
+        private IEnumerator FinishPlayerSetup(GameObject player)
+        {
+            if (player == null)
+                yield break;
+
+            EnsureEquippedWeapons(player);
+
+            for (var frame = 0; frame < 45; frame++)
+            {
+                if (HasReadyWeaponInput(player))
+                    break;
+
+                yield return null;
+            }
+
+            EnsureEquippedWeapons(player);
+
+            var controller = player.GetComponent<Akila.FPSFramework.FirstPersonController>();
+
+            if (controller != null)
+            {
+                controller.enabled = true;
+                controller.lockCursor = true;
+                controller.SetActive(true);
+            }
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            FPSFrameworkCore.IsActive = true;
+            FPSFrameworkCore.IsPaused = false;
+            FPSFrameworkCore.IsInputActive = true;
+        }
+
+        private bool HasReadyWeaponInput(GameObject player)
+        {
+            var inventory = player.GetComponentInChildren<FrameworkInventory>(true);
+
+            if (inventory == null)
+                return false;
+
+            var activeInput = inventory.GetComponentsInChildren<ItemInput>(true)
+                .FirstOrDefault(input => input != null && input.gameObject.activeInHierarchy);
+
+            return activeInput != null &&
+                   activeInput.enabled &&
+                   activeInput.Controls != null &&
+                   activeInput.Inventory != null &&
+                   activeInput.CharacterInput != null;
+        }
+
         public void RecoverPlayer(GameObject previousPlayer)
         {
             StartCoroutine(RecoverPlayerRoutine(previousPlayer));
@@ -398,7 +456,7 @@ namespace DontDiePlease.Central.Combat
 
             yield return null;
 
-            EnsureEquippedWeapons(player);
+            yield return FinishPlayerSetup(player);
             EnsureSingleCamera(player);
             DeathCamera.Instance?.Disable();
 
@@ -460,13 +518,13 @@ namespace DontDiePlease.Central.Combat
             foreach (var spot in candidates)
             {
                 if (NavMesh.SamplePosition(spot, out var hit, 16f, NavMesh.AllAreas))
-                    return hit.position + Vector3.up * 0.08f;
+                    return hit.position + Vector3.up * PlayerSpawnHeight;
             }
 
             foreach (var spot in candidates)
             {
                 if (Physics.Raycast(spot + Vector3.up * 60f, Vector3.down, out var hit, 140f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
-                    return hit.point + Vector3.up * 0.08f;
+                    return hit.point + Vector3.up * PlayerSpawnHeight;
             }
 
             return Vector3.up * 1.2f;

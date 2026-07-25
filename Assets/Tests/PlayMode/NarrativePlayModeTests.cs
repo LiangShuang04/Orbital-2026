@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
@@ -523,6 +524,43 @@ namespace DontDiePlease.Tests.PlayMode
 
         [UnityTest]
         [Timeout(120000)]
+        public IEnumerator DemoCombatKeepsTheAkilaPlayerGroundedAndRecoversFalls()
+        {
+            yield return LoadScene("Demo_Combat");
+            var scene = SceneManager.GetActiveScene();
+            yield return WaitForConfiguredSpawner(scene, 600);
+
+            var characterType = RuntimeType("Akila.FPSFramework.CharacterManager", "Akila.FPSFramework");
+            var character = FindSceneObjects(scene, characterType).OfType<Component>().Single();
+            var groundingType = RuntimeType("DontDiePlease.Central.Combat.CentralPlayerGrounding");
+            var grounding = character.GetComponent(groundingType);
+            var controller = character.GetComponent<CharacterController>();
+            Assert.That(grounding, Is.Not.Null);
+            Assert.That(controller, Is.Not.Null);
+
+            for (var frame = 0; frame < 120; frame++)
+                yield return null;
+
+            var terrain = Terrain.activeTerrains.Single(item => item.gameObject.scene == scene);
+            var groundHeight = terrain.SampleHeight(character.transform.position) + terrain.transform.position.y;
+            Assert.That(character.transform.position.y, Is.InRange(groundHeight - 0.1f, groundHeight + 0.6f));
+            Assert.That(controller.isGrounded, Is.True);
+
+            character.transform.position = new Vector3(
+                character.transform.position.x,
+                groundHeight - 8f,
+                character.transform.position.z);
+            Physics.SyncTransforms();
+
+            for (var frame = 0; frame < 12; frame++)
+                yield return null;
+
+            groundHeight = terrain.SampleHeight(character.transform.position) + terrain.transform.position.y;
+            Assert.That(character.transform.position.y, Is.GreaterThanOrEqualTo(groundHeight - 0.1f));
+        }
+
+        [UnityTest]
+        [Timeout(120000)]
         public IEnumerator DemoCombatDeathRestoresAkilaPlayerCameraAndWeapon()
         {
             yield return LoadScene("Demo_Combat");
@@ -619,6 +657,30 @@ namespace DontDiePlease.Tests.PlayMode
             var itemInput = firearm.GetComponent(itemInputType) as Behaviour;
             Assert.That(itemInput, Is.Not.Null);
             Assert.That(itemInput.enabled, Is.True);
+            Assert.That(GetProperty(itemInput, "Controls"), Is.Not.Null);
+            Assert.That(GetProperty(itemInput, "Inventory"), Is.Not.Null);
+            Assert.That(GetProperty(itemInput, "CharacterInput"), Is.Not.Null);
+            var controls = GetProperty(itemInput, "Controls");
+            var firearmActions = GetProperty(controls, "Firearm");
+            var aimAction = GetProperty(firearmActions, "Aim") as InputAction;
+            Assert.That(aimAction, Is.Not.Null);
+            Assert.That(aimAction.enabled, Is.True);
+            Assert.That(
+                aimAction.bindings.Any(binding =>
+                    string.Equals(binding.effectivePath, "<Mouse>/rightButton", StringComparison.OrdinalIgnoreCase)),
+                Is.True);
+            var inventoryItemType = RuntimeType("Akila.FPSFramework.InventoryItem", "Akila.FPSFramework");
+            var inventoryItem = firearm.GetComponent(inventoryItemType);
+            Assert.That(inventoryItem, Is.Not.Null);
+            Assert.That(GetProperty(inventoryItem, "aimingAnimation"), Is.Not.Null);
+            SetField(itemInput, "aimInput", true);
+
+            for (var frame = 0; frame < 10; frame++)
+                yield return null;
+
+            Assert.That(GetProperty<float>(inventoryItem, "aimProgress"), Is.GreaterThan(0f));
+            SetField(itemInput, "aimInput", false);
+
             var characterInputType = RuntimeType("Akila.FPSFramework.CharacterInput", "Akila.FPSFramework");
             var characterInput = characters[0].GetComponent(characterInputType) as Behaviour;
             Assert.That(characterInput, Is.Not.Null);

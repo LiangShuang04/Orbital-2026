@@ -125,6 +125,7 @@ namespace DontDiePlease.Central.Combat
         {
             foreach (var renderer in prefab.GetComponentsInChildren<Renderer>(true))
             {
+                renderer.enabled = true;
                 var sourceMaterials = renderer.sharedMaterials;
                 var changed = false;
 
@@ -160,17 +161,21 @@ namespace DontDiePlease.Central.Combat
             if (shader == null)
                 return source;
 
-            var mainTexture = source.HasProperty("_MainTex") ? source.GetTexture("_MainTex") : null;
-            var mainScale = source.HasProperty("_MainTex") ? source.GetTextureScale("_MainTex") : Vector2.one;
-            var mainOffset = source.HasProperty("_MainTex") ? source.GetTextureOffset("_MainTex") : Vector2.zero;
-            var color = source.HasProperty("_Color") ? source.GetColor("_Color") : Color.white;
+            var mainProperty = source.HasProperty("_BaseMap") ? "_BaseMap" : "_MainTex";
+            var colorProperty = source.HasProperty("_BaseColor") ? "_BaseColor" : "_Color";
+            var mainTexture = source.HasProperty(mainProperty) ? source.GetTexture(mainProperty) : source.mainTexture;
+            var mainScale = source.HasProperty(mainProperty) ? source.GetTextureScale(mainProperty) : source.mainTextureScale;
+            var mainOffset = source.HasProperty(mainProperty) ? source.GetTextureOffset(mainProperty) : source.mainTextureOffset;
+            var color = source.HasProperty(colorProperty) ? source.GetColor(colorProperty) : source.color;
             var material = new Material(shader)
             {
                 name = $"{source.name}_URP",
-                enableInstancing = source.enableInstancing
+                enableInstancing = source.enableInstancing,
+                renderQueue = 2000
             };
 
             material.SetTexture("_BaseMap", mainTexture);
+            material.mainTexture = mainTexture;
             material.SetTextureScale("_BaseMap", mainScale);
             material.SetTextureOffset("_BaseMap", mainOffset);
             material.SetColor("_BaseColor", color);
@@ -181,11 +186,27 @@ namespace DontDiePlease.Central.Combat
             CopyFloat(source, material, "_BumpScale", "_BumpScale");
             CopyFloat(source, material, "_Metallic", "_Metallic");
             CopyFloat(source, material, "_Glossiness", "_Smoothness");
+            CopyFloat(source, material, "_Smoothness", "_Smoothness");
             CopyFloat(source, material, "_OcclusionStrength", "_OcclusionStrength");
             CopyColor(source, material, "_EmissionColor", "_EmissionColor");
 
+            material.SetFloat("_Surface", 0f);
+            material.SetFloat("_AlphaClip", 0f);
+            material.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.One);
+            material.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.Zero);
+            material.SetFloat("_ZWrite", 1f);
+            material.SetOverrideTag("RenderType", "Opaque");
+            material.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            material.DisableKeyword("_ALPHATEST_ON");
+
             if (material.GetTexture("_BumpMap") != null)
                 material.EnableKeyword("_NORMALMAP");
+
+            if (material.GetTexture("_MetallicGlossMap") != null)
+                material.EnableKeyword("_METALLICSPECGLOSSMAP");
+
+            if (material.GetTexture("_OcclusionMap") != null)
+                material.EnableKeyword("_OCCLUSIONMAP");
 
             if (material.GetTexture("_EmissionMap") != null ||
                 material.GetColor("_EmissionColor").maxColorComponent > 0.001f)

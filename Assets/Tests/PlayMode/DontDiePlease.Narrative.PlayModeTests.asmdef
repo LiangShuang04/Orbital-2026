@@ -1,5 +1,8 @@
 {
     "name": "DontDiePlease.Narrative.PlayModeTests",
+    "references": [
+        "Unity.InputSystem"
+    ],
     "optionalUnityReferences": [
         "TestAssemblies"
     ]
