@@ -14,6 +14,10 @@ public class ItemData : ScriptableObject
 
     [Header("Category")]
     public ItemType type;
+
+    [Header("Dropping")]
+    [Tooltip("Object spawned when this item is dropped. Leave empty for a simple cube")]
+    public GameObject worldPrefab;
 }
 
 public enum ItemType
