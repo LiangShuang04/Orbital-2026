@@ -33,7 +33,7 @@ namespace DontDiePlease.Central.Combat
 
         private void Update()
         {
-            if (spent)
+            if (spent || Time.timeScale <= 0f || FPSFrameworkCore.IsPaused)
                 return;
 
             remainingLife -= Time.deltaTime;
@@ -60,6 +60,9 @@ namespace DontDiePlease.Central.Combat
 
         private void Hit(RaycastHit hit)
         {
+            if (Time.timeScale <= 0f || FPSFrameworkCore.IsPaused)
+                return;
+
             spent = true;
 
             var damageable = hit.transform.GetComponentInParent<IDamageable>();

@@ -12,7 +12,7 @@ namespace DontDiePlease.Narrative.UI
         private const float CharactersPerSecond = 36f;
         private const float MinimumAutoAdvanceSeconds = 5.5f;
         private const float ReadingCharactersPerSecond = 21f;
-        private static readonly Color PanelColor = new Color(0.012f, 0.025f, 0.032f, 0.98f);
+        private static readonly Color PanelColor = new Color(0.008f, 0.016f, 0.022f, 0.92f);
         private static readonly Color Cyan = new Color(0.25f, 0.92f, 0.98f, 1f);
         private static readonly Color TextColor = new Color(0.96f, 0.98f, 0.99f, 1f);
         private static readonly Color MutedText = new Color(0.68f, 0.78f, 0.81f, 1f);
@@ -22,6 +22,7 @@ namespace DontDiePlease.Narrative.UI
         private GameObject subtitleRoot;
         private GameObject notificationRoot;
         private GameObject objectiveRoot;
+        private RectTransform fullRect;
         private TextMeshProUGUI fullSpeaker;
         private TextMeshProUGUI fullText;
         private TextMeshProUGUI fullHint;
@@ -86,6 +87,9 @@ namespace DontDiePlease.Narrative.UI
                 }
             }
 
+            if (currentLine == null)
+                return;
+
             if (lineComplete && currentLine.choices != null)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
@@ -131,6 +135,9 @@ namespace DontDiePlease.Narrative.UI
             visibleCharacterCount = 0f;
             autoAdvanceAt = 0f;
             lineComplete = false;
+
+            if (fullRect != null)
+                fullRect.sizeDelta = new Vector2(fullRect.sizeDelta.x, 220f);
 
             ShowMode(mode);
             SetLineText(line);
@@ -235,6 +242,9 @@ namespace DontDiePlease.Narrative.UI
 
             var count = Mathf.Min(choices.Length, choiceButtons.Length);
 
+            if (fullRect != null && count > 0)
+                fullRect.sizeDelta = new Vector2(fullRect.sizeDelta.x, 360f);
+
             for (var index = 0; index < count; index++)
             {
                 var button = choiceButtons[index];
@@ -283,10 +293,11 @@ namespace DontDiePlease.Narrative.UI
             var canvas = CreateCanvas();
             readableFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF") ??
                            TMP_Settings.defaultFontAsset;
-            fullRoot = CreatePanel(canvas.transform, "FullDialogue", new Vector2(0.5f, 0f), new Vector2(0f, 28f), new Vector2(1180f, 430f));
-            subtitleRoot = CreatePanel(canvas.transform, "ExplorationSubtitle", new Vector2(0.5f, 0f), new Vector2(0f, 108f), new Vector2(1180f, 142f));
-            notificationRoot = CreatePanel(canvas.transform, "SystemNotification", new Vector2(0.5f, 1f), new Vector2(0f, -58f), new Vector2(860f, 76f));
-            objectiveRoot = CreatePanel(canvas.transform, "ObjectivePanel", new Vector2(1f, 1f), new Vector2(-24f, -24f), new Vector2(420f, 138f));
+            fullRoot = CreatePanel(canvas.transform, "FullDialogue", new Vector2(0.5f, 0f), new Vector2(0f, 28f), new Vector2(1080f, 220f));
+            fullRect = fullRoot.GetComponent<RectTransform>();
+            subtitleRoot = CreatePanel(canvas.transform, "ExplorationSubtitle", new Vector2(0.5f, 0f), new Vector2(0f, 38f), new Vector2(1140f, 156f));
+            notificationRoot = CreatePanel(canvas.transform, "SystemNotification", new Vector2(0.5f, 1f), new Vector2(0f, -48f), new Vector2(820f, 68f));
+            objectiveRoot = CreatePanel(canvas.transform, "ObjectivePanel", new Vector2(1f, 1f), new Vector2(-20f, -20f), new Vector2(380f, 116f));
 
             BuildFullDialogue();
             BuildSubtitle();
@@ -311,17 +322,20 @@ namespace DontDiePlease.Narrative.UI
         private void BuildFullDialogue()
         {
             AddRail(fullRoot.transform, Cyan);
-            fullSpeaker = CreateText(fullRoot.transform, "Speaker", 22f, FontStyles.Bold, TextAlignmentOptions.Left);
-            SetRect(fullSpeaker.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(36f, -22f), new Vector2(-72f, 34f));
-            fullText = CreateText(fullRoot.transform, "Dialogue", 30f, FontStyles.Normal, TextAlignmentOptions.TopLeft);
-            SetRect(fullText.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(36f, -66f), new Vector2(-72f, 142f));
+            fullSpeaker = CreateText(fullRoot.transform, "Speaker", 18f, FontStyles.Bold, TextAlignmentOptions.Left);
+            SetRect(fullSpeaker.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(34f, -14f), new Vector2(-68f, 24f));
+            fullText = CreateText(fullRoot.transform, "Dialogue", 26f, FontStyles.Normal, TextAlignmentOptions.TopLeft);
+            fullText.enableAutoSizing = true;
+            fullText.fontSizeMin = 20f;
+            fullText.fontSizeMax = 26f;
+            SetRect(fullText.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(34f, -48f), new Vector2(-68f, 108f));
             fullHint = CreateText(fullRoot.transform, "Hint", 15f, FontStyles.Bold, TextAlignmentOptions.BottomRight);
             fullHint.color = MutedText;
-            SetRect(fullHint.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(36f, 14f), new Vector2(-72f, 28f));
+            SetRect(fullHint.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(32f, 10f), new Vector2(-64f, 24f));
 
             for (var index = 0; index < choiceButtons.Length; index++)
             {
-                var y = 140f - index * 50f;
+                var y = 124f - index * 46f;
                 choiceButtons[index] = CreateChoiceButton(fullRoot.transform, index, y);
             }
         }
@@ -329,16 +343,19 @@ namespace DontDiePlease.Narrative.UI
         private void BuildSubtitle()
         {
             AddRail(subtitleRoot.transform, Cyan);
-            subtitleSpeaker = CreateText(subtitleRoot.transform, "Speaker", 19f, FontStyles.Bold, TextAlignmentOptions.Left);
-            SetRect(subtitleSpeaker.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(30f, -15f), new Vector2(-60f, 28f));
-            subtitleText = CreateText(subtitleRoot.transform, "Subtitle", 28f, FontStyles.Normal, TextAlignmentOptions.TopLeft);
-            SetRect(subtitleText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), new Vector2(30f, 14f), new Vector2(-60f, -48f));
+            subtitleSpeaker = CreateText(subtitleRoot.transform, "Speaker", 18f, FontStyles.Bold, TextAlignmentOptions.Left);
+            SetRect(subtitleSpeaker.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(32f, -14f), new Vector2(-64f, 24f));
+            subtitleText = CreateText(subtitleRoot.transform, "Subtitle", 24f, FontStyles.Normal, TextAlignmentOptions.TopLeft);
+            subtitleText.enableAutoSizing = true;
+            subtitleText.fontSizeMin = 19f;
+            subtitleText.fontSizeMax = 24f;
+            SetRect(subtitleText.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(32f, -48f), new Vector2(-64f, 92f));
         }
 
         private void BuildNotification()
         {
             AddRail(notificationRoot.transform, new Color(1f, 0.72f, 0.18f, 1f));
-            notificationText = CreateText(notificationRoot.transform, "Notification", 24f, FontStyles.Bold, TextAlignmentOptions.Center);
+            notificationText = CreateText(notificationRoot.transform, "Notification", 26f, FontStyles.Bold, TextAlignmentOptions.Center);
             SetRect(notificationText.rectTransform, Vector2.zero, Vector2.one, new Vector2(22f, 8f), new Vector2(-44f, -16f));
         }
 
@@ -397,9 +414,11 @@ namespace DontDiePlease.Narrative.UI
             text.alignment = alignment;
             text.color = TextColor;
             text.characterSpacing = 0f;
-            text.lineSpacing = 4f;
+            text.lineSpacing = 3f;
+            text.outlineColor = new Color(0f, 0f, 0f, 0.88f);
+            text.outlineWidth = 0.06f;
             text.textWrappingMode = TextWrappingModes.Normal;
-            text.overflowMode = TextOverflowModes.Overflow;
+            text.overflowMode = TextOverflowModes.Ellipsis;
             text.raycastTarget = false;
             return text;
         }

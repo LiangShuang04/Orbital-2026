@@ -1,3 +1,4 @@
+using Akila.FPSFramework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -99,13 +100,13 @@ namespace DontDiePlease.Systems
         private void OnDestroy()
         {
             UnregisterHandlers();
-            Time.timeScale = 1f;
+            SetPausedState(false);
         }
 
         public void OpenPauseMenu()
         {
             isPaused = true;
-            Time.timeScale = 0f;
+            SetPausedState(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 
@@ -123,7 +124,7 @@ namespace DontDiePlease.Systems
         public void ResumeGame()
         {
             isPaused = false;
-            Time.timeScale = 1f;
+            SetPausedState(false);
             Cursor.visible = !lockCursorOnResume;
             Cursor.lockState = lockCursorOnResume ? CursorLockMode.Locked : CursorLockMode.None;
 
@@ -156,14 +157,14 @@ namespace DontDiePlease.Systems
 
         public void RestartScene()
         {
-            Time.timeScale = 1f;
+            SetPausedState(false);
             var scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.buildIndex);
         }
 
         public void LoadMainMenu()
         {
-            Time.timeScale = 1f;
+            SetPausedState(false);
 
             if (!string.IsNullOrWhiteSpace(mainMenuSceneName) && Application.CanStreamedLevelBeLoaded(mainMenuSceneName))
             {
@@ -176,8 +177,15 @@ namespace DontDiePlease.Systems
 
         public void QuitGame()
         {
-            Time.timeScale = 1f;
+            SetPausedState(false);
             Application.Quit();
+        }
+
+        private static void SetPausedState(bool paused)
+        {
+            Time.timeScale = paused ? 0f : 1f;
+            FPSFrameworkCore.IsPaused = paused;
+            FPSFrameworkCore.IsInputActive = !paused;
         }
 
         public void SetMouseSensitivity(float value)

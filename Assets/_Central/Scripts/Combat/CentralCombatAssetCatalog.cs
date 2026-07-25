@@ -11,6 +11,7 @@ namespace DontDiePlease.Central.Combat
         [SerializeField] private GameObject assaultRiflePrefab;
         [SerializeField] private GameObject gameManagerPrefab;
         [SerializeField] private GameObject hudPrefab;
+        [SerializeField] private GameObject fenrisFrigatePrefab;
         [SerializeField] private GameObject[] pickupPrefabs = Array.Empty<GameObject>();
 
         public GameObject PlayerPrefab => playerPrefab;
@@ -18,6 +19,7 @@ namespace DontDiePlease.Central.Combat
         public GameObject AssaultRiflePrefab => assaultRiflePrefab;
         public GameObject GameManagerPrefab => gameManagerPrefab;
         public GameObject HudPrefab => hudPrefab;
+        public GameObject FenrisFrigatePrefab => fenrisFrigatePrefab;
         public GameObject[] PickupPrefabs => pickupPrefabs;
 
         public void Configure(
@@ -34,6 +36,11 @@ namespace DontDiePlease.Central.Combat
             gameManagerPrefab = gameManager;
             hudPrefab = hud;
             pickupPrefabs = pickups ?? Array.Empty<GameObject>();
+        }
+
+        public void SetFenrisFrigate(GameObject prefab)
+        {
+            fenrisFrigatePrefab = prefab;
         }
     }
 }

@@ -1,10 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Data-driven tuning values for an enemy. Lives as an asset (like ItemData), so
-/// designers can balance enemies without touching code, and M3 difficulty scaling
-/// can swap or tweak these without recompiling
-/// </summary>
 [CreateAssetMenu(fileName = "New Enemy", menuName = "Enemies/Enemy Stats")]
 public class EnemyStats : ScriptableObject
 {

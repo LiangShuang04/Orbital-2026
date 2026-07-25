@@ -25,6 +25,12 @@ namespace DontDiePlease.Narrative.Runtime
         {
             director = narrativeDirector;
             terminalMaterial = CreateTerminalMaterial();
+            ResolveSignalAnchors();
+            StartCoroutine(BuildSceneMilestones());
+        }
+
+        private void ResolveSignalAnchors()
+        {
             signalGeneratorAnchor = FindObjectsByType<NarrativeSpawnAnchor>(FindObjectsInactive.Include)
                 .FirstOrDefault(anchor =>
                     anchor != null &&
@@ -37,7 +43,6 @@ namespace DontDiePlease.Narrative.Runtime
                     anchor.gameObject.scene == gameObject.scene &&
                     anchor.Kind == NarrativeAnchorKind.SignalGeneratorAssembly &&
                     anchor.AnchorId == "signal-generator-assembly");
-            StartCoroutine(BuildSceneMilestones());
         }
 
         private void OnDestroy()
@@ -54,6 +59,8 @@ namespace DontDiePlease.Narrative.Runtime
             {
                 return;
             }
+
+            ResolveSignalAnchors();
 
             if (signalGeneratorAnchor == null)
             {
@@ -88,6 +95,8 @@ namespace DontDiePlease.Narrative.Runtime
             {
                 return;
             }
+
+            ResolveSignalAnchors();
 
             if (signalAssemblyAnchor == null)
             {

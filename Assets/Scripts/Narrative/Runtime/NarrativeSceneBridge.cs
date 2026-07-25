@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DontDiePlease.Central.Combat;
 using DontDiePlease.Systems;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,6 +24,11 @@ namespace DontDiePlease.Narrative.Runtime
             eventManager = randomEvents;
             sceneName = SceneManager.GetActiveScene().name;
             director.SequenceCompleted += HandleSequenceCompleted;
+
+            if (openingRoutine != null)
+                StopCoroutine(openingRoutine);
+
+            openingRoutine = StartCoroutine(BeginSceneNarrative());
         }
 
         private void OnEnable()
@@ -34,7 +40,8 @@ namespace DontDiePlease.Narrative.Runtime
             InsideShip.SafetyChanged += HandleSafetyChanged;
             EnemyHealth.AnyEnemyDied += HandleEnemyDied;
             EnemyController.AnyEnemyDetected += HandleEnemyDetected;
-            openingRoutine = StartCoroutine(BeginSceneNarrative());
+            if (director != null)
+                openingRoutine = StartCoroutine(BeginSceneNarrative());
         }
 
         private void OnDisable()
@@ -126,6 +133,18 @@ namespace DontDiePlease.Narrative.Runtime
             }
             else if (sceneName == "Demo_Combat")
             {
+                for (var frame = 0; frame < 300 && FenrisFrigatePrologue.Instance == null; frame++)
+                {
+                    yield return null;
+                }
+
+                var frigatePrologue = FenrisFrigatePrologue.Instance;
+
+                if (frigatePrologue != null)
+                {
+                    yield return BeginFenrisPrologue(frigatePrologue);
+                }
+
                 director.RaiseStoryEvent("TRG_RUINS_ENTERED");
 
                 if (director.State.HasCompletedSequence("TRG_RUINS_ENTERED") &&
@@ -145,6 +164,35 @@ namespace DontDiePlease.Narrative.Runtime
                     worldBinder?.EnsureSignalInstallationSite();
                 }
             }
+        }
+
+        private IEnumerator BeginFenrisPrologue(FenrisFrigatePrologue prologue)
+        {
+            director.RaiseStoryEvent("TRG_FENRIS_WAKE_V2");
+
+            while (prologue != null && !prologue.HasExited)
+            {
+                yield return null;
+            }
+
+            if (prologue == null)
+                yield break;
+
+            director.RaiseStoryEvent("TRG_EXIT_SHIP_FIRST");
+
+            while (!director.State.HasCompletedSequence("TRG_EXIT_SHIP_FIRST"))
+            {
+                yield return null;
+            }
+
+            prologue.ReleaseCombat(ShouldRunAutomaticWaves());
+        }
+
+        private bool ShouldRunAutomaticWaves()
+        {
+            return !director.State.signalDefenseActive &&
+                   !(director.State.HasFlag("warden_k_engaged") &&
+                     !director.State.HasFlag("component_core"));
         }
 
         private void HandleInteraction(InteractableObject source, GameObject interactor)

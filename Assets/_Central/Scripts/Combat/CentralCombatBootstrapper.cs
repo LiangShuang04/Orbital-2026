@@ -32,10 +32,14 @@ namespace DontDiePlease.Central.Combat
         private const string AssaultRiflePath = "Assets/Akila/FPS Framework/Prefabs/Weapons/Assault Rifle_1.prefab";
         private const string FrameworkGameManagerPath = "Assets/Akila/FPS Framework/Prefabs/World/Game Manager.prefab";
         private const string FrameworkHudPath = "Assets/Akila/FPS Framework/Prefabs/HUD/HUD.prefab";
+        private const string FenrisFrigatePath = "Assets/VattalusAssets/FenrisFrigate/_URP/Prefabs/DEMO/FenrisFrigate_DemoPrefab.prefab";
         private const string AssetCatalogPath = "Combat/CentralCombatAssetCatalog";
         private const float PlayerSpawnHeight = 1.08f;
 
         private CentralCombatAssetCatalog assetCatalog;
+        private FenrisFrigatePrologue fenrisPrologue;
+        private Vector3 mapSpawn;
+        private bool mapSpawnReady;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void RegisterSceneHandler()
@@ -83,9 +87,19 @@ namespace DontDiePlease.Central.Combat
 
             EnsureSeedManager();
             DisableCompetingControllers();
-            DisableSceneEventSystems();
-            EnsureFrameworkManagers();
+            DisableActiveEventSystems();
             BuildRuntimeNavMesh();
+            mapSpawn = PickMapSpawn();
+            mapSpawnReady = true;
+
+            if (gameObject.scene.name == "Demo_Combat")
+            {
+                var frigatePrefab = LoadAsset(assetCatalog?.FenrisFrigatePrefab, FenrisFrigatePath);
+                fenrisPrologue = FenrisFrigatePrologue.Create(frigatePrefab, gameObject.scene, mapSpawn);
+            }
+
+            EnsureFrameworkManagers();
+            NormalizeEventSystems();
 
             var player = EnsureFrameworkPlayer();
 
@@ -102,7 +116,9 @@ namespace DontDiePlease.Central.Combat
                 var demoSpawner = EnsureSpawner();
                 demoSpawner.gameObject.SetActive(true);
                 demoSpawner.Configure(player.transform, LoadPickupPrefabs());
-                demoSpawner.SetAutomaticWaves(true, true);
+                demoSpawner.SetAutomaticWaves(fenrisPrologue == null, true);
+                fenrisPrologue?.AttachPlayer(player.transform, demoSpawner);
+                player.GetComponent<CentralPlayerGrounding>()?.RefreshSafePosition(player.transform.position);
                 CentralCombatHud.Create(demoSpawner);
                 yield break;
             }
@@ -112,14 +128,31 @@ namespace DontDiePlease.Central.Combat
             CentralCombatHud.Create(waves);
         }
 
-        private void DisableSceneEventSystems()
+        private void DisableActiveEventSystems()
         {
             var eventSystems = FindObjectsByType<EventSystem>(FindObjectsInactive.Include);
 
             foreach (var eventSystem in eventSystems)
             {
-                if (eventSystem != null && eventSystem.gameObject.scene == gameObject.scene)
+                if (eventSystem != null)
                     eventSystem.gameObject.SetActive(false);
+            }
+        }
+
+        private void NormalizeEventSystems()
+        {
+            var eventSystems = FindObjectsByType<EventSystem>(FindObjectsInactive.Include);
+            var activeSystem = eventSystems.FirstOrDefault(eventSystem =>
+                eventSystem != null &&
+                eventSystem.GetComponentInParent<Akila.FPSFramework.GameManager>(true) != null);
+
+            if (activeSystem == null)
+                activeSystem = eventSystems.FirstOrDefault(eventSystem => eventSystem != null);
+
+            foreach (var eventSystem in eventSystems)
+            {
+                if (eventSystem != null)
+                    eventSystem.gameObject.SetActive(eventSystem == activeSystem);
             }
         }
 
@@ -266,6 +299,7 @@ namespace DontDiePlease.Central.Combat
                 if (existing.gameObject.activeInHierarchy && IsReadyMadeFrameworkPlayer(existing.gameObject))
                 {
                     ConfigurePlayer(existing.gameObject);
+                    MovePlayerToSpawn(existing.gameObject);
                     return existing.gameObject;
                 }
             }
@@ -288,7 +322,7 @@ namespace DontDiePlease.Central.Combat
             }
 
             var pos = PickPlayerSpawn();
-            var player = Instantiate(playerPrefab, pos, Quaternion.Euler(0f, 15f, 0f));
+            var player = Instantiate(playerPrefab, pos, PickPlayerRotation());
             player.name = gameObject.scene.name == "Demo_Combat" ? "AkilaFPSFrameworkPlayer" : "AkilaCombatPlayer";
             SceneManager.MoveGameObjectToScene(player, gameObject.scene);
             ConfigurePlayer(player);
@@ -397,6 +431,7 @@ namespace DontDiePlease.Central.Combat
             }
 
             EnsureEquippedWeapons(player);
+            PrepareFirearms(player);
 
             var controller = player.GetComponent<Akila.FPSFramework.FirstPersonController>();
 
@@ -412,6 +447,40 @@ namespace DontDiePlease.Central.Combat
             FPSFrameworkCore.IsActive = true;
             FPSFrameworkCore.IsPaused = false;
             FPSFrameworkCore.IsInputActive = true;
+        }
+
+        private static void PrepareFirearms(GameObject player)
+        {
+            foreach (var firearm in player.GetComponentsInChildren<Firearm>(true))
+            {
+                firearm.enabled = true;
+                firearm.isInputActive = true;
+                firearm.firePrevented = false;
+                firearm.isReloading = false;
+
+                var itemInput = firearm.GetComponent<ItemInput>();
+
+                if (itemInput != null)
+                {
+                    itemInput.enabled = true;
+                    itemInput.allowInputWhilePaused = false;
+                }
+
+                if (!firearm.gameObject.activeInHierarchy)
+                    continue;
+
+                foreach (var animator in firearm.GetComponentsInChildren<Animator>(true))
+                {
+                    animator.speed = 1f;
+                    var state = animator.GetCurrentAnimatorStateInfo(0);
+
+                    if (state.IsName("Take") || state.IsName("Pickup"))
+                    {
+                        animator.Play("Idle", 0, 0f);
+                        animator.Update(0f);
+                    }
+                }
+            }
         }
 
         private bool HasReadyWeaponInput(GameObject player)
@@ -446,10 +515,11 @@ namespace DontDiePlease.Central.Combat
                 yield break;
             }
 
-            var player = Instantiate(playerPrefab, PickPlayerSpawn(), Quaternion.Euler(0f, 15f, 0f));
+            var player = Instantiate(playerPrefab, PickPlayerSpawn(), PickPlayerRotation());
             player.name = gameObject.scene.name == "Demo_Combat" ? "AkilaFPSFrameworkPlayer" : "AkilaCombatPlayer";
             SceneManager.MoveGameObjectToScene(player, gameObject.scene);
             ConfigurePlayer(player);
+            fenrisPrologue?.SetPlayer(player.transform);
 
             if (previousPlayer != null)
                 previousPlayer.SetActive(false);
@@ -501,6 +571,39 @@ namespace DontDiePlease.Central.Combat
         }
 
         private Vector3 PickPlayerSpawn()
+        {
+            if (fenrisPrologue != null)
+                return fenrisPrologue.CurrentRespawnPosition;
+
+            return mapSpawnReady ? mapSpawn : PickMapSpawn();
+        }
+
+        private Quaternion PickPlayerRotation()
+        {
+            return fenrisPrologue != null
+                ? fenrisPrologue.CurrentRespawnRotation
+                : Quaternion.Euler(0f, 15f, 0f);
+        }
+
+        private void MovePlayerToSpawn(GameObject player)
+        {
+            if (player == null)
+                return;
+
+            var controller = player.GetComponent<CharacterController>();
+            var wasEnabled = controller != null && controller.enabled;
+
+            if (wasEnabled)
+                controller.enabled = false;
+
+            player.transform.SetPositionAndRotation(PickPlayerSpawn(), PickPlayerRotation());
+            Physics.SyncTransforms();
+
+            if (wasEnabled)
+                controller.enabled = true;
+        }
+
+        private Vector3 PickMapSpawn()
         {
             var candidates = new[]
             {

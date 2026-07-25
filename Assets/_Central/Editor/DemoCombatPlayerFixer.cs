@@ -31,7 +31,6 @@ namespace DontDiePlease.Central.EditorTools
                 return;
             }
 
-            // demo copy only
             var scene = EditorSceneManager.OpenScene(DemoScene, OpenSceneMode.Single);
             var player = GetOrCreatePlayer(scene, prefab);
 

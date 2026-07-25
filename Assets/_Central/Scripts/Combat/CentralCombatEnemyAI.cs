@@ -81,6 +81,14 @@ namespace DontDiePlease.Central.Combat
             if (state == EnemyState.Dead || enemy == null || enemy.IsDead)
                 return;
 
+            if (Time.timeScale <= 0f || FPSFrameworkCore.IsPaused)
+            {
+                if (agent != null && agent.enabled && agent.isOnNavMesh)
+                    agent.isStopped = true;
+
+                return;
+            }
+
             if (target == null)
             {
                 target = FindPlayerTarget();
@@ -232,6 +240,9 @@ namespace DontDiePlease.Central.Combat
 
         private void ResolveAttack()
         {
+            if (Time.timeScale <= 0f || FPSFrameworkCore.IsPaused)
+                return;
+
             attackResolved = true;
 
             if (config.ranged)
@@ -257,6 +268,9 @@ namespace DontDiePlease.Central.Combat
 
         private void FireProjectile()
         {
+            if (Time.timeScale <= 0f || FPSFrameworkCore.IsPaused)
+                return;
+
             var origin = muzzle != null ? muzzle.position : transform.position + Vector3.up * (config.bodyHeight * 0.65f) + transform.forward * 0.9f;
             var aimPoint = GetTargetAimPoint();
             var direction = (aimPoint - origin).normalized;

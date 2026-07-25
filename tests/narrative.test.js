@@ -30,7 +30,7 @@ async function findFiles(dir, extension) {
 test("narrative IDs and dialogue links are valid", () => {
   assert.equal(sequences.size, db.sequences.length);
   assert.equal(objectives.size, db.objectives.length);
-  assert.equal(db.sequences.length, 53);
+  assert.equal(db.sequences.length, 54);
 
   for (const sequence of db.sequences) {
     const lines = new Set(sequence.lines.map(line => line.id));
@@ -140,6 +140,11 @@ test("defense source keeps production timing and persistence", async () => {
   assert.match(timeline, /Progress >= 0\.9f/);
   assert.match(source, /signalDefenseRemainingSeconds/);
   assert.match(source, /PersistProgress\(true\)/);
+});
+
+test("surface narration keeps first person controls active", () => {
+  const exitSequence = sequences.get("TRG_EXIT_SHIP_FIRST");
+  assert.equal(exitSequence.lockInput, false);
 });
 
 test("dialogue queue rechecks priority and eligibility", async () => {

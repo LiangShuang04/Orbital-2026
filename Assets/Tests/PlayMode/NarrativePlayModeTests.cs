@@ -4,7 +4,9 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
@@ -14,6 +16,9 @@ namespace DontDiePlease.Tests.PlayMode
     public sealed class NarrativePlayModeTests
     {
         private const string GuestSaveKey = "DontDiePlease.Narrative.State.guest";
+        private const string AuthTokenKey = "DontDiePlease.Auth.Token";
+        private const string AuthUserIdKey = "DontDiePlease.Auth.UserId";
+        private const string AuthUsernameKey = "DontDiePlease.Auth.Username";
 
         [UnitySetUp]
         public IEnumerator SetUp()
@@ -23,6 +28,9 @@ namespace DontDiePlease.Tests.PlayMode
             yield return null;
             PlayerPrefs.DeleteKey(GuestSaveKey);
             PlayerPrefs.DeleteKey("DontDiePlease.Narrative.State");
+            PlayerPrefs.DeleteKey(AuthTokenKey);
+            PlayerPrefs.DeleteKey(AuthUserIdKey);
+            PlayerPrefs.DeleteKey(AuthUsernameKey);
             PlayerPrefs.Save();
             yield return null;
         }
@@ -31,10 +39,14 @@ namespace DontDiePlease.Tests.PlayMode
         public IEnumerator TearDown()
         {
             Time.timeScale = 1f;
+            DestroyDetachedProjectiles();
             DestroyNarrativeRuntimes();
             yield return null;
             PlayerPrefs.DeleteKey(GuestSaveKey);
             PlayerPrefs.DeleteKey("DontDiePlease.Narrative.State");
+            PlayerPrefs.DeleteKey(AuthTokenKey);
+            PlayerPrefs.DeleteKey(AuthUserIdKey);
+            PlayerPrefs.DeleteKey(AuthUsernameKey);
             PlayerPrefs.Save();
             yield return null;
         }
@@ -185,6 +197,35 @@ namespace DontDiePlease.Tests.PlayMode
                 scene,
                 "DontDiePlease.Narrative.Runtime.NarrativeCombatCoordinator");
             yield return WaitForReady(coordinator, 600);
+            Assert.That(
+                Resources.FindObjectsOfTypeAll<EventSystem>().Count(eventSystem =>
+                    eventSystem != null &&
+                    eventSystem.gameObject.scene.IsValid() &&
+                    eventSystem.gameObject.activeInHierarchy),
+                Is.EqualTo(1));
+            var industry = FindGameObject(scene, "Environment");
+            Assert.That(industry, Is.Not.Null);
+            Assert.That(FindGameObject(scene, "Building01"), Is.Not.Null);
+            Assert.That(FindGameObject(scene, "Building02"), Is.Not.Null);
+            Assert.That(industry.GetComponentsInChildren<Renderer>(true).Length, Is.GreaterThan(10000));
+            Assert.That(industry.GetComponentsInChildren<Collider>(true).Length, Is.GreaterThan(8000));
+            Assert.That(GraphicsSettings.currentRenderPipeline, Is.Not.Null);
+            Assert.That(GraphicsSettings.currentRenderPipeline.GetType().Name, Does.Contain("UniversalRenderPipeline"));
+            var sceneMaterials = industry.GetComponentsInChildren<Renderer>(true)
+                .SelectMany(renderer => renderer.sharedMaterials)
+                .Where(material => material != null)
+                .Distinct()
+                .ToArray();
+            var invalidMaterials = sceneMaterials
+                .Where(material =>
+                    material.shader == null ||
+                    !material.shader.isSupported ||
+                    material.shader.name == "Hidden/InternalErrorShader")
+                .Select(material => material.name)
+                .Distinct()
+                .ToArray();
+            Assert.That(sceneMaterials.Length, Is.GreaterThan(50));
+            Assert.That(invalidMaterials, Is.Empty, string.Join(", ", invalidMaterials));
             var anchorType = RuntimeType("DontDiePlease.Narrative.Runtime.NarrativeSpawnAnchor");
             var sceneAnchors = FindSceneObjects(scene, anchorType).OfType<Component>().ToArray();
             Assert.That(sceneAnchors.Length, Is.EqualTo(9));
@@ -237,6 +278,212 @@ namespace DontDiePlease.Tests.PlayMode
             UnityEngine.Object.Destroy(duplicate);
             yield return null;
             Invoke(coordinator, "CacheAnchors");
+        }
+
+        [UnityTest]
+        [Timeout(120000)]
+        public IEnumerator DemoCombatStartsInsideFenrisAndReleasesEnemiesAfterDeparture()
+        {
+            yield return LoadScene("Demo_Combat");
+            var scene = SceneManager.GetActiveScene();
+            yield return WaitForConfiguredSpawner(scene, 600);
+            yield return WaitForRuntimeObject(
+                scene,
+                "DontDiePlease.Central.Combat.FenrisFrigatePrologue",
+                300);
+            yield return WaitForRuntimeObject(
+                scene,
+                "DontDiePlease.Narrative.Runtime.NarrativeDirector",
+                300);
+
+            var prologue = FindRuntimeObject(
+                scene,
+                "DontDiePlease.Central.Combat.FenrisFrigatePrologue");
+            var director = FindRuntimeObject(
+                scene,
+                "DontDiePlease.Narrative.Runtime.NarrativeDirector");
+            var spawner = FindSceneObjects(
+                scene,
+                RuntimeType("DontDiePlease.Central.Combat.CentralCombatSpawner")).Single();
+            yield return WaitForReady(director, 300);
+
+            for (var frame = 0;
+                 frame < 120 && GetProperty<string>(director, "ActiveSequenceId") != "TRG_FENRIS_WAKE_V2";
+                 frame++)
+            {
+                yield return null;
+            }
+
+            var state = GetProperty(director, "State");
+            Assert.That(
+                GetProperty<string>(director, "ActiveSequenceId"),
+                Is.EqualTo("TRG_FENRIS_WAKE_V2"),
+                $"objective={GetField<string>(state, "currentObjectiveId")} " +
+                $"flags={string.Join(",", ((IList)GetField<object>(state, "flags")).Cast<object>())} " +
+                $"sequences={string.Join(",", ((IList)GetField<object>(state, "completedSequenceIds")).Cast<object>())} " +
+                $"inside={GetProperty<bool>(prologue, "IsPlayerInside")} " +
+                $"exited={GetProperty<bool>(prologue, "HasExited")}");
+            Assert.That(GetProperty<bool>(prologue, "BlocksCombat"), Is.True);
+            Assert.That(GetProperty<bool>(prologue, "HasExited"), Is.False);
+            Assert.That(GetProperty<bool>(prologue, "IsPlayerInside"), Is.True);
+            Assert.That(GetProperty<bool>(prologue, "AirlockOpened"), Is.False);
+            Assert.That(GetProperty<bool>(prologue, "TutorialComplete"), Is.False);
+            Assert.That(GetProperty<bool>(prologue, "IsAirlockInteractionAvailable"), Is.False);
+            var airlockAnchor = GetProperty<Transform>(prologue, "AirlockAnchor");
+            var interiorSpawnAnchor = GetProperty<Transform>(prologue, "InteriorSpawnAnchor");
+            var interiorSpawn = GetProperty<Vector3>(prologue, "InteriorSpawnPosition");
+            Assert.That(airlockAnchor, Is.Not.Null);
+            Assert.That(interiorSpawnAnchor, Is.Not.Null);
+            Assert.That(interiorSpawnAnchor.name, Does.Contain("Bridge").IgnoreCase);
+            Assert.That(Vector3.Distance(interiorSpawn, interiorSpawnAnchor.position), Is.LessThan(2.8f));
+            Assert.That(GetProperty<bool>(prologue, "InteriorSpawnIsClear"), Is.True);
+            Assert.That(GetProperty<int>(prologue, "InteriorRoomCount"), Is.GreaterThanOrEqualTo(10));
+            Assert.That(GetProperty<int>(prologue, "InteriorVolumeCount"), Is.GreaterThanOrEqualTo(10));
+            Assert.That(GetProperty<int>(prologue, "SolidColliderCount"), Is.GreaterThan(50));
+            Assert.That(GetProperty<int>(prologue, "InteractableCount"), Is.GreaterThan(20));
+            Assert.That(GetProperty<int>(prologue, "TutorialStationCount"), Is.EqualTo(4));
+            Assert.That(GetProperty<int>(prologue, "CompletedTutorialStationCount"), Is.Zero);
+            Assert.That(
+                GetProperty<int>(prologue, "VisibleInteriorRoomCount"),
+                Is.EqualTo(GetProperty<int>(prologue, "InteriorRoomCount")));
+            Assert.That(GetProperty<float>(prologue, "ShipDistanceFromMapSpawn"), Is.LessThan(90f));
+            var airlockPrompt = FindGameObject(scene, "OpenAirlockPrompt", true);
+            Assert.That(airlockPrompt, Is.Not.Null);
+            var tutorialPanel = FindGameObject(scene, "FenrisTutorialPanel");
+            Assert.That(tutorialPanel, Is.Not.Null);
+            Assert.That(tutorialPanel.activeInHierarchy, Is.True);
+            var tutorialText = FindGameObject(scene, "TutorialText");
+            Assert.That(tutorialText, Is.Not.Null);
+            var tutorialLabel = tutorialText.GetComponent(RuntimeType("TMPro.TextMeshProUGUI", "Unity.TextMeshPro"));
+            Assert.That(GetProperty<string>(tutorialLabel, "text"), Does.Contain("USE WASD TO MOVE"));
+            var combatInfo = FindGameObject(scene, "CombatInfo", true);
+            Assert.That(combatInfo, Is.Not.Null);
+            Assert.That(combatInfo.activeInHierarchy, Is.False);
+            Assert.That(
+                Resources.FindObjectsOfTypeAll<GameObject>()
+                    .Count(item =>
+                        item != null &&
+                        item.scene == scene &&
+                        item.name.StartsWith("TutorialStation_", StringComparison.Ordinal)),
+                Is.Zero);
+            Assert.That(FindNamedSceneObjects(scene, "StationLight").Length, Is.Zero);
+            var subtitle = FindGameObject(scene, "ExplorationSubtitle");
+            var fullDialogue = FindGameObject(scene, "FullDialogue", true);
+            Assert.That(subtitle, Is.Not.Null);
+            Assert.That(subtitle.activeInHierarchy, Is.True);
+            Assert.That(subtitle.GetComponent<RectTransform>().sizeDelta.y, Is.LessThanOrEqualTo(160f));
+            var subtitleSpeakerRect = subtitle.transform.Find("Speaker").GetComponent<RectTransform>();
+            var subtitleTextRect = subtitle.transform.Find("Subtitle").GetComponent<RectTransform>();
+            var speakerCorners = new Vector3[4];
+            var subtitleCorners = new Vector3[4];
+            subtitleSpeakerRect.GetWorldCorners(speakerCorners);
+            subtitleTextRect.GetWorldCorners(subtitleCorners);
+            Assert.That(speakerCorners[0].y, Is.GreaterThanOrEqualTo(subtitleCorners[1].y));
+            Assert.That(fullDialogue, Is.Not.Null);
+            Assert.That(fullDialogue.activeInHierarchy, Is.False);
+            var fullSpeakerRect = fullDialogue.transform.Find("Speaker").GetComponent<RectTransform>();
+            var fullTextRect = fullDialogue.transform.Find("Dialogue").GetComponent<RectTransform>();
+            var fullSpeakerCorners = new Vector3[4];
+            var fullTextCorners = new Vector3[4];
+            fullSpeakerRect.GetWorldCorners(fullSpeakerCorners);
+            fullTextRect.GetWorldCorners(fullTextCorners);
+            Assert.That(fullSpeakerCorners[0].y, Is.GreaterThanOrEqualTo(fullTextCorners[1].y));
+            var placementBounds = GetField<Bounds>(prologue, "shipBounds");
+            var landingTerrain = Terrain.activeTerrains.Single(terrain => terrain.gameObject.scene == scene);
+            var terrainMin = landingTerrain.transform.position;
+            var terrainMax = terrainMin + landingTerrain.terrainData.size;
+            Assert.That(placementBounds.min.x, Is.GreaterThanOrEqualTo(terrainMin.x));
+            Assert.That(placementBounds.max.x, Is.LessThanOrEqualTo(terrainMax.x));
+            Assert.That(placementBounds.min.z, Is.GreaterThanOrEqualTo(terrainMin.z));
+            Assert.That(placementBounds.max.z, Is.LessThanOrEqualTo(terrainMax.z));
+            Assert.That(GetProperty<int>(spawner, "ActiveEnemyCount"), Is.Zero);
+
+            var ship = GetProperty<GameObject>(prologue, "Ship");
+            Assert.That(ship, Is.Not.Null);
+            Assert.That(ship.name, Is.EqualTo("FenrisFrigate"));
+            var renderers = ship.GetComponentsInChildren<Renderer>(true);
+            Assert.That(renderers.Length, Is.GreaterThan(100));
+            var materials = renderers
+                .SelectMany(renderer => renderer.sharedMaterials)
+                .Where(material => material != null)
+                .Distinct()
+                .ToArray();
+            var invalidMaterials = materials
+                .Where(material =>
+                    material.shader == null ||
+                    !material.shader.isSupported ||
+                    material.shader.name == "Hidden/InternalErrorShader")
+                .Select(material => material.name)
+                .Distinct()
+                .ToArray();
+            Assert.That(materials.Length, Is.GreaterThan(20));
+            Assert.That(invalidMaterials, Is.Empty, string.Join(", ", invalidMaterials));
+
+            var player = GetField<Transform>(prologue, "player");
+            yield return new WaitForSecondsRealtime(1.2f);
+            Assert.That(GetProperty<bool>(prologue, "IsPlayerInside"), Is.True);
+            Assert.That(Vector3.Distance(player.position, interiorSpawn), Is.LessThan(2f));
+            Assert.That(GetProperty<bool>(prologue, "MapEntryIsClear"), Is.True);
+
+            SetField(prologue, "departureCheckAt", 0f);
+            Invoke(
+                prologue,
+                "MovePlayer",
+                placementBounds.max + new Vector3(4f, 4f, 4f),
+                Quaternion.identity);
+            yield return new WaitForSecondsRealtime(1f);
+            Assert.That(GetProperty<bool>(prologue, "IsPlayerInside"), Is.True);
+
+            SetField(prologue, "tutorialStep", 6);
+            Invoke(
+                prologue,
+                "MovePlayer",
+                GetProperty<Vector3>(prologue, "AirlockApproachPosition"),
+                Quaternion.identity);
+            yield return null;
+            Assert.That(GetProperty<bool>(prologue, "TutorialComplete"), Is.True);
+            Assert.That(GetProperty<bool>(prologue, "IsAirlockInteractionAvailable"), Is.True);
+            Invoke(prologue, "OpenAirlock");
+            yield return null;
+            Assert.That(GetProperty<bool>(prologue, "AirlockOpened"), Is.True);
+            Assert.That(tutorialPanel.activeInHierarchy, Is.True);
+            Assert.That(
+                GetProperty<string>(tutorialLabel, "text"),
+                Does.Contain("PRESS E AGAIN TO EXIT"));
+            var mapEntry = GetProperty<Vector3>(prologue, "MapEntryPosition");
+            Invoke(prologue, "Disembark");
+            yield return null;
+            yield return null;
+            Assert.That(Vector3.Distance(player.position, mapEntry), Is.LessThan(0.2f));
+            Assert.That(tutorialPanel.activeInHierarchy, Is.False);
+            var playerInput = player.GetComponentsInChildren<Behaviour>(true)
+                .FirstOrDefault(component => component.GetType().Name == "CharacterInput");
+            Assert.That(playerInput, Is.Not.Null);
+            Assert.That(playerInput.enabled, Is.True);
+            Invoke(prologue, "ReleaseCombat", true);
+            yield return null;
+            Assert.That(combatInfo.activeInHierarchy, Is.True);
+            yield return new WaitForSeconds(2.5f);
+
+            var airlockDoors = ship.GetComponentsInChildren<MonoBehaviour>(true)
+                .Where(behaviour =>
+                    behaviour != null &&
+                    behaviour.GetType().Name == "VattalusDoorController" &&
+                    behaviour.gameObject.name.Contains("Airlock", StringComparison.OrdinalIgnoreCase))
+                .ToArray();
+            Assert.That(airlockDoors, Is.Not.Empty);
+            Assert.That(airlockDoors.All(door => (bool)Invoke(door, "isDoorOpen")), Is.True);
+            Assert.That(GetProperty<bool>(prologue, "HasExited"), Is.True);
+            Assert.That(GetProperty<bool>(prologue, "BlocksCombat"), Is.False);
+            Assert.That(
+                GetProperty<int>(spawner, "ActiveEnemyCount"),
+                Is.GreaterThan(0),
+                $"wave={GetProperty<int>(spawner, "CurrentWave")} " +
+                $"configured={GetProperty<bool>(spawner, "IsConfigured")} " +
+                $"encounter={GetField<bool>(spawner, "encounterActive")} " +
+                $"automatic={GetField<bool>(spawner, "automaticWavesEnabled")} " +
+                $"timer={GetField<float>(spawner, "nextWaveTimer"):0.00} " +
+                $"timeScale={Time.timeScale:0.00}");
         }
 
         [UnityTest]
@@ -362,6 +609,15 @@ namespace DontDiePlease.Tests.PlayMode
                 state.fullPathHash == attackHash ||
                 attackAnimator.IsInTransition(0),
                 Is.True);
+
+            var pausedHealth = GetField<float>(playerHealth, "health");
+            Invoke(attackerAi, "BeginAttack");
+            SetField(attackerAi, "windupTimer", 0f);
+            SetField(attackerAi, "attackResolved", false);
+            Time.timeScale = 0f;
+            Invoke(attackerAi, "Update");
+            Assert.That(GetField<float>(playerHealth, "health"), Is.EqualTo(pausedHealth));
+            Time.timeScale = 1f;
         }
 
         [UnityTest]
@@ -480,6 +736,15 @@ namespace DontDiePlease.Tests.PlayMode
             yield return LoadScene("Demo_Combat");
             var scene = SceneManager.GetActiveScene();
             yield return WaitForConfiguredSpawner(scene, 600);
+            yield return WaitForRuntimeObject(
+                scene,
+                "DontDiePlease.Central.Combat.FenrisFrigatePrologue",
+                300);
+            var prologue = FindRuntimeObject(
+                scene,
+                "DontDiePlease.Central.Combat.FenrisFrigatePrologue");
+            Invoke(prologue, "SkipToMap");
+            yield return null;
             var characterType = RuntimeType("Akila.FPSFramework.CharacterManager", "Akila.FPSFramework");
             var character = FindSceneObjects(scene, characterType).OfType<Component>().Single();
             var firearm = default(Component);
@@ -529,9 +794,16 @@ namespace DontDiePlease.Tests.PlayMode
             yield return LoadScene("Demo_Combat");
             var scene = SceneManager.GetActiveScene();
             yield return WaitForConfiguredSpawner(scene, 600);
+            yield return WaitForRuntimeObject(
+                scene,
+                "DontDiePlease.Central.Combat.FenrisFrigatePrologue",
+                300);
 
             var characterType = RuntimeType("Akila.FPSFramework.CharacterManager", "Akila.FPSFramework");
             var character = FindSceneObjects(scene, characterType).OfType<Component>().Single();
+            var prologue = FindRuntimeObject(
+                scene,
+                "DontDiePlease.Central.Combat.FenrisFrigatePrologue");
             var groundingType = RuntimeType("DontDiePlease.Central.Combat.CentralPlayerGrounding");
             var grounding = character.GetComponent(groundingType);
             var controller = character.GetComponent<CharacterController>();
@@ -541,22 +813,34 @@ namespace DontDiePlease.Tests.PlayMode
             for (var frame = 0; frame < 120; frame++)
                 yield return null;
 
-            var terrain = Terrain.activeTerrains.Single(item => item.gameObject.scene == scene);
-            var groundHeight = terrain.SampleHeight(character.transform.position) + terrain.transform.position.y;
+            var groundHit = Physics.RaycastAll(
+                    character.transform.position + Vector3.up * 0.5f,
+                    Vector3.down,
+                    10f,
+                    Physics.DefaultRaycastLayers,
+                    QueryTriggerInteraction.Ignore)
+                .Where(hit =>
+                    hit.transform != character.transform &&
+                    !hit.transform.IsChildOf(character.transform))
+                .OrderBy(hit => hit.distance)
+                .FirstOrDefault();
+            Assert.That(groundHit.collider, Is.Not.Null);
+            var groundHeight = groundHit.point.y;
             Assert.That(character.transform.position.y, Is.InRange(groundHeight - 0.1f, groundHeight + 0.6f));
-            Assert.That(controller.isGrounded, Is.True);
 
+            var terrain = Terrain.activeTerrains.Single(value => value.gameObject.scene == scene);
+            var terrainHeight = terrain.SampleHeight(character.transform.position) + terrain.transform.position.y;
             character.transform.position = new Vector3(
                 character.transform.position.x,
-                groundHeight - 8f,
+                terrainHeight - 8f,
                 character.transform.position.z);
             Physics.SyncTransforms();
 
             for (var frame = 0; frame < 12; frame++)
                 yield return null;
 
-            groundHeight = terrain.SampleHeight(character.transform.position) + terrain.transform.position.y;
             Assert.That(character.transform.position.y, Is.GreaterThanOrEqualTo(groundHeight - 0.1f));
+            Assert.That(GetProperty<bool>(prologue, "IsPlayerInside"), Is.True);
         }
 
         [UnityTest]
@@ -663,16 +947,44 @@ namespace DontDiePlease.Tests.PlayMode
             var controls = GetProperty(itemInput, "Controls");
             var firearmActions = GetProperty(controls, "Firearm");
             var aimAction = GetProperty(firearmActions, "Aim") as InputAction;
+            var fireAction = GetProperty(firearmActions, "Fire") as InputAction;
             Assert.That(aimAction, Is.Not.Null);
             Assert.That(aimAction.enabled, Is.True);
+            Assert.That(fireAction, Is.Not.Null);
+            Assert.That(fireAction.enabled, Is.True);
             Assert.That(
                 aimAction.bindings.Any(binding =>
                     string.Equals(binding.effectivePath, "<Mouse>/rightButton", StringComparison.OrdinalIgnoreCase)),
+                Is.True);
+            Assert.That(
+                fireAction.bindings.Any(binding =>
+                    string.Equals(binding.effectivePath, "<Mouse>/leftButton", StringComparison.OrdinalIgnoreCase)),
                 Is.True);
             var inventoryItemType = RuntimeType("Akila.FPSFramework.InventoryItem", "Akila.FPSFramework");
             var inventoryItem = firearm.GetComponent(inventoryItemType);
             Assert.That(inventoryItem, Is.Not.Null);
             Assert.That(GetProperty(inventoryItem, "aimingAnimation"), Is.Not.Null);
+
+            for (var frame = 0; frame < 120 && !GetProperty<bool>(firearm, "readyToFire"); frame++)
+                yield return null;
+
+            var animatorState = string.Join(
+                "; ",
+                firearm.GetComponentsInChildren<Animator>(true).Select(animator =>
+                {
+                    var state = animator.GetCurrentAnimatorStateInfo(0);
+                    return $"{animator.name}:active={animator.gameObject.activeInHierarchy},enabled={animator.enabled},speed={animator.speed:0.00},take={state.IsName("Take")},pickup={state.IsName("Pickup")},time={state.normalizedTime:0.00}";
+                }));
+            Assert.That(
+                GetProperty<bool>(firearm, "readyToFire"),
+                Is.True,
+                $"ammo={GetProperty<int>(firearm, "remainingAmmoCount")} reloading={GetProperty<bool>(firearm, "isReloading")} prevented={GetProperty<bool>(firearm, "firePrevented")} input={GetProperty<bool>(firearm, "isInputActive")} restricted={Invoke(firearm, "IsPlayingRestrictedAnimation")} scale={Time.timeScale:0.00} animators={animatorState}");
+            var ammoBeforeInput = GetProperty<int>(firearm, "remainingAmmoCount");
+            SetField(itemInput, "triggeredFire", true);
+            Invoke(firearm, "Update");
+            SetField(itemInput, "triggeredFire", false);
+            Assert.That(GetProperty<int>(firearm, "remainingAmmoCount"), Is.LessThan(ammoBeforeInput));
+
             SetField(itemInput, "aimInput", true);
 
             for (var frame = 0; frame < 10; frame++)
@@ -867,6 +1179,24 @@ namespace DontDiePlease.Tests.PlayMode
                 if (director != null)
                 {
                     UnityEngine.Object.Destroy(director.gameObject);
+                }
+            }
+        }
+
+        private static void DestroyDetachedProjectiles()
+        {
+            var scalerType = RuntimeType("Akila.FPSFramework.ProximityScaler", "Akila.FPSFramework");
+            var characterType = RuntimeType("Akila.FPSFramework.CharacterManager", "Akila.FPSFramework");
+            var scalers = Resources.FindObjectsOfTypeAll(scalerType).OfType<Component>().ToArray();
+
+            foreach (var scaler in scalers)
+            {
+                if (scaler != null &&
+                    scaler.gameObject.scene.IsValid() &&
+                    scaler.gameObject.scene.isLoaded &&
+                    scaler.GetComponentInParent(characterType) == null)
+                {
+                    UnityEngine.Object.Destroy(scaler.gameObject);
                 }
             }
         }

@@ -18,6 +18,12 @@ namespace DontDiePlease.Central.Combat
             nextSampleAt = Time.time + 0.5f;
         }
 
+        public void RefreshSafePosition(Vector3 position)
+        {
+            safePosition = position;
+            nextSampleAt = Time.time + 0.5f;
+        }
+
         private void Awake()
         {
             controller = GetComponent<CharacterController>();
@@ -78,6 +84,25 @@ namespace DontDiePlease.Central.Combat
 
         private bool TryGetGroundHeight(Vector3 position, out float height)
         {
+            var rayOrigin = position + Vector3.up * 0.45f;
+            var hits = Physics.RaycastAll(
+                rayOrigin,
+                Vector3.down,
+                220f,
+                Physics.DefaultRaycastLayers,
+                QueryTriggerInteraction.Ignore);
+
+            System.Array.Sort(hits, (left, right) => left.distance.CompareTo(right.distance));
+
+            foreach (var hit in hits)
+            {
+                if (hit.transform == transform || hit.transform.IsChildOf(transform))
+                    continue;
+
+                height = hit.point.y;
+                return true;
+            }
+
             foreach (var terrain in Terrain.activeTerrains)
             {
                 if (terrain == null || terrain.terrainData == null)
@@ -93,25 +118,6 @@ namespace DontDiePlease.Central.Combat
                 }
 
                 height = terrain.SampleHeight(position) + origin.y;
-                return true;
-            }
-
-            var mask = Physics.DefaultRaycastLayers;
-
-            if (gameObject.layer >= 0)
-                mask &= ~(1 << gameObject.layer);
-
-            var rayOrigin = position + Vector3.up * 20f;
-
-            if (Physics.Raycast(
-                    rayOrigin,
-                    Vector3.down,
-                    out var hit,
-                    220f,
-                    mask,
-                    QueryTriggerInteraction.Ignore))
-            {
-                height = hit.point.y;
                 return true;
             }
 

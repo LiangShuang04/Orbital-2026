@@ -106,7 +106,6 @@ namespace DontDiePlease.Systems
             rooms.Clear();
             spawnPts.Clear();
 
-            // old saves depend on this stream name
             var random = seedManager.CreateRandomStream("map-gen-v1");
             BuildLayout(random);
             SpawnFloors(random);

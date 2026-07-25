@@ -74,17 +74,22 @@ namespace DontDiePlease.Narrative.Runtime
                 yield break;
             }
 
-            CacheAnchors();
-
             if (sceneName == DemoCombatSceneName)
             {
                 yield return InitializeCentralCombat();
+                EnsureRuntimeAnchors();
+                CacheAnchors();
                 InitializeFirstRobot();
                 InitializeDefense();
             }
             else if (sceneName == CentralCombatSceneName)
             {
+                CacheAnchors();
                 yield return InitializeCentralCombat();
+            }
+            else
+            {
+                CacheAnchors();
             }
 
             IsReady = true;
@@ -219,12 +224,15 @@ namespace DontDiePlease.Narrative.Runtime
 
             var wardenActive = director.State.HasFlag("warden_k_engaged") &&
                                !director.State.HasFlag("component_core");
+            var prologueBlocksCombat = FenrisFrigatePrologue.Instance != null &&
+                                       FenrisFrigatePrologue.Instance.BlocksCombat;
             var runWaves = sceneName == DemoCombatSceneName &&
                            !wardenActive &&
-                           !director.State.signalDefenseActive;
+                           !director.State.signalDefenseActive &&
+                           !prologueBlocksCombat;
             centralSpawner.SetAutomaticWaves(runWaves, true);
 
-            if (wardenActive)
+            if (wardenActive && !prologueBlocksCombat)
             {
                 SpawnWarden();
             }
@@ -661,6 +669,141 @@ namespace DontDiePlease.Narrative.Runtime
 
                 anchors.Add(anchor.AnchorId, anchor);
             }
+        }
+
+        private void EnsureRuntimeAnchors()
+        {
+            var scene = SceneManager.GetActiveScene();
+            var existing = FindObjectsByType<NarrativeSpawnAnchor>(FindObjectsInactive.Include)
+                .Where(anchor => anchor != null && anchor.gameObject.scene == scene)
+                .GroupBy(anchor => anchor.AnchorId, StringComparer.Ordinal)
+                .ToDictionary(group => group.Key, group => group.First(), StringComparer.Ordinal);
+            var root = FindObjectsByType<Transform>(FindObjectsInactive.Include)
+                .FirstOrDefault(item => item.gameObject.scene == scene && item.name == "NarrativeEncounterAnchors");
+
+            if (root == null)
+            {
+                var rootObject = new GameObject("NarrativeEncounterAnchors");
+                SceneManager.MoveGameObjectToScene(rootObject, scene);
+                root = rootObject.transform;
+            }
+
+            var player = FindPlayer();
+            var origin = player != null ? player.position : new Vector3(14f, 2f, -31f);
+            var forward = player != null ? Flatten(player.forward) : Vector3.forward;
+            var right = new Vector3(forward.z, 0f, -forward.x);
+            var firstRobot = SnapToNavMesh(origin + forward * 14f, 18f);
+            var warden = SnapToNavMesh(origin + forward * 40f, 20f);
+            var assembly = SnapToNavMesh(origin + forward * 27f - right * 8f, 16f);
+            var center = SnapToNavMesh(origin + forward * 8f - right * 3f, 10f);
+
+            AddRuntimeAnchor(
+                root,
+                existing,
+                "First Robot Spawn",
+                firstRobot,
+                Quaternion.LookRotation(-forward, Vector3.up),
+                "FIRST_ROBOT",
+                FirstRobotAnchorId,
+                NarrativeAnchorKind.FirstRobotSpawn);
+            AddRuntimeAnchor(
+                root,
+                existing,
+                "Warden-K Spawn",
+                warden,
+                Quaternion.LookRotation(-forward, Vector3.up),
+                "WARDEN_K",
+                WardenAnchorId,
+                NarrativeAnchorKind.WardenSpawn);
+            AddRuntimeAnchor(
+                root,
+                existing,
+                "Signal Generator Assembly",
+                assembly,
+                Quaternion.LookRotation(forward, Vector3.up),
+                "SIGNAL_GENERATOR",
+                "signal-generator-assembly",
+                NarrativeAnchorKind.SignalGeneratorAssembly);
+            AddRuntimeAnchor(
+                root,
+                existing,
+                "Signal Generator Placement",
+                center,
+                Quaternion.LookRotation(forward, Vector3.up),
+                "SIGNAL_GENERATOR",
+                "signal-generator-placement",
+                NarrativeAnchorKind.SignalGeneratorPlacement);
+            AddRuntimeAnchor(
+                root,
+                existing,
+                "Signal Defense Center",
+                center,
+                Quaternion.identity,
+                DefenseEncounterId,
+                DefenseCenterAnchorId,
+                NarrativeAnchorKind.DefenseCenter);
+            AddDefenseAnchor(root, existing, "North", center, new Vector3(0f, 0f, 20f));
+            AddDefenseAnchor(root, existing, "East", center, new Vector3(20f, 0f, 0f));
+            AddDefenseAnchor(root, existing, "South", center, new Vector3(0f, 0f, -20f));
+            AddDefenseAnchor(root, existing, "West", center, new Vector3(-20f, 0f, 0f));
+        }
+
+        private static void AddDefenseAnchor(
+            Transform root,
+            IDictionary<string, NarrativeSpawnAnchor> existing,
+            string direction,
+            Vector3 center,
+            Vector3 offset)
+        {
+            var position = SnapToNavMesh(center + offset, 12f);
+            var facing = center - position;
+            facing.y = 0f;
+            var rotation = facing.sqrMagnitude > 0.001f
+                ? Quaternion.LookRotation(facing.normalized, Vector3.up)
+                : Quaternion.identity;
+            AddRuntimeAnchor(
+                root,
+                existing,
+                $"Signal Defense {direction}",
+                position,
+                rotation,
+                DefenseEncounterId,
+                $"signal-defense-{direction.ToLowerInvariant()}",
+                NarrativeAnchorKind.DefenseEnemySpawn);
+        }
+
+        private static void AddRuntimeAnchor(
+            Transform root,
+            IDictionary<string, NarrativeSpawnAnchor> existing,
+            string objectName,
+            Vector3 position,
+            Quaternion rotation,
+            string encounterId,
+            string anchorId,
+            NarrativeAnchorKind kind)
+        {
+            if (existing.ContainsKey(anchorId))
+                return;
+
+            var anchorObject = new GameObject(objectName);
+            anchorObject.transform.SetParent(root, false);
+            anchorObject.transform.SetPositionAndRotation(position, rotation);
+            var anchor = anchorObject.AddComponent<NarrativeSpawnAnchor>();
+            anchor.Configure(encounterId, anchorId, kind);
+            existing.Add(anchorId, anchor);
+        }
+
+        private static Vector3 SnapToNavMesh(Vector3 position, float radius)
+        {
+            return NavMesh.SamplePosition(position, out var hit, radius, NavMesh.AllAreas)
+                ? hit.position
+                : position;
+        }
+
+        private static Vector3 Flatten(Vector3 value)
+        {
+            value.y = 0f;
+            return value.sqrMagnitude > 0.001f ? value.normalized : Vector3.forward;
         }
 
         private bool TryGetAnchor(

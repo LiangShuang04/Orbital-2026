@@ -17,6 +17,7 @@ MonoBehaviour:
   assaultRiflePrefab: {fileID: 395104231899459405, guid: bbabec215dfafb844b5dfd983988a7d0, type: 3}
   gameManagerPrefab: {fileID: 5887309622221891272, guid: 2b9f6cbe9b5f1de4598c5ec2c2cc031d, type: 3}
   hudPrefab: {fileID: 5004127525361548006, guid: 012149545de9c2945b05178ecd69320d, type: 3}
+  fenrisFrigatePrefab: {fileID: 8414313498897350972, guid: 5e70dc9d83c14ac3af0693c1d0f086f4, type: 3}
   pickupPrefabs:
   - {fileID: 6284205649933253207, guid: 13c26d8b7b0d3d345962e08d9a78f6c5, type: 3}
   - {fileID: 5727318654148026565, guid: 7c69369ca5d72954586f004d3ac27aeb, type: 3}

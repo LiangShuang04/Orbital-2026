@@ -33,7 +33,7 @@ namespace DontDiePlease.Tests.EditMode
 
             Assert.That(database, Is.Not.Null);
             Assert.That(database.sequences, Is.Not.Null);
-            Assert.That(database.sequences.Length, Is.EqualTo(53));
+            Assert.That(database.sequences.Length, Is.EqualTo(54));
             Assert.That(database.sequences.Select(sequence => sequence.id).Distinct().Count(), Is.EqualTo(database.sequences.Length));
 
             foreach (var sequence in database.sequences)

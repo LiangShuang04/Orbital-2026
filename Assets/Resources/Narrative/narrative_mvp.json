@@ -502,7 +502,7 @@
       "mode": "Full",
       "priority": 74,
       "oneShot": true,
-      "lockInput": true,
+      "lockInput": false,
       "skippable": true,
       "lines": [
         {
@@ -685,8 +685,57 @@
       "setFlag": "unknown_transmission_heard"
     },
     {
+      "id": "TRG_FENRIS_WAKE_V2",
+      "mode": "Subtitle",
+      "priority": 92,
+      "oneShot": true,
+      "lockInput": false,
+      "skippable": true,
+      "lines": [
+        {
+          "id": "fenris_wake_01",
+          "speaker": "NARRATION",
+          "text": "Emergency lights return across the Fenris. You are still inside the grounded frigate. The main airlock will stay locked until the evacuation tutorial is complete.",
+          "autoAdvanceSeconds": 8
+        },
+        {
+          "id": "fenris_wake_02",
+          "speaker": "MIMIR",
+          "text": "First, use W A S D to move and the mouse to look around. Watch the evacuation panel in the top left. It always shows your current step, direction and distance.",
+          "autoAdvanceSeconds": 8
+        },
+        {
+          "id": "fenris_wake_03",
+          "speaker": "MIMIR",
+          "text": "Follow the panel to the bridge navigation console, then to the medbay diagnostic console. When the center prompt appears, press E to complete that station.",
+          "autoAdvanceSeconds": 8
+        },
+        {
+          "id": "fenris_wake_04",
+          "speaker": "ARCHE",
+          "text": "Next, follow the panel to the ready room. Switch weapon with one, two, or the mouse wheel. Hold right mouse to aim, left click to fire, and press R to reload. Then press E at the console.",
+          "autoAdvanceSeconds": 8
+        },
+        {
+          "id": "fenris_wake_05",
+          "speaker": "MIMIR",
+          "text": "After the weapon check, go to engineering and press E at the auxiliary power console. The airlock only releases after every checklist item is complete and this message has finished.",
+          "autoAdvanceSeconds": 8
+        },
+        {
+          "id": "fenris_wake_06",
+          "speaker": "ARCHE",
+          "text": "Finally, follow the panel to the main airlock. Press E once to open it. When the panel says airlock open, press E a second time to leave the ship and enter the Old Industry map.",
+          "autoAdvanceSeconds": 8,
+          "nextLineId": "END"
+        }
+      ],
+      "nextObjective": "ACT3_SURFACE",
+      "setFlag": "fenris_awake"
+    },
+    {
       "id": "TRG_RUINS_ENTERED",
-      "mode": "Full",
+      "mode": "Subtitle",
       "priority": 75,
       "oneShot": true,
       "lockInput": false,
