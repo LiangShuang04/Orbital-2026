@@ -29,8 +29,10 @@ public class ItemPickup : MonoBehaviour, IInteractable
             return;
         }
 
-        if (inventory.AddItem(itemData, quantity))
+        if (inventory.AddItem(itemData, quantity)){
+            Debug.Log("picked up " + GetDisplayName());
             Destroy(gameObject);
+        }
         else
             Debug.Log("Inventory full, cannot pick up " + GetDisplayName());
     }

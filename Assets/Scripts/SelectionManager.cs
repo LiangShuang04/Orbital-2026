@@ -8,7 +8,6 @@ public class SelectionManager : MonoBehaviour
 {
     [Header("UI")]
     public GameObject interaction_Info_UI;
-    [SerializeField] private string promptSuffix = "  [E]";
 
     [Header("Interaction")]
     [SerializeField] private float interactDistance = 3.5f;
@@ -64,7 +63,7 @@ public class SelectionManager : MonoBehaviour
 
     void ShowPrompt(string label)
     {
-        if (interactionText != null) interactionText.text = label + promptSuffix;
+        if (interactionText != null) interactionText.text = label + $"  [{interactKey}]";
         if (interaction_Info_UI != null) interaction_Info_UI.SetActive(true);
     }
 
