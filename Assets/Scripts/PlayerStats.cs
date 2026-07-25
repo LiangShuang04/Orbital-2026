@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
     PlayerMovement movement;
-    CameraController CamController;
+    CameraController camController;
 
     [Header("Health")]
     public float maxHealth = 100f;
@@ -25,27 +26,35 @@ public class PlayerStats : MonoBehaviour
     [Header("Toxicity")]
     public float maxToxicity = 100f;
     public float currentToxicity = 0f;
-    public float toxicityBuildupRate = 2f;
-    public float toxicityDecayRate = 5f;
+    public float toxicityBuildupRate = 0.1f;
+    public float toxicityDecayRate = 0f;
 
     [Header("Environment")]
     public bool isInsideShip = true;
 
-    bool isDead = false;
+    [Header("On Death")]
+    [Tooltip("Components disabled when the player dies (drag in the Akila FirstPersonController, CharacterInput, and any weapon/look scripts)")]
+    public Behaviour[] disableOnDeath;
+    [Tooltip("Where the player is placed on respawn. Leave empty to respawn on the spot")]
+    public Transform respawnPoint;
+
+    public bool IsDead => isDead;
+    public event Action OnDied;
+
+    bool isDead;
 
     void Start()
     {
         isDead = false;
         movement = GetComponent<PlayerMovement>();
-        CamController = GetComponentInChildren<CameraController>();
+        camController = GetComponentInChildren<CameraController>();
     }
 
     void Update()
     {
         if (isDead) return;
-        float dt = Time.deltaTime;
+        var dt = Time.deltaTime;
 
-        // Oxygen and toxicity react to environment
         if (isInsideShip)
         {
             currentOxygen = Mathf.Min(maxOxygen,  currentOxygen   + oxygenRegenerationRate * dt);
@@ -57,27 +66,70 @@ public class PlayerStats : MonoBehaviour
             currentToxicity = Mathf.Min(maxToxicity,currentToxicity + toxicityBuildupRate * dt);
         }
 
-        // Saturation always drains
         currentSaturation = Mathf.Max(0f, currentSaturation - saturationDepletionRate * dt);
 
-        // Damage from empty/maxed stats — all hit health
         if (currentOxygen <= 0f) currentHealth -= suffocationDamage * dt;
         if (currentSaturation <= 0f) currentHealth -= starvationDamage * dt;
-        if (currentToxicity >= maxToxicity) currentHealth = 0f;  // insta-kill
+        if (currentToxicity >= maxToxicity) currentHealth = 0f;
 
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
         if (currentHealth <= 0f) Die();
-    }   // <-- Update closes HERE, before the other methods
+    }
 
     public void Die()
     {
+        if (isDead) return;
         isDead = true;
-        movement.enabled = false;
-        CamController.enabled = false;
+
+        foreach (var b in disableOnDeath)
+            if (b != null) b.enabled = false;
+
+        // legacy references, only used if this player has the old controller scripts
+        if (movement != null) movement.enabled = false;
+        if (camController != null) camController.enabled = false;
+
+        // freeze the Akila controller automatically (matched by name, no hard dependency)
+        SetMovementEnabled(false);
+
+        OnDied?.Invoke();
         Debug.Log("Player died");
     }
 
-    // --- Public methods for pickups, medkits, food, oxygen tanks ---
+    public void Respawn()
+    {
+        isDead = false;
+        currentHealth = maxHealth;
+        currentOxygen = maxOxygen;
+        currentSaturation = maxSaturation;
+        currentToxicity = 0f;
+
+        foreach (var b in disableOnDeath)
+            if (b != null) b.enabled = true;
+
+        if (movement != null) movement.enabled = true;
+        if (camController != null) camController.enabled = true;
+
+        SetMovementEnabled(true);
+
+        if (respawnPoint != null)
+        {
+            transform.position = respawnPoint.position;
+            transform.rotation = respawnPoint.rotation;
+        }
+    }
+
+    // enables/disables the Akila movement + input by type name, so PlayerStats
+    // does not need a compile-time reference to the Akila package
+    void SetMovementEnabled(bool enabled)
+    {
+        foreach (var mb in GetComponents<MonoBehaviour>())
+        {
+            var n = mb.GetType().Name;
+            if (n == "FirstPersonController" || n == "CharacterInput")
+                mb.enabled = enabled;
+        }
+    }
+
     public void Heal(float amount) => currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
     public void RestoreOxygen(float amount) => currentOxygen = Mathf.Min(maxOxygen, currentOxygen + amount);
     public void RestoreSaturation(float amount) => currentSaturation = Mathf.Min(maxSaturation, currentSaturation + amount);

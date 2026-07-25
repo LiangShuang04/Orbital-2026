@@ -14,14 +14,18 @@ public class ItemData : ScriptableObject
 
     [Header("Category")]
     public ItemType type;
+
+    [Header("Dropping")]
+    [Tooltip("Object spawned when this item is dropped. Leave empty for a simple cube")]
+    public GameObject worldPrefab;
 }
 
 public enum ItemType
 {
-    Resource, //includes materials and resources
-    Consumable, // includes things that can restore health or saturation like medkit or food
-    Tool, // weapons and tools
-    Key // key items used to unlock the next act
+    Resource,
+    Consumable,
+    Tool,
+    Key
 }
 
 

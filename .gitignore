@@ -7,6 +7,7 @@ Logs/
 UserSettings/
 MemoryCaptures/
 Recordings/
+.DS_Store
 
 *.csproj
 *.sln
@@ -29,3 +30,32 @@ sysinfo.txt
 *.apk
 *.aab
 *.unitypackage
+*.unitypackage.meta
+*.zip
+*.zip.meta
+
+node_modules/
+.env
+
+# Large third-party asset packs — each teammate imports these locally
+# (kept on disk, just not pushed to GitHub)
+/Assets/_DLNK/
+/Assets/_DLNK.meta
+/Assets/SineVFX/
+/Assets/SineVFX.meta
+/Assets/VattalusAssets/
+/Assets/VattalusAssets.meta
+/Assets/Health Pack/
+/Assets/Health Pack.meta
+/Assets/OldIndustry/
+/Assets/OldIndustry.meta
+/Assets/Akila/
+/Assets/Akila.meta
+/Assets/StarSparrow/
+/Assets/StarSparrow.meta
+/Assets/Barking_Dog/
+/Assets/Barking_Dog.meta
+
+# WebGL build output — never commit builds
+/Milestone 2 trial game/
+/Milestone 2 trial game.zip
