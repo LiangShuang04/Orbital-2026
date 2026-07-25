@@ -88,6 +88,9 @@ public class PlayerStats : MonoBehaviour
         if (movement != null) movement.enabled = false;
         if (camController != null) camController.enabled = false;
 
+        // freeze the Akila controller automatically (matched by name, no hard dependency)
+        SetMovementEnabled(false);
+
         OnDied?.Invoke();
         Debug.Log("Player died");
     }
@@ -106,10 +109,24 @@ public class PlayerStats : MonoBehaviour
         if (movement != null) movement.enabled = true;
         if (camController != null) camController.enabled = true;
 
+        SetMovementEnabled(true);
+
         if (respawnPoint != null)
         {
             transform.position = respawnPoint.position;
             transform.rotation = respawnPoint.rotation;
+        }
+    }
+
+    // enables/disables the Akila movement + input by type name, so PlayerStats
+    // does not need a compile-time reference to the Akila package
+    void SetMovementEnabled(bool enabled)
+    {
+        foreach (var mb in GetComponents<MonoBehaviour>())
+        {
+            var n = mb.GetType().Name;
+            if (n == "FirstPersonController" || n == "CharacterInput")
+                mb.enabled = enabled;
         }
     }
 
