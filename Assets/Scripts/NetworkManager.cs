@@ -14,8 +14,10 @@ namespace DontDiePlease.Networking
         [SerializeField] private int requestTimeoutSeconds = 15;
 
         private string jwtToken = string.Empty;
+        private string currentUserId = string.Empty;
 
         public bool IsAuthenticated => !string.IsNullOrWhiteSpace(jwtToken);
+        public string CurrentUserId => currentUserId;
 
         private void Awake()
         {
@@ -65,6 +67,7 @@ namespace DontDiePlease.Networking
         public void ClearSession()
         {
             jwtToken = string.Empty;
+            currentUserId = string.Empty;
         }
 
         public async Task<ApiResult<TResponse>> GetAuthenticatedJson<TResponse>(string endpoint) where TResponse : class
@@ -118,10 +121,11 @@ namespace DontDiePlease.Networking
             }
 
             jwtToken = envelope.token;
+            currentUserId = envelope.user != null ? envelope.user.id : string.Empty;
 
             var session = new AuthSession
             {
-                userId = envelope.user != null ? envelope.user.id : string.Empty,
+                userId = currentUserId,
                 username = envelope.user != null ? envelope.user.username : string.Empty,
                 email = envelope.user != null ? envelope.user.email : string.Empty
             };

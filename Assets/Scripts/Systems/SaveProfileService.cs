@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DontDiePlease.Networking;
 using UnityEngine;
@@ -7,6 +8,7 @@ namespace DontDiePlease.Systems
 {
     public sealed class SaveProfileService : MonoBehaviour
     {
+        private static readonly SemaphoreSlim ObjectiveSaveLock = new SemaphoreSlim(1, 1);
         [SerializeField] private NetworkManager networkManager;
         [SerializeField] private GameSeedManager seedManager;
         [SerializeField] private bool createSaveIfMissing = true;
@@ -62,6 +64,78 @@ namespace DontDiePlease.Systems
             }
 
             return ToProfileResult(result);
+        }
+
+        public async Task<ApiResult<SaveProfileData>> SaveObjectiveState(ObjectiveStateData objectiveState)
+        {
+            ResolveDependencies();
+            await ObjectiveSaveLock.WaitAsync();
+
+            try
+            {
+                var req = new SaveObjectiveUpdateRequest
+                {
+                    objectiveState = objectiveState
+                };
+
+                var result = await networkManager.PutAuthenticatedJson<SaveObjectiveUpdateRequest, SaveProfileResponse>("/save", req);
+
+                if (!result.Success && result.StatusCode == 404 && createSaveIfMissing)
+                {
+                    var created = await CreateSaveWithCurrentSeed();
+
+                    if (!created.Success)
+                    {
+                        return created;
+                    }
+
+                    result = await networkManager.PutAuthenticatedJson<SaveObjectiveUpdateRequest, SaveProfileResponse>("/save", req);
+                }
+
+                return ToProfileResult(result);
+            }
+            finally
+            {
+                ObjectiveSaveLock.Release();
+            }
+        }
+
+        public async Task<ApiResult<SaveProfileData>> SaveNewGame(int worldSeed, ObjectiveStateData objectiveState)
+        {
+            ResolveDependencies();
+            await ObjectiveSaveLock.WaitAsync();
+
+            try
+            {
+                var req = new SaveNewGameRequest
+                {
+                    worldSeed = worldSeed,
+                    objectiveState = objectiveState
+                };
+                var result = await networkManager.PutAuthenticatedJson<SaveNewGameRequest, SaveProfileResponse>("/save", req);
+
+                if (!result.Success && result.StatusCode == 404 && createSaveIfMissing)
+                {
+                    var createReq = new SaveCreateRequest
+                    {
+                        worldSeed = worldSeed
+                    };
+                    var created = await networkManager.PostAuthenticatedJson<SaveCreateRequest, SaveProfileResponse>("/save", createReq);
+
+                    if (!created.Success)
+                    {
+                        return ToProfileResult(created);
+                    }
+
+                    result = await networkManager.PutAuthenticatedJson<SaveNewGameRequest, SaveProfileResponse>("/save", req);
+                }
+
+                return ToProfileResult(result);
+            }
+            finally
+            {
+                ObjectiveSaveLock.Release();
+            }
         }
 
         public async Task<ApiResult<SaveProfileData>> LoadSeedIntoManager()

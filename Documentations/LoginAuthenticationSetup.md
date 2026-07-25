@@ -1,62 +1,72 @@
 # Login Authentication Setup
 
-The current login flow uses the sci-fi PHPLogin scene as the visual shell, then `PhpLoginBridge` takes over the buttons and input fields at runtime.
+The `Login` scene uses the imported sci-fi interface as its visual shell. `PhpLoginBridge` replaces the package's PHP behaviours at runtime and connects the form to the Express API.
 
-## Scene
+## Game Flow
 
-Primary login scene:
+The release flow is:
 
-- `Assets/Scenes/Login.unity`
+```text
+Login
+  -> MainGameplayScene for the aircraft introduction and tutorial
+  -> Demo_Combat for the final playable map, enemies, Warden-K, and Signal Generator defence
+```
 
-Target scene after a successful mock login:
+After login, Unity retrieves the authenticated player's save profile:
 
-- `Assets/Scenes/MainMenuScene.unity`
+- A new account or missing save starts in `MainGameplayScene` with `ACT1_WAKE`.
+- An early aircraft/tutorial save resumes in `MainGameplayScene`.
+- A save that has reached the ruins, robot encounter, or later objectives resumes in `Demo_Combat`.
 
-The original imported package scene is left alone. Our scene copy is the one wired into the project.
+`MainMenuScene` remains available for manual testing but is not part of the authenticated release flow.
 
 ## Main Scripts
 
 - `Assets/Scripts/Auth/PhpLoginBridge.cs`
-- `Assets/Scripts/Auth/AuthManager.cs`
-- `Assets/Scripts/Auth/AuthApiClient.cs`
-- `Assets/Scripts/Auth/AuthModels.cs`
-- `Assets/Scripts/Auth/LoginPageController.cs`
-- `Assets/Scripts/Auth/AuthUIController.cs`
+- `Assets/Scripts/Auth/AuthenticatedGameFlow.cs`
 - `Assets/Scripts/NetworkManager.cs`
+- `Assets/Scripts/Systems/SaveProfileService.cs`
+- `Assets/Scripts/Systems/SaveProfileModels.cs`
 
-`PhpLoginBridge` is the practical runtime bridge for the current UI scene. The older generated-login scripts are kept because they are still useful fallback/reference code, but they are not the main login scene path right now.
+## Authentication
 
-## Runtime Behaviour
-
-Mock auth is enabled by default so the Unity scene can be tested without a deployed server.
-
-Mock mode accepts:
-
-- non-empty username/email
-- non-empty password
-- matching register confirmation fields
-- email-looking register input
-
-The bridge disables the imported PHP package's original auth behaviours and replaces their button events with our flow.
-
-## Backend Integration
-
-For the Express backend, use:
+Unity calls:
 
 - `POST /api/v1/auth/register`
 - `POST /api/v1/auth/login`
 
-The backend returns a JWT. Unity stores the token in memory through `NetworkManager` and attaches it to future save requests as:
+The backend writes the account to MongoDB and returns a JWT. Unity keeps the JWT in memory and sends it on save requests:
 
 ```text
 Authorization: Bearer <token>
 ```
 
-Do not put MongoDB credentials inside Unity. Unity should only talk to backend endpoints over HTTP/HTTPS.
+The Unity client never connects to MongoDB directly and must not contain Atlas credentials.
+
+## Save Routing
+
+After authentication, Unity calls:
+
+- `GET /api/v1/save`
+- `POST /api/v1/save` when the account has no save profile
+- `PUT /api/v1/save` for seed and narrative progress updates
+
+The save profile supplies `worldSeed` and `objectiveState`. `AuthenticatedGameFlow` uses those fields to select the resume scene.
+
+## Login UI
+
+The runtime bridge:
+
+- uses Liberation Sans SDF for readable text
+- increases input, status, and button text sizes
+- applies high-contrast input and button colours
+- disables controls while a request is running
+- shows backend validation and connection failures in the scene
+- supports Enter and Tab keyboard navigation
 
 ## Backend Local Run
 
-Create `.env` in the repo root:
+Create `.env` in the repository root:
 
 ```env
 PORT=5000
@@ -80,21 +90,21 @@ GET http://127.0.0.1:5000/api-docs
 
 ## Build Settings
 
-Recommended scene order:
+Required enabled scenes:
 
 1. `Assets/Scenes/Login.unity`
-2. `Assets/Scenes/MainMenuScene.unity`
-3. `Assets/Scenes/MainGameplayScene.unity`
-4. `Assets/Scenes/Central_Combat.unity`
-5. `Assets/Scenes/Demo_Combat.unity`
+2. `Assets/Scenes/MainGameplayScene.unity`
+3. `Assets/Scenes/Demo_Combat.unity`
 
-## Test Checklist
+`MainMenuScene` can stay enabled for its standalone tests. `Central` and `Central_Combat` are not part of the release flow.
 
-- Open `Assets/Scenes/Login.unity`
-- Press Play
-- Try login with blank fields and confirm the UI blocks it
-- Try register with mismatched confirmation fields
-- Try a valid mock login and confirm it enters `MainMenuScene`
-- Start the backend and test `/api/v1/health`
-- If testing real auth, disable mock auth on the login bridge and set the server URL
-- Confirm JWT auth works before testing save/load
+## Manual Test
+
+1. Start the Express backend.
+2. Open `Assets/Scenes/Login.unity`.
+3. Press Play and register a new account.
+4. Confirm the account receives a save profile and loads `MainGameplayScene`.
+5. Complete or advance the aircraft tutorial until the ruins transition.
+6. Confirm the game loads `Demo_Combat`.
+7. Exit, log in again, and confirm the saved objective resumes in the correct scene.
+8. Confirm the Console has no authentication, scene-loading, missing-script, or duplicate AudioListener errors.

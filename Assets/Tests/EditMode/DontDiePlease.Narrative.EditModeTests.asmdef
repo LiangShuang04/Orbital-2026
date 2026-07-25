@@ -1,0 +1,9 @@
+{
+    "name": "DontDiePlease.Narrative.EditModeTests",
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ]
+}

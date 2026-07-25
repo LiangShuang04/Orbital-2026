@@ -1,3 +1,4 @@
+using System;
 using Akila.FPSFramework;
 using UnityEngine;
 using UnityEngine.AI;
@@ -25,6 +26,7 @@ namespace DontDiePlease.Central.Combat
         public bool IsDead => dead;
         public float Health => damageable != null ? damageable.health : 0f;
         public float MaxHealth => damageable != null ? damageable.maxHealth : 0f;
+        public event Action<CentralCombatEnemy> Died;
 
         private void Awake()
         {
@@ -41,6 +43,12 @@ namespace DontDiePlease.Central.Combat
         {
             if (damageable != null)
                 damageable.OnDeath.RemoveListener(Die);
+        }
+
+        private void Update()
+        {
+            if (!dead && damageable != null && damageable.health <= 0f)
+                Die();
         }
 
         public void Configure(CentralCombatEnemyConfig config)
@@ -131,9 +139,15 @@ namespace DontDiePlease.Central.Combat
                     col.enabled = false;
             }
 
-            var visual = transform.childCount > 0 ? transform.GetChild(0) : transform;
-            visual.localRotation = Quaternion.Euler(0f, 0f, Random.Range(-78f, 78f));
+            var visuals = GetComponent<CentralEnemyVisualDriver>();
 
+            if (visuals == null || !visuals.PlayDeath())
+            {
+                var visual = transform.childCount > 0 ? transform.GetChild(0) : transform;
+                visual.localRotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(-78f, 78f));
+            }
+
+            Died?.Invoke(this);
             Destroy(gameObject, despawnDelay);
         }
     }

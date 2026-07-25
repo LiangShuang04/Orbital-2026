@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DontDiePlease.Networking;
+using DontDiePlease.Systems;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,7 +11,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 #endif
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -17,13 +18,10 @@ namespace DontDiePlease.Auth
 {
     public sealed class PhpLoginBridge : MonoBehaviour
     {
-        [SerializeField] private bool useMockAuth = true;
-        [SerializeField] private string targetSceneName = "MainMenuScene";
-        [SerializeField] private string serverBaseUrl;
-        [SerializeField] private string sharedApiKey;
-        [SerializeField] private float mockDelaySeconds = 0.35f;
-
         private UIGlobal ui;
+        private NetworkManager networkManager;
+        private AuthenticatedGameFlow gameFlow;
+        private TMP_FontAsset readableFont;
         private TMP_InputField loginInput;
         private TMP_InputField passwordInput;
         private TMP_InputField registerLoginInput;
@@ -45,19 +43,18 @@ namespace DontDiePlease.Auth
 
         public void Configure(string sceneName, bool mockAuth, string baseUrl)
         {
-            targetSceneName = string.IsNullOrWhiteSpace(sceneName) ? targetSceneName : sceneName;
-            useMockAuth = mockAuth;
-            serverBaseUrl = baseUrl ?? string.Empty;
         }
 
         private async void Start()
         {
             await Task.Yield();
+            ResolveServices();
             ResolveSceneReferences();
             DisablePackageAuthScripts();
             ClearPackageInputEvents();
             BindControls();
             ConfigureCanvasScalers();
+            ApplyReadableVisuals();
             SetStatus(string.Empty);
             SetRegisterVisible(false);
             EnsureEventSystem();
@@ -196,18 +193,18 @@ namespace DontDiePlease.Auth
 
         private void ContinueToPassword()
         {
-            var username = GetText(loginInput);
+            var email = GetText(loginInput);
 
-            if (string.IsNullOrWhiteSpace(username))
+            if (!IsEmailLike(email))
             {
-                SetStatus("Enter your username.");
+                SetStatus("Enter the email linked to your account.");
                 Focus(loginInput);
                 return;
             }
 
             if (ui != null)
             {
-                ui.MyName = username.Trim();
+                ui.MyName = email.Trim();
                 ui.ChangeTitleForPassword();
             }
             else
@@ -222,12 +219,12 @@ namespace DontDiePlease.Auth
 
         private async void SubmitLogin()
         {
-            var username = !string.IsNullOrWhiteSpace(ui?.MyName) ? ui.MyName : GetText(loginInput);
+            var email = !string.IsNullOrWhiteSpace(ui?.MyName) ? ui.MyName : GetText(loginInput);
             var password = GetText(passwordInput);
 
-            if (string.IsNullOrWhiteSpace(username))
+            if (!IsEmailLike(email))
             {
-                SetStatus("Enter your username.");
+                SetStatus("Enter the email linked to your account.");
                 Focus(loginInput);
                 return;
             }
@@ -241,15 +238,29 @@ namespace DontDiePlease.Auth
 
             await RunBusyState(async () =>
             {
-                var ok = useMockAuth ? await MockLogin(username, password) : await RealLogin(username, password);
+                SetStatus("Checking account...");
+                var auth = await networkManager.LoginUser(email, password);
 
-                if (!ok)
+                if (!auth.Success)
+                {
+                    SetStatus(CleanError(auth.Error));
+                    SetActive(ui?.AccessDenied, true);
                     return;
+                }
 
-                SetStatus("Access granted.");
+                SetStatus("Loading survivor record...");
+                var flow = await gameFlow.PrepareNextScene();
+
+                if (!flow.Success)
+                {
+                    SetStatus(CleanError(flow.Error));
+                    return;
+                }
+
+                SetStatus("Survivor record loaded.");
                 SetActive(ui?.AccessGranted, true);
                 SetActive(ui?.AccessDenied, false);
-                SceneManager.LoadScene(targetSceneName);
+                SceneManager.LoadScene(flow.SceneName);
             });
         }
 
@@ -306,17 +317,26 @@ namespace DontDiePlease.Auth
 
             await RunBusyState(async () =>
             {
-                var ok = useMockAuth ? await MockRegister(username, password, email) : await RealRegister(username, password, email);
+                SetStatus("Creating survivor record...");
+                var auth = await networkManager.RegisterUser(username, email, password);
 
-                if (!ok)
+                if (!auth.Success)
+                {
+                    SetStatus(CleanError(auth.Error));
                     return;
+                }
 
-                SetStatus("Account ready. Log in with your new credentials.");
-                SetInput(loginInput, username.Trim());
-                SetInput(passwordInput, string.Empty);
-                SetRegisterVisible(false);
+                var flow = await gameFlow.PrepareNextScene();
+
+                if (!flow.Success)
+                {
+                    SetStatus(CleanError(flow.Error));
+                    return;
+                }
+
+                SetStatus("Survivor record created.");
                 SetActive(ui?.AccountCreated, true);
-                Focus(loginInput);
+                SceneManager.LoadScene(flow.SceneName);
             });
         }
 
@@ -340,88 +360,6 @@ namespace DontDiePlease.Auth
             }
         }
 
-        private async Task<bool> MockLogin(string username, string password)
-        {
-            await WaitMockDelay();
-            var ok = !string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password);
-
-            if (!ok)
-            {
-                SetStatus("Invalid login.");
-                SetActive(ui?.AccessDenied, true);
-            }
-
-            return ok;
-        }
-
-        private async Task<bool> MockRegister(string username, string password, string email)
-        {
-            await WaitMockDelay();
-            return !string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password) && IsEmailLike(email);
-        }
-
-        private async Task<bool> RealLogin(string username, string password)
-        {
-            var url = BuildUrl("login.php");
-            var form = new WWWForm();
-            form.AddField("playerName", username.Trim());
-            form.AddField("password", password);
-            AddSharedKey(form);
-            var response = await PostForm(url, form);
-            var ok = response.IndexOf("Login success", StringComparison.OrdinalIgnoreCase) >= 0 || response.IndexOf("success", StringComparison.OrdinalIgnoreCase) >= 0;
-
-            if (!ok)
-            {
-                SetStatus("Login rejected by server.");
-                SetActive(ui?.AccessDenied, true);
-            }
-
-            return ok;
-        }
-
-        private async Task<bool> RealRegister(string username, string password, string email)
-        {
-            var url = BuildUrl("register.php");
-            var form = new WWWForm();
-            form.AddField("playerName", username.Trim());
-            form.AddField("password", password);
-            form.AddField("email", email.Trim());
-            form.AddField("idavatar", ui != null ? ui.AvatarID : 0);
-            AddSharedKey(form);
-            var response = await PostForm(url, form);
-            var ok = response.IndexOf("Ok", StringComparison.OrdinalIgnoreCase) >= 0 || response.IndexOf("success", StringComparison.OrdinalIgnoreCase) >= 0;
-
-            if (!ok)
-                SetStatus("Server could not create this account.");
-
-            return ok;
-        }
-
-        private async Task<string> PostForm(string url, WWWForm form)
-        {
-            if (string.IsNullOrWhiteSpace(serverBaseUrl))
-                throw new InvalidOperationException("Set the PHP server URL first.");
-
-            using var request = UnityWebRequest.Post(url, form);
-            var op = request.SendWebRequest();
-
-            while (!op.isDone)
-                await Task.Yield();
-
-            if (request.result != UnityWebRequest.Result.Success)
-                throw new InvalidOperationException(request.error);
-
-            return request.downloadHandler != null ? request.downloadHandler.text : string.Empty;
-        }
-
-        private async Task WaitMockDelay()
-        {
-            var end = Time.unscaledTime + Mathf.Max(0f, mockDelaySeconds);
-
-            while (Time.unscaledTime < end)
-                await Task.Yield();
-        }
-
         private string ValidateRegister(string username, string password, string confirmPassword, string email, string confirmEmail)
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -440,18 +378,6 @@ namespace DontDiePlease.Auth
                 return "Emails do not match.";
 
             return string.Empty;
-        }
-
-        private string BuildUrl(string endpoint)
-        {
-            var root = serverBaseUrl.Trim().TrimEnd('/');
-            return $"{root}/{endpoint}";
-        }
-
-        private void AddSharedKey(WWWForm form)
-        {
-            if (!string.IsNullOrWhiteSpace(sharedApiKey))
-                form.AddField("key", sharedApiKey);
         }
 
         private void SetBusy(bool value)
@@ -555,6 +481,25 @@ namespace DontDiePlease.Auth
 #endif
         }
 
+        private void ResolveServices()
+        {
+            networkManager = NetworkManager.Instance != null
+                ? NetworkManager.Instance
+                : FindAnyObjectByType<NetworkManager>();
+
+            if (networkManager == null)
+            {
+                networkManager = new GameObject("NetworkManager").AddComponent<NetworkManager>();
+            }
+
+            gameFlow = GetComponent<AuthenticatedGameFlow>();
+
+            if (gameFlow == null)
+            {
+                gameFlow = gameObject.AddComponent<AuthenticatedGameFlow>();
+            }
+        }
+
         private void ConfigureCanvasScalers()
         {
             foreach (var scaler in FindObjectsByType<CanvasScaler>(FindObjectsInactive.Include, FindObjectsSortMode.None))
@@ -566,6 +511,96 @@ namespace DontDiePlease.Auth
                 scaler.referenceResolution = new Vector2(1920f, 1080f);
                 scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
                 scaler.matchWidthOrHeight = 0.5f;
+            }
+        }
+
+        private void ApplyReadableVisuals()
+        {
+            readableFont = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF") ??
+                           TMP_Settings.defaultFontAsset;
+
+            foreach (var text in FindObjectsByType<TextMeshProUGUI>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                if (text == null || text.gameObject.scene != gameObject.scene)
+                {
+                    continue;
+                }
+
+                if (readableFont != null)
+                {
+                    text.font = readableFont;
+                }
+
+                text.enableKerning = true;
+                text.characterSpacing = 0f;
+
+                if (text.fontSize < 13f)
+                {
+                    text.fontSize = 13f;
+                }
+            }
+
+            StyleInput(loginInput, "EMAIL");
+            StyleInput(passwordInput, "PASSWORD");
+            StyleInput(registerLoginInput, "USERNAME");
+            StyleInput(registerPasswordInput, "PASSWORD");
+            StyleInput(registerConfirmPasswordInput, "CONFIRM PASSWORD");
+            StyleInput(registerEmailInput, "EMAIL");
+            StyleInput(registerConfirmEmailInput, "CONFIRM EMAIL");
+
+            foreach (var button in controlledButtons)
+            {
+                if (button == null)
+                {
+                    continue;
+                }
+
+                var label = button.GetComponentInChildren<TextMeshProUGUI>(true);
+
+                if (label != null)
+                {
+                    label.fontSize = Mathf.Max(18f, label.fontSize);
+                    label.color = new Color(0.94f, 0.98f, 1f, 1f);
+                }
+
+                var colors = button.colors;
+                colors.normalColor = new Color(0.12f, 0.25f, 0.31f, 1f);
+                colors.highlightedColor = new Color(0.2f, 0.52f, 0.62f, 1f);
+                colors.pressedColor = new Color(0.08f, 0.7f, 0.78f, 1f);
+                colors.disabledColor = new Color(0.08f, 0.12f, 0.14f, 0.75f);
+                button.colors = colors;
+            }
+
+            if (statusText != null)
+            {
+                statusText.fontSize = Mathf.Max(19f, statusText.fontSize);
+                statusText.color = new Color(1f, 0.78f, 0.4f, 1f);
+                statusText.overflowMode = TextOverflowModes.Overflow;
+            }
+        }
+
+        private void StyleInput(TMP_InputField input, string label)
+        {
+            if (input == null)
+            {
+                return;
+            }
+
+            input.caretColor = new Color(0.35f, 0.94f, 1f, 1f);
+            input.selectionColor = new Color(0.15f, 0.55f, 0.68f, 0.65f);
+
+            if (input.textComponent != null)
+            {
+                input.textComponent.fontSize = Mathf.Max(22f, input.textComponent.fontSize);
+                input.textComponent.color = new Color(0.95f, 0.98f, 1f, 1f);
+                input.textComponent.overflowMode = TextOverflowModes.Ellipsis;
+            }
+
+            if (input.placeholder is TextMeshProUGUI placeholder)
+            {
+                placeholder.text = label;
+                placeholder.fontSize = Mathf.Max(19f, placeholder.fontSize);
+                placeholder.color = new Color(0.62f, 0.75f, 0.78f, 0.92f);
             }
         }
 

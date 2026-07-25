@@ -26,10 +26,12 @@ namespace DontDiePlease.Central.Combat
         private int wave;
         private float nextWaveTimer;
         private bool encounterActive;
+        private bool automaticWavesEnabled = true;
 
         public int CurrentWave => wave;
         public int ActiveEnemyCount => activeEnemies.Count(enemy => enemy != null && !enemy.IsDead);
         public int Seed { get; private set; }
+        public bool IsConfigured { get; private set; }
         public event Action<int, int> CombatStateChanged;
 
         public void Configure(Transform playerTarget, GameObject[] pickups)
@@ -41,7 +43,8 @@ namespace DontDiePlease.Central.Combat
             BuildSpawnZones();
             PlacePickups();
             nextWaveTimer = firstWaveDelay;
-            encounterActive = true;
+            IsConfigured = true;
+            encounterActive = automaticWavesEnabled;
             CombatStateChanged?.Invoke(wave, ActiveEnemyCount);
         }
 
@@ -83,6 +86,47 @@ namespace DontDiePlease.Central.Combat
             CombatStateChanged?.Invoke(wave, ActiveEnemyCount);
         }
 
+        public void SetAutomaticWaves(bool enabled, bool clearExisting)
+        {
+            automaticWavesEnabled = enabled;
+            encounterActive = enabled && IsConfigured;
+
+            if (clearExisting)
+            {
+                ClearActiveEnemies();
+            }
+
+            CombatStateChanged?.Invoke(wave, ActiveEnemyCount);
+        }
+
+        public CentralCombatEnemy SpawnEncounterEnemy(CentralCombatEnemyConfig config, Vector3 position)
+        {
+            if (!IsConfigured || config == null || player == null)
+            {
+                return null;
+            }
+
+            if (!NavMesh.SamplePosition(position, out var hit, 12f, NavMesh.AllAreas))
+                return null;
+
+            var enemy = SpawnEnemy(config, hit.position);
+            CombatStateChanged?.Invoke(wave, ActiveEnemyCount);
+            return enemy;
+        }
+
+        public void ClearActiveEnemies()
+        {
+            foreach (var enemy in activeEnemies)
+            {
+                if (enemy != null)
+                {
+                    Destroy(enemy.gameObject);
+                }
+            }
+
+            activeEnemies.Clear();
+        }
+
         private List<CentralCombatEnemyConfig> BuildWave(int waveIdx)
         {
             var configs = new List<CentralCombatEnemyConfig>();
@@ -90,9 +134,9 @@ namespace DontDiePlease.Central.Combat
             if (waveIdx <= 1)
             {
                 configs.Add(CentralCombatEnemyConfig.Rusher());
-                configs.Add(CentralCombatEnemyConfig.Rusher());
-                configs.Add(CentralCombatEnemyConfig.Rusher());
                 configs.Add(CentralCombatEnemyConfig.Shooter());
+                configs.Add(CentralCombatEnemyConfig.Heavy());
+                configs.Add(CentralCombatEnemyConfig.Stalker());
                 return Shuffle(configs);
             }
 
@@ -100,10 +144,10 @@ namespace DontDiePlease.Central.Combat
             {
                 configs.Add(CentralCombatEnemyConfig.Rusher());
                 configs.Add(CentralCombatEnemyConfig.Rusher());
-                configs.Add(CentralCombatEnemyConfig.Rusher());
                 configs.Add(CentralCombatEnemyConfig.Shooter());
                 configs.Add(CentralCombatEnemyConfig.Shooter());
                 configs.Add(CentralCombatEnemyConfig.Heavy());
+                configs.Add(CentralCombatEnemyConfig.Stalker());
                 return Shuffle(configs);
             }
 
@@ -140,8 +184,12 @@ namespace DontDiePlease.Central.Combat
             return values;
         }
 
-        private void SpawnEnemy(CentralCombatEnemyConfig config, Vector3 position)
+        private CentralCombatEnemy SpawnEnemy(CentralCombatEnemyConfig config, Vector3 position)
         {
+            if (!NavMesh.SamplePosition(position, out var hit, 8f, NavMesh.AllAreas))
+                return null;
+
+            position = hit.position;
             var go = new GameObject($"Enemy_{config.displayName}");
             go.transform.SetParent(transform, true);
             go.transform.SetPositionAndRotation(position, Quaternion.Euler(0f, NextFloat(0f, 360f), 0f));
@@ -156,12 +204,15 @@ namespace DontDiePlease.Central.Combat
 
             var enemy = go.AddComponent<CentralCombatEnemy>();
             enemy.Configure(config);
+            enemy.enabled = true;
 
             agent.Warp(position);
 
             var ai = go.AddComponent<CentralCombatEnemyAI>();
             ai.Configure(enemy, player, muzzle);
+            ai.enabled = true;
             activeEnemies.Add(enemy);
+            return enemy;
         }
 
         private Vector3 PickSpawnPosition(int offset)
@@ -169,30 +220,96 @@ namespace DontDiePlease.Central.Combat
             if (spawnZones.Count == 0)
                 BuildSpawnZones();
 
-            for (var attempt = 0; attempt < 24; attempt++)
+            var hasPlayerPosition = TryGetPlayerNavPosition(out var playerPosition);
+
+            for (var attempt = 0; attempt < 36; attempt++)
             {
-                var zone = spawnZones[(rng.Next(0, spawnZones.Count) + offset) % spawnZones.Count];
-                var scatter = RandomCircle(4f, 14f);
+                var zone = hasPlayerPosition && attempt < 24
+                    ? playerPosition
+                    : spawnZones[(rng.Next(0, spawnZones.Count) + offset) % spawnZones.Count];
+                var minRadius = hasPlayerPosition && attempt < 24 ? minPlayerSpawnDistance : 4f;
+                var maxRadius = hasPlayerPosition && attempt < 24 ? minPlayerSpawnDistance + 24f : 14f;
+                var scatter = RandomCircle(minRadius, maxRadius);
                 var pos = zone + new Vector3(scatter.x, 0f, scatter.y);
 
                 if (player != null && Vector3.Distance(pos, player.position) < minPlayerSpawnDistance)
                     continue;
 
-                if (NavMesh.SamplePosition(pos, out var hit, 8f, NavMesh.AllAreas))
+                if (NavMesh.SamplePosition(pos, out var hit, 12f, NavMesh.AllAreas) &&
+                    IsReachableSpawn(hit.position) &&
+                    IsSeparatedSpawn(hit.position))
+                {
                     return hit.position;
+                }
             }
 
-            var fallback = player != null ? player.position + player.forward * 18f : transform.position + Vector3.forward * 18f;
+            for (var idx = 0; idx < spawnZones.Count; idx++)
+            {
+                var zone = spawnZones[(idx + offset) % spawnZones.Count];
 
-            if (NavMesh.SamplePosition(fallback, out var fallbackHit, 20f, NavMesh.AllAreas))
-                return fallbackHit.position;
+                if (IsReachableSpawn(zone) && IsSeparatedSpawn(zone))
+                    return zone;
+            }
 
-            return fallback;
+            if (hasPlayerPosition)
+            {
+                for (var idx = 0; idx < 8; idx++)
+                {
+                    var direction = Quaternion.Euler(0f, idx * 45f, 0f) * Vector3.forward;
+                    var candidate = playerPosition + direction * minPlayerSpawnDistance;
+
+                    if (NavMesh.SamplePosition(candidate, out var hit, 18f, NavMesh.AllAreas) &&
+                        IsSeparatedSpawn(hit.position))
+                    {
+                        return hit.position;
+                    }
+                }
+
+                return playerPosition;
+            }
+
+            return NavMesh.SamplePosition(transform.position, out var fallback, 100f, NavMesh.AllAreas)
+                ? fallback.position
+                : transform.position;
+        }
+
+        private bool IsReachableSpawn(Vector3 position)
+        {
+            if (!TryGetPlayerNavPosition(out var playerPosition) ||
+                Mathf.Abs(position.y - playerPosition.y) > 12f)
+                return false;
+
+            var path = new NavMeshPath();
+            return NavMesh.CalculatePath(position, playerPosition, NavMesh.AllAreas, path) &&
+                   path.status == NavMeshPathStatus.PathComplete;
+        }
+
+        private bool IsSeparatedSpawn(Vector3 position)
+        {
+            foreach (var enemy in activeEnemies)
+            {
+                if (enemy != null && !enemy.IsDead &&
+                    Vector3.SqrMagnitude(enemy.transform.position - position) < 9f)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private void BuildSpawnZones()
         {
             spawnZones.Clear();
+
+            if (TryGetPlayerNavPosition(out var playerPosition))
+            {
+                for (var idx = 0; idx < 8; idx++)
+                {
+                    var direction = Quaternion.Euler(0f, idx * 45f, 0f) * Vector3.forward;
+                    AddZone(playerPosition + direction * 24f);
+                }
+            }
 
             var bounds = CalculateSceneBounds();
             var center = bounds.center;
@@ -215,8 +332,24 @@ namespace DontDiePlease.Central.Combat
 
         private void AddZone(Vector3 candidate)
         {
-            if (NavMesh.SamplePosition(candidate, out var hit, 18f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(candidate, out var hit, 18f, NavMesh.AllAreas) &&
+                spawnZones.All(zone => Vector3.SqrMagnitude(zone - hit.position) > 4f))
+            {
                 spawnZones.Add(hit.position);
+            }
+        }
+
+        private bool TryGetPlayerNavPosition(out Vector3 position)
+        {
+            if (player != null &&
+                NavMesh.SamplePosition(player.position, out var hit, 30f, NavMesh.AllAreas))
+            {
+                position = hit.position;
+                return true;
+            }
+
+            position = default;
+            return false;
         }
 
         private Bounds CalculateSceneBounds()

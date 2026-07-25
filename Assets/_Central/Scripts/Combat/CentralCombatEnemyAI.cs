@@ -29,6 +29,7 @@ namespace DontDiePlease.Central.Combat
         private CentralCombatEnemy enemy;
         private CentralCombatEnemyConfig config;
         private NavMeshAgent agent;
+        private CentralEnemyVisualDriver visuals;
         private Transform target;
         private Transform muzzle;
         private EnemyState state;
@@ -52,11 +53,12 @@ namespace DontDiePlease.Central.Combat
         {
             enemy = value;
             config = value.Config;
+            visuals = GetComponent<CentralEnemyVisualDriver>();
             target = targetValue;
             muzzle = muzzleValue;
             postPos = transform.position;
             patrolTarget = postPos;
-            state = EnemyState.Idle;
+            state = target != null ? EnemyState.Chase : EnemyState.Idle;
             attackTimer = Random.Range(0.2f, 0.8f);
             value.BindAI(this);
         }
@@ -225,6 +227,7 @@ namespace DontDiePlease.Central.Combat
             attackResolved = false;
             windupTimer = config.attackWindup;
             state = EnemyState.Attack;
+            visuals?.PlayAttack();
         }
 
         private void ResolveAttack()

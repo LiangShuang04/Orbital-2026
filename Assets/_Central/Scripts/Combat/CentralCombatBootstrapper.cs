@@ -7,6 +7,7 @@ using DontDiePlease.Systems;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -31,13 +32,31 @@ namespace DontDiePlease.Central.Combat
         private const string AssaultRiflePath = "Assets/Akila/FPS Framework/Prefabs/Weapons/Assault Rifle_1.prefab";
         private const string FrameworkGameManagerPath = "Assets/Akila/FPS Framework/Prefabs/World/Game Manager.prefab";
         private const string FrameworkHudPath = "Assets/Akila/FPS Framework/Prefabs/HUD/HUD.prefab";
+        private const string AssetCatalogPath = "Combat/CentralCombatAssetCatalog";
+
+        private CentralCombatAssetCatalog assetCatalog;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void RegisterSceneHandler()
+        {
+            SceneManager.sceneLoaded -= HandleSceneLoaded;
+            SceneManager.sceneLoaded += HandleSceneLoaded;
+        }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        private static void CreateForCombatScene()
+        private static void CreateForActiveScene()
         {
-            var scene = SceneManager.GetActiveScene();
+            CreateForScene(SceneManager.GetActiveScene());
+        }
 
-            if (!SceneNames.Contains(scene.name))
+        private static void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            CreateForScene(scene);
+        }
+
+        private static void CreateForScene(Scene scene)
+        {
+            if (!scene.IsValid() || !scene.isLoaded || !SceneNames.Contains(scene.name))
                 return;
 
             var alreadyThere = FindObjectsByType<CentralCombatBootstrapper>(FindObjectsInactive.Include)
@@ -59,9 +78,11 @@ namespace DontDiePlease.Central.Combat
             FPSFrameworkCore.IsActive = true;
             FPSFrameworkCore.IsInputActive = true;
             FPSFrameworkCore.IsPaused = false;
+            assetCatalog = Resources.Load<CentralCombatAssetCatalog>(AssetCatalogPath);
 
             EnsureSeedManager();
             DisableCompetingControllers();
+            DisableSceneEventSystems();
             EnsureFrameworkManagers();
             BuildRuntimeNavMesh();
 
@@ -74,15 +95,31 @@ namespace DontDiePlease.Central.Combat
             if (player == null)
                 yield break;
 
+            EnsureEquippedWeapons(player);
             if (SceneManager.GetActiveScene().name == "Demo_Combat")
             {
-                DisableExistingSpawners();
+                var demoSpawner = EnsureSpawner();
+                demoSpawner.gameObject.SetActive(true);
+                demoSpawner.Configure(player.transform, LoadPickupPrefabs());
+                demoSpawner.SetAutomaticWaves(true, true);
+                CentralCombatHud.Create(demoSpawner);
                 yield break;
             }
 
             var waves = EnsureSpawner();
             waves.Configure(player.transform, LoadPickupPrefabs());
             CentralCombatHud.Create(waves);
+        }
+
+        private void DisableSceneEventSystems()
+        {
+            var eventSystems = FindObjectsByType<EventSystem>(FindObjectsInactive.Include);
+
+            foreach (var eventSystem in eventSystems)
+            {
+                if (eventSystem != null && eventSystem.gameObject.scene == gameObject.scene)
+                    eventSystem.gameObject.SetActive(false);
+            }
         }
 
         private void EnsureSeedManager()
@@ -126,7 +163,7 @@ namespace DontDiePlease.Central.Combat
         {
             if (FindAnyObjectByType<Akila.FPSFramework.GameManager>(FindObjectsInactive.Include) == null)
             {
-                var managerPrefab = LoadEditorAsset<GameObject>(FrameworkGameManagerPath);
+                var managerPrefab = LoadAsset(assetCatalog?.GameManagerPrefab, FrameworkGameManagerPath);
 
                 if (managerPrefab != null)
                     Instantiate(managerPrefab);
@@ -134,7 +171,7 @@ namespace DontDiePlease.Central.Combat
 
             if (FindAnyObjectByType<UIManager>(FindObjectsInactive.Include) == null)
             {
-                var hudPrefab = LoadEditorAsset<GameObject>(FrameworkHudPath);
+                var hudPrefab = LoadAsset(assetCatalog?.HudPrefab, FrameworkHudPath);
 
                 if (hudPrefab != null)
                     Instantiate(hudPrefab);
@@ -174,10 +211,47 @@ namespace DontDiePlease.Central.Combat
             }
 
             surface.collectObjects = CollectObjects.All;
-            surface.useGeometry = NavMeshCollectGeometry.RenderMeshes;
+            surface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
             surface.layerMask = Physics.DefaultRaycastLayers;
             surface.defaultArea = 0;
+
+            var addedModifiers = new List<NavMeshModifier>();
+            var changedModifiers = new List<(NavMeshModifier modifier, bool ignored)>();
+            var meshColliders = FindObjectsByType<MeshCollider>(FindObjectsInactive.Include);
+
+            foreach (var meshCollider in meshColliders)
+            {
+                if (meshCollider == null || meshCollider.gameObject.scene != gameObject.scene)
+                    continue;
+
+                var modifier = meshCollider.GetComponent<NavMeshModifier>();
+
+                if (modifier == null)
+                {
+                    modifier = meshCollider.gameObject.AddComponent<NavMeshModifier>();
+                    addedModifiers.Add(modifier);
+                }
+                else
+                {
+                    changedModifiers.Add((modifier, modifier.ignoreFromBuild));
+                }
+
+                modifier.ignoreFromBuild = true;
+            }
+
             surface.BuildNavMesh();
+
+            foreach (var state in changedModifiers)
+            {
+                if (state.modifier != null)
+                    state.modifier.ignoreFromBuild = state.ignored;
+            }
+
+            foreach (var modifier in addedModifiers)
+            {
+                if (modifier != null)
+                    Destroy(modifier);
+            }
         }
 
         private GameObject EnsureFrameworkPlayer()
@@ -204,7 +278,7 @@ namespace DontDiePlease.Central.Combat
                 }
             }
 
-            var playerPrefab = LoadEditorAsset<GameObject>(PlayerPrefabPath);
+            var playerPrefab = LoadAsset(assetCatalog?.PlayerPrefab, PlayerPrefabPath);
 
             if (playerPrefab == null)
             {
@@ -222,6 +296,20 @@ namespace DontDiePlease.Central.Combat
 
         private void ConfigurePlayer(GameObject player)
         {
+            var controller = player.GetComponent<Akila.FPSFramework.FirstPersonController>();
+
+            if (controller != null)
+            {
+                controller.enabled = true;
+                controller.lockCursor = true;
+                controller.SetActive(true);
+            }
+
+            var characterInput = player.GetComponent<CharacterInput>();
+
+            if (characterInput != null)
+                characterInput.enabled = true;
+
             var damageable = player.GetComponentInChildren<Damageable>(true);
 
             if (damageable != null)
@@ -248,20 +336,59 @@ namespace DontDiePlease.Central.Combat
             if (inv == null)
                 return;
 
+            inv.enabled = true;
+            inv.isActive = true;
+            inv.isInputActive = true;
             inv.startItems.Clear();
-            AddStarterWeapon(inv, PistolPath);
-            AddStarterWeapon(inv, AssaultRiflePath);
+            AddStarterWeapon(inv, LoadAsset(assetCatalog?.PistolPrefab, PistolPath));
+            AddStarterWeapon(inv, LoadAsset(assetCatalog?.AssaultRiflePrefab, AssaultRiflePath));
             inv.maxSlots = Mathf.Max(3, inv.startItems.Count);
         }
 
-        private void AddStarterWeapon(FrameworkInventory inventory, string path)
+        private void EnsureEquippedWeapons(GameObject player)
         {
-            var prefab = LoadEditorAsset<GameObject>(path);
+            FPSFrameworkCore.IsActive = true;
+            FPSFrameworkCore.IsInputActive = true;
+            FPSFrameworkCore.IsPaused = false;
 
+            var inventory = player.GetComponentInChildren<FrameworkInventory>(true);
+
+            if (inventory == null)
+                return;
+
+            inventory.enabled = true;
+            inventory.isActive = true;
+            inventory.isInputActive = true;
+            EnsureWeaponInstance(inventory, LoadAsset(assetCatalog?.PistolPrefab, PistolPath), "Pistol_1");
+            EnsureWeaponInstance(inventory, LoadAsset(assetCatalog?.AssaultRiflePrefab, AssaultRiflePath), "Assault Rifle_1");
+            inventory.items = inventory.GetComponentsInChildren<FrameworkInventoryItem>(true).ToList();
+            inventory.currentItemIndex = 0;
+            inventory.Switch(0);
+        }
+
+        private void EnsureWeaponInstance(FrameworkInventory inventory, GameObject prefab, string weaponName)
+        {
+            if (prefab == null ||
+                inventory.GetComponentsInChildren<FrameworkInventoryItem>(true)
+                    .Any(item => item != null && item.name.Contains(weaponName)))
+            {
+                return;
+            }
+
+            var item = prefab.GetComponent<FrameworkInventoryItem>() ??
+                       prefab.GetComponentInChildren<FrameworkInventoryItem>(true);
+
+            if (item != null)
+                Instantiate(item, inventory.transform);
+        }
+
+        private void AddStarterWeapon(FrameworkInventory inventory, GameObject prefab)
+        {
             if (prefab == null)
                 return;
 
-            var item = prefab.GetComponent<FrameworkInventoryItem>() ?? prefab.GetComponentInChildren<FrameworkInventoryItem>(true);
+            var item = prefab.GetComponent<FrameworkInventoryItem>() ??
+                       prefab.GetComponentInChildren<FrameworkInventoryItem>(true);
 
             if (item != null && !inventory.startItems.Contains(item))
                 inventory.startItems.Add(item);
@@ -378,17 +505,6 @@ namespace DontDiePlease.Central.Combat
             return player.name == "AkilaFPSFrameworkPlayer" || player.name == "AkilaCombatPlayer" || player.CompareTag("Player");
         }
 
-        private void DisableExistingSpawners()
-        {
-            var spawners = FindObjectsByType<CentralCombatSpawner>(FindObjectsInactive.Include);
-
-            foreach (var spawner in spawners)
-            {
-                if (spawner != null && spawner.gameObject.scene == gameObject.scene)
-                    spawner.gameObject.SetActive(false);
-            }
-        }
-
         private CentralCombatSpawner EnsureSpawner()
         {
             var spawner = FindObjectsByType<CentralCombatSpawner>(FindObjectsInactive.Include)
@@ -404,6 +520,9 @@ namespace DontDiePlease.Central.Combat
 
         private GameObject[] LoadPickupPrefabs()
         {
+            if (assetCatalog != null && assetCatalog.PickupPrefabs.Length > 0)
+                return assetCatalog.PickupPrefabs.Where(prefab => prefab != null).ToArray();
+
             var paths = new[]
             {
                 "Assets/Akila/FPS Framework/Prefabs/Pickables/Ammo/9mm Ammo.prefab",
@@ -412,6 +531,11 @@ namespace DontDiePlease.Central.Combat
             };
 
             return paths.Select(LoadEditorAsset<GameObject>).Where(prefab => prefab != null).ToArray();
+        }
+
+        private static GameObject LoadAsset(GameObject runtimeAsset, string editorPath)
+        {
+            return runtimeAsset != null ? runtimeAsset : LoadEditorAsset<GameObject>(editorPath);
         }
 
         private static T LoadEditorAsset<T>(string path) where T : Object

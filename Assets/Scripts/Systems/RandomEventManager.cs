@@ -127,6 +127,32 @@ namespace DontDiePlease.Systems
                 return;
             }
 
+            TriggerDefinition(def);
+        }
+
+        public bool TriggerEvent(RandomEventType eventType)
+        {
+            if (activeTimedEvent != null)
+            {
+                return false;
+            }
+
+            EnsureDefinitions();
+
+            foreach (var def in eventDefinitions)
+            {
+                if (def != null && def.eventType == eventType)
+                {
+                    TriggerDefinition(def);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void TriggerDefinition(RandomEventDefinition def)
+        {
             eventSequenceNumber++;
 
             var context = new RandomEventContext
@@ -290,10 +316,7 @@ namespace DontDiePlease.Systems
 
         private RandomEventDefinition PickDefinition(System.Random random)
         {
-            if (eventDefinitions == null || eventDefinitions.Length == 0)
-            {
-                Reset();
-            }
+            EnsureDefinitions();
 
             var totalWeight = 0;
 
@@ -329,6 +352,14 @@ namespace DontDiePlease.Systems
             }
 
             return eventDefinitions[eventDefinitions.Length - 1];
+        }
+
+        private void EnsureDefinitions()
+        {
+            if (eventDefinitions == null || eventDefinitions.Length == 0)
+            {
+                Reset();
+            }
         }
 
         private void EndTimedEvent()

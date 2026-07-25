@@ -10,6 +10,8 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private EnemyStats stats;
 
+    public static event Action<EnemyHealth> AnyEnemyDied;
+
     public float CurrentHealth { get; private set; }
     public bool IsDead { get; private set; }
 
@@ -31,6 +33,7 @@ public class EnemyHealth : MonoBehaviour
         {
             IsDead = true;
             OnDied?.Invoke();
+            AnyEnemyDied?.Invoke(this);
         }
     }
 }

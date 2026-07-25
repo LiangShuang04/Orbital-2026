@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using UnityEngine;
 using TMPro;
@@ -8,6 +9,8 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private TMP_Text contentsText;
     [SerializeField] private KeyCode toggleKey = KeyCode.Tab;
+
+    public static event Action<bool> InventoryVisibilityChanged;
 
     void Start()
     {
@@ -26,7 +29,10 @@ public class InventoryUI : MonoBehaviour
     void Update()
     {
         if (panel != null && Input.GetKeyDown(toggleKey))
+        {
             panel.SetActive(!panel.activeSelf);
+            InventoryVisibilityChanged?.Invoke(panel.activeSelf);
+        }
     }
 
     private void Refresh()

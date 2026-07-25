@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using DontDiePlease.Central.Combat;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,6 +14,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(EnemyHealth))]
 public class EnemyController : MonoBehaviour
 {
+    public static event Action<EnemyController> AnyEnemyDetected;
+
     enum State { Patrol, Chase, Attack, Dead }
 
     [SerializeField] private EnemyStats stats;
@@ -20,6 +24,7 @@ public class EnemyController : MonoBehaviour
 
     private NavMeshAgent agent;
     private EnemyHealth health;
+    private CentralEnemyVisualDriver visuals;
     private Transform player;
     private PlayerStats playerStats;
 
@@ -39,6 +44,7 @@ public class EnemyController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         health = GetComponent<EnemyHealth>();
+        visuals = GetComponent<CentralEnemyVisualDriver>();
 
         // Apply data-driven tuning to the agent.
         if (stats != null)
@@ -84,7 +90,11 @@ public class EnemyController : MonoBehaviour
             case State.Patrol:
                 // Idle for now; transition to Chase when the player is spotted.
                 // (Later: wander between patrol points, or use a line-of-sight check.)
-                if (dist <= stats.detectionRange) state = State.Chase;
+                if (dist <= stats.detectionRange)
+                {
+                    state = State.Chase;
+                    AnyEnemyDetected?.Invoke(this);
+                }
                 break;
 
             case State.Chase:
@@ -101,6 +111,7 @@ public class EnemyController : MonoBehaviour
                 {
                     lastAttackTime = Time.time;
                     if (animator != null && animParams.Contains(AttackHash)) animator.SetTrigger(AttackHash);
+                    visuals?.PlayAttack();
                     if (playerStats != null) playerStats.TakeDamage(stats.attackDamage);
                 }
                 if (dist > stats.attackRange) state = State.Chase;
@@ -124,6 +135,7 @@ public class EnemyController : MonoBehaviour
     private void UpdateAnimator()
     {
         if (animator != null && animParams.Contains(SpeedHash)) animator.SetFloat(SpeedHash, agent.velocity.magnitude);
+        visuals?.SetMoving(agent.velocity.sqrMagnitude > 0.01f);
     }
 
     /// <summary>Called by EnemyHealth.OnDied. Stops the agent and ends behaviour.</summary>
@@ -132,6 +144,7 @@ public class EnemyController : MonoBehaviour
         state = State.Dead;
         if (agent != null) agent.isStopped = true;
         if (animator != null && animParams.Contains(DeadHash)) animator.SetTrigger(DeadHash);
+        visuals?.PlayDeath();
 
         // Stop colliding/blocking the player. Destroy after a delay so the death
         // animation can play (tune the 3s to your clip length).

@@ -119,5 +119,29 @@ namespace DontDiePlease.Central.Combat
                 accentColor = new Color(0.42f, 0.36f, 0.54f, 1f)
             };
         }
+
+        public static CentralCombatEnemyConfig Boss()
+        {
+            return new CentralCombatEnemyConfig
+            {
+                archetype = CentralEnemyArchetype.Boss,
+                displayName = "WARDEN-K",
+                maxHealth = 320f,
+                moveSpeed = 2.9f,
+                acceleration = 8f,
+                detectionRange = 36f,
+                sightAngle = 155f,
+                attackRange = 21f,
+                attackDamage = 26f,
+                attackCooldown = 1.2f,
+                attackWindup = 0.42f,
+                repositionDistance = 7f,
+                bodyHeight = 2.7f,
+                bodyRadius = 0.66f,
+                ranged = true,
+                primaryColor = new Color(0.12f, 0.13f, 0.14f, 1f),
+                accentColor = new Color(0.72f, 0.24f, 0.12f, 1f)
+            };
+        }
     }
 }

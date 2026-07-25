@@ -37,6 +37,19 @@ namespace DontDiePlease.Systems
     }
 
     [Serializable]
+    public sealed class SaveObjectiveUpdateRequest
+    {
+        public ObjectiveStateData objectiveState;
+    }
+
+    [Serializable]
+    public sealed class SaveNewGameRequest
+    {
+        public int worldSeed;
+        public ObjectiveStateData objectiveState;
+    }
+
+    [Serializable]
     public sealed class SaveProfileUpdateRequest
     {
         public int worldSeed;

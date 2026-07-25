@@ -5,7 +5,10 @@ namespace DontDiePlease.Central.Combat
 {
     public static class CentralCombatVisuals
     {
+        private const string VisualCatalogPath = "Combat/CentralEnemyVisualCatalog";
         private static readonly Dictionary<string, Material> Materials = new Dictionary<string, Material>();
+        private static readonly Dictionary<Material, Material> UrpMaterials = new Dictionary<Material, Material>();
+        private static CentralEnemyVisualCatalog visualCatalog;
 
         public static Material CreateMaterial(string name, Color color, float metallic, float smoothness)
         {
@@ -36,6 +39,30 @@ namespace DontDiePlease.Central.Combat
 
         public static Transform BuildEnemyBody(Transform parent, CentralCombatEnemyConfig config)
         {
+            if (TryGetVisual(config.archetype, out var entry))
+                return BuildPrefabBody(parent, entry, config.bodyHeight, "Visual");
+
+            return BuildFallbackBody(parent, config);
+        }
+
+        public static Transform ReplaceEnemyBody(Transform parent, CentralEnemyArchetype archetype, float bodyHeight)
+        {
+            if (!TryGetVisual(archetype, out var entry))
+                return null;
+
+            var renderers = parent.GetComponentsInChildren<Renderer>(true);
+
+            foreach (var renderer in renderers)
+            {
+                if (renderer != null)
+                    renderer.enabled = false;
+            }
+
+            return BuildPrefabBody(parent, entry, bodyHeight, "RobotVisual");
+        }
+
+        private static Transform BuildFallbackBody(Transform parent, CentralCombatEnemyConfig config)
+        {
             var root = new GameObject("Visual").transform;
             root.SetParent(parent, false);
 
@@ -60,6 +87,224 @@ namespace DontDiePlease.Central.Combat
             }
 
             return root;
+        }
+
+        private static Transform BuildPrefabBody(
+            Transform parent,
+            CentralEnemyVisualCatalog.Entry entry,
+            float bodyHeight,
+            string rootName)
+        {
+            var root = new GameObject(rootName).transform;
+            root.SetParent(parent, false);
+
+            var prefab = Object.Instantiate(entry.prefab, root, false);
+            prefab.name = entry.prefab.name;
+            prefab.transform.localPosition = Vector3.zero;
+            prefab.transform.localRotation = Quaternion.identity;
+
+            foreach (var col in prefab.GetComponentsInChildren<Collider>(true))
+            {
+                col.enabled = false;
+            }
+
+            ApplyUrpMaterials(prefab);
+            FitToHeight(prefab.transform, root, bodyHeight);
+
+            var animator = prefab.GetComponentInChildren<Animator>(true);
+            var driver = parent.GetComponent<CentralEnemyVisualDriver>();
+
+            if (driver == null)
+                driver = parent.gameObject.AddComponent<CentralEnemyVisualDriver>();
+
+            driver.Configure(animator, entry);
+            return root;
+        }
+
+        private static void ApplyUrpMaterials(GameObject prefab)
+        {
+            foreach (var renderer in prefab.GetComponentsInChildren<Renderer>(true))
+            {
+                var sourceMaterials = renderer.sharedMaterials;
+                var changed = false;
+
+                for (var idx = 0; idx < sourceMaterials.Length; idx++)
+                {
+                    var compatible = GetUrpMaterial(sourceMaterials[idx]);
+
+                    if (compatible == sourceMaterials[idx])
+                        continue;
+
+                    sourceMaterials[idx] = compatible;
+                    changed = true;
+                }
+
+                if (changed)
+                    renderer.sharedMaterials = sourceMaterials;
+            }
+        }
+
+        private static Material GetUrpMaterial(Material source)
+        {
+            if (source == null || source.shader == null ||
+                source.shader.name.StartsWith("Universal Render Pipeline/"))
+            {
+                return source;
+            }
+
+            if (UrpMaterials.TryGetValue(source, out var existing))
+                return existing;
+
+            var shader = Shader.Find("Universal Render Pipeline/Lit");
+
+            if (shader == null)
+                return source;
+
+            var mainTexture = source.HasProperty("_MainTex") ? source.GetTexture("_MainTex") : null;
+            var mainScale = source.HasProperty("_MainTex") ? source.GetTextureScale("_MainTex") : Vector2.one;
+            var mainOffset = source.HasProperty("_MainTex") ? source.GetTextureOffset("_MainTex") : Vector2.zero;
+            var color = source.HasProperty("_Color") ? source.GetColor("_Color") : Color.white;
+            var material = new Material(shader)
+            {
+                name = $"{source.name}_URP",
+                enableInstancing = source.enableInstancing
+            };
+
+            material.SetTexture("_BaseMap", mainTexture);
+            material.SetTextureScale("_BaseMap", mainScale);
+            material.SetTextureOffset("_BaseMap", mainOffset);
+            material.SetColor("_BaseColor", color);
+            CopyTexture(source, material, "_BumpMap", "_BumpMap");
+            CopyTexture(source, material, "_MetallicGlossMap", "_MetallicGlossMap");
+            CopyTexture(source, material, "_OcclusionMap", "_OcclusionMap");
+            CopyTexture(source, material, "_EmissionMap", "_EmissionMap");
+            CopyFloat(source, material, "_BumpScale", "_BumpScale");
+            CopyFloat(source, material, "_Metallic", "_Metallic");
+            CopyFloat(source, material, "_Glossiness", "_Smoothness");
+            CopyFloat(source, material, "_OcclusionStrength", "_OcclusionStrength");
+            CopyColor(source, material, "_EmissionColor", "_EmissionColor");
+
+            if (material.GetTexture("_BumpMap") != null)
+                material.EnableKeyword("_NORMALMAP");
+
+            if (material.GetTexture("_EmissionMap") != null ||
+                material.GetColor("_EmissionColor").maxColorComponent > 0.001f)
+            {
+                material.EnableKeyword("_EMISSION");
+                material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+            }
+
+            ConfigureSurface(source, material);
+            UrpMaterials[source] = material;
+            return material;
+        }
+
+        private static void ConfigureSurface(Material source, Material material)
+        {
+            var mode = source.HasProperty("_Mode") ? Mathf.RoundToInt(source.GetFloat("_Mode")) : 0;
+
+            if (mode == 1)
+            {
+                material.SetFloat("_AlphaClip", 1f);
+                material.SetFloat("_Cutoff", source.HasProperty("_Cutoff") ? source.GetFloat("_Cutoff") : 0.5f);
+                material.EnableKeyword("_ALPHATEST_ON");
+                material.renderQueue = 2450;
+                return;
+            }
+
+            if (mode < 2)
+                return;
+
+            material.SetFloat("_Surface", 1f);
+            material.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            material.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            material.SetFloat("_ZWrite", 0f);
+            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+            material.renderQueue = 3000;
+        }
+
+        private static void CopyTexture(Material source, Material target, string sourceName, string targetName)
+        {
+            if (source.HasProperty(sourceName) && target.HasProperty(targetName))
+                target.SetTexture(targetName, source.GetTexture(sourceName));
+        }
+
+        private static void CopyFloat(Material source, Material target, string sourceName, string targetName)
+        {
+            if (source.HasProperty(sourceName) && target.HasProperty(targetName))
+                target.SetFloat(targetName, source.GetFloat(sourceName));
+        }
+
+        private static void CopyColor(Material source, Material target, string sourceName, string targetName)
+        {
+            if (source.HasProperty(sourceName) && target.HasProperty(targetName))
+                target.SetColor(targetName, source.GetColor(sourceName));
+        }
+
+        private static bool TryGetVisual(
+            CentralEnemyArchetype archetype,
+            out CentralEnemyVisualCatalog.Entry entry)
+        {
+            if (visualCatalog == null)
+                visualCatalog = Resources.Load<CentralEnemyVisualCatalog>(VisualCatalogPath);
+
+            if (visualCatalog != null)
+                return visualCatalog.TryGet(archetype, out entry);
+
+            entry = null;
+            return false;
+        }
+
+        private static void FitToHeight(Transform visual, Transform space, float bodyHeight)
+        {
+            if (!TryGetBounds(visual, space, out var bounds) || bounds.size.y <= 0.001f)
+                return;
+
+            var scale = Mathf.Max(0.01f, bodyHeight) / bounds.size.y;
+            visual.localScale *= scale;
+
+            if (!TryGetBounds(visual, space, out bounds))
+                return;
+
+            visual.localPosition -= new Vector3(bounds.center.x, bounds.min.y, bounds.center.z);
+        }
+
+        private static bool TryGetBounds(Transform visual, Transform space, out Bounds bounds)
+        {
+            var renderers = visual.GetComponentsInChildren<Renderer>(true);
+            var initialized = false;
+            bounds = default;
+
+            foreach (var renderer in renderers)
+            {
+                var worldBounds = renderer.bounds;
+
+                for (var x = -1; x <= 1; x += 2)
+                {
+                    for (var y = -1; y <= 1; y += 2)
+                    {
+                        for (var z = -1; z <= 1; z += 2)
+                        {
+                            var worldPoint = worldBounds.center + Vector3.Scale(
+                                worldBounds.extents,
+                                new Vector3(x, y, z));
+                            var localPoint = space.InverseTransformPoint(worldPoint);
+
+                            if (!initialized)
+                            {
+                                bounds = new Bounds(localPoint, Vector3.zero);
+                                initialized = true;
+                            }
+                            else
+                            {
+                                bounds.Encapsulate(localPoint);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return initialized;
         }
 
         public static Transform BuildProjectileMuzzle(Transform parent, CentralCombatEnemyConfig config)

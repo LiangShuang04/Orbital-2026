@@ -34,6 +34,7 @@ namespace DontDiePlease.Systems
 
         public float MouseSensitivity { get; private set; }
         public float MasterVolume { get; private set; }
+        public bool IsPaused => isPaused;
 
         private void Awake()
         {

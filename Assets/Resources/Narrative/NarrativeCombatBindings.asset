@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb28f3fb1ab4d62be2da581766a6128, type: 3}
+  m_Name: NarrativeCombatBindings
+  m_EditorClassIdentifier: Assembly-CSharp::DontDiePlease.Narrative.Runtime.NarrativeCombatBindings
+  firstRobotPrefab: {fileID: 1172250275101388662, guid: f8a56508d4eea45129813a9dd9fee625, type: 3}
+  firstRobotAnchorName: EnemyRoot
+  firstRobotNavMeshRadius: 8
+  defensePhases:
+  - startProgress: 0
+    enemiesPerWave: 1
+    maxActiveEnemies: 2
+    spawnIntervalSeconds: 18
+    minSpawnRadius: 18
+    maxSpawnRadius: 26
+  - startProgress: 0.25
+    enemiesPerWave: 2
+    maxActiveEnemies: 3
+    spawnIntervalSeconds: 16
+    minSpawnRadius: 20
+    maxSpawnRadius: 30
+  - startProgress: 0.6
+    enemiesPerWave: 2
+    maxActiveEnemies: 4
+    spawnIntervalSeconds: 13
+    minSpawnRadius: 22
+    maxSpawnRadius: 32
+  - startProgress: 0.9
+    enemiesPerWave: 3
+    maxActiveEnemies: 5
+    spawnIntervalSeconds: 10
+    minSpawnRadius: 24
+    maxSpawnRadius: 34
