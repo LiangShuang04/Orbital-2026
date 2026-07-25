@@ -1,59 +1,68 @@
 # Don't Die Please
 
-Don't Die Please is a Unity sci-fi survival prototype about staying alive on the toxic planet Yggdrasil long enough to rebuild a signal generator and call for rescue.
-
-The repo currently contains both sides of the project:
-
-- Unity client gameplay scenes, UI, seeded map/event systems, and combat prototypes
-- Node.js/Express backend for account auth, MongoDB save data, and Swagger API docs
+Don't Die Please is a Unity sci-fi survival game set on the toxic planet Yggdrasil. The player explores the Far Kite crash site, survives robot attacks, rebuilds a signal generator and attempts to call for rescue.
 
 ## Current Build
 
 Unity version: `6000.4.9f1`
 
+Release flow:
+
+```text
+MainMenuScene
+  -> Demo_Combat
+```
+
+The login page is no longer part of the Unity client. New Game and Continue use local narrative persistence and load the final playable scene directly.
+
 Main scenes:
 
-- `Assets/Scenes/Login.unity`
 - `Assets/Scenes/MainMenuScene.unity`
-- `Assets/Scenes/MainGameplayScene.unity`
-- `Assets/Scenes/Central.unity`
-- `Assets/Scenes/Central_Combat.unity`
-- `Assets/Scenes/demoMainScene.unity`
 - `Assets/Scenes/Demo_Combat.unity`
+- `Assets/Scenes/MainGameplayScene.unity` remains disabled as an aircraft-scene archive
 
-The main project branch keeps our gameplay/backend work. Large imported packages are kept on the `third-party-packages` branch so `main` stays easier to review.
+## Demo Combat
+
+`Demo_Combat` contains:
+
+- Liang Shuang's Far Kite spacecraft
+- the existing green Yggdrasil terrain
+- Akila FPS Framework first-person player
+- pistol and assault rifle loadout
+- seeded robot waves using the Protofactor robot pack
+- narrative encounter and Signal Generator anchors
+- first-death and repeat-death recovery dialogue
+
+The player no longer reaches a terminal Game Over at zero health. MIMIR loads the latest branch, then the combat bootstrap creates a fresh Akila player, restores the camera and weapons, and retargets active enemies.
 
 ## Gameplay Systems
 
-Login:
+Survival and persistence:
 
-- Sci-fi login scene based on the imported PHPLogin UI
-- Mock auth by default for Unity testing
-- Backend-ready auth client for Express `/api/v1/auth`
+- health, oxygen, hunger and toxicity data
+- inventory and base module state
+- objective progress and active timers
+- `worldSeed` persistence for repeatable maps and events
+- local narrative save used by New Game and Continue
 
-Survival/save data:
-
-- Health, oxygen, hunger, and toxicity
-- Inventory items like `metal_scrap` and `filter_fibre`
-- Base modules such as oxygen station, storage unit, power generator, and signal generator
-- Objective progress and active timers
-- `worldSeed` stored with save profiles so seeded systems can be restored later
-
-Seeded world features:
+Seeded systems:
 
 - `GameSeedManager` owns deterministic random streams
-- `SeededMapGenerator` builds a repeatable modular map layout from the same seed
-- `RandomEventManager` triggers seeded toxic storm, robot patrol, and resource drop events
-- `RandomEventHud` shows warnings in-game
-- `PauseSettingsMenuController` handles pause/resume/restart/settings/menu/quit plus PlayerPrefs settings
+- `SeededMapGenerator` builds repeatable modular layouts
+- `RandomEventManager` triggers seeded storms, patrols and resource drops
+- `RandomEventHud` presents event warnings
 
 Combat:
 
-- `Central_Combat` and `Demo_Combat` are test scenes for FPS combat
-- Akila FPS Framework player prefab is used for first-person movement, aiming, firing, reload, and weapon switching
-- Enemy prototype includes movement, stats, health, FSM, and robot bundle assets from the enemy branch
+- Akila movement, mouse look, ADS, firing, reload and weapon switching
+- four project enemy archetypes with different health and attacks
+- Protofactor robot visuals and animation controllers
+- runtime NavMesh generation and seeded spawn positions
+- story-gated first robot, Warden-K and Signal Generator defence
 
 ## Backend
+
+The Express and MongoDB backend remains available for account and cloud-save work, but it is not required to enter the current Unity build.
 
 Install dependencies:
 
@@ -61,7 +70,7 @@ Install dependencies:
 npm install
 ```
 
-Create a local `.env` file:
+Create `.env`:
 
 ```env
 PORT=5000
@@ -70,13 +79,13 @@ JWT_SECRET=replace-this-with-a-long-secret
 CORS_ORIGIN=http://localhost:3000
 ```
 
-Run the API:
+Run:
 
 ```bash
 npm run dev
 ```
 
-Useful endpoints:
+Endpoints:
 
 - `GET /api/v1/health`
 - `POST /api/v1/auth/register`
@@ -86,13 +95,11 @@ Useful endpoints:
 - `PUT /api/v1/save`
 - `GET /api-docs`
 
-The Unity client should never talk to MongoDB directly. It talks to the API with a JWT.
+## Repository Setup
 
-## Unity Setup
+Open the repository root in Unity Hub.
 
-Open the repo root in Unity Hub, not just the `Assets` folder.
-
-Do not commit these generated folders:
+Do not commit:
 
 - `Library`
 - `Temp`
@@ -100,26 +107,27 @@ Do not commit these generated folders:
 - `Logs`
 - `UserSettings`
 
-The most useful editor tools are under Unity's top menu:
+The StarSparrow spacecraft, Protofactor robots, Akila FPS Framework and terrain dependencies used by `Demo_Combat` are tracked in the repository. A complete clone should therefore reproduce the playable scene without relying on a separate local asset folder.
 
-- `Tools/Central/Combat/Rebuild Central Combat Scene`
-- `Tools/OldIndustry/Combat/Rebuild Demo Combat Scene`
-- `Tools/Old Industry/Setup First Person Walker In Demo Scene`
-- `Tools/Don't Die Please/Apply Toxic Morandi Style`
-- `Tools/Don't Die Please/Batch Assign Seeded Variant`
+## Controls
 
-## Docs
+- `WASD`: move
+- `Mouse`: look
+- `Right Mouse`: aim
+- `Left Mouse`: fire
+- `R`: reload
+- `1`, `2` or mouse wheel: switch weapons
+- `E`: interact
+- `Esc`: pause
 
-- `Documentations/LoginAuthenticationSetup.md`
-- `Documentations/SeededEventsAndMenuChecklist.md`
-- `Assets/_Central/Docs/CentralCombatREADME.md`
-- `Assets/_Central/Docs/DemoCombatREADME.md`
-- `Assets/_Central/Docs/OldIndustryFirstPersonControls.md`
-- `Assets/_Login/README.md`
+## Verification
 
-## Current Gaps
+Before sharing a build:
 
-- Random events trigger and display HUD warnings, but toxic storm still needs to affect real oxygen/toxicity gameplay.
-- Some map/resource/event prefabs are still prototype-level and need final art hookup.
-- Unity play-mode testing should be repeated after pulling large third-party assets.
-- Imported package delivery should stay on the separate branch unless we decide to move to Git LFS or release downloads.
+1. Open `Assets/Scenes/Demo_Combat.unity`.
+2. Confirm the Far Kite is visible on the green terrain.
+3. Press Play and confirm one Akila player camera and one AudioListener.
+4. Confirm movement, look, aim, fire, reload and weapon switching.
+5. Let an enemy reduce health to zero.
+6. Confirm MIMIR's recovery dialogue appears and the replacement player keeps the FPS camera and weapons.
+7. Confirm robot materials render normally and the Console has no compilation errors.

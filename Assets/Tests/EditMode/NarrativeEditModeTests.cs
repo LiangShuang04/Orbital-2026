@@ -63,25 +63,6 @@ namespace DontDiePlease.Tests.EditMode
         }
 
         [Test]
-        public void SavedProgressChoosesAircraftOrDemoScene()
-        {
-            var objectiveType = RuntimeType("DontDiePlease.Systems.ObjectiveStateData");
-            var flowType = RuntimeType("DontDiePlease.Auth.AuthenticatedGameFlow");
-            var resolve = flowType.GetMethod("ResolveScene", BindingFlags.Public | BindingFlags.Static);
-            var objective = Activator.CreateInstance(objectiveType);
-            SetField(objective, "currentQuest", "ACT1_WAKE");
-            SetField(objective, "completedObjectives", Array.Empty<string>());
-            Assert.That(resolve.Invoke(null, new[] { objective }), Is.EqualTo("MainGameplayScene"));
-
-            SetField(objective, "currentQuest", "ACT4_ARCHIVE");
-            Assert.That(resolve.Invoke(null, new[] { objective }), Is.EqualTo("Demo_Combat"));
-
-            SetField(objective, "currentQuest", "ACT3_SURFACE");
-            SetField(objective, "completedObjectives", new[] { "flag:unknown_transmission_heard" });
-            Assert.That(resolve.Invoke(null, new[] { objective }), Is.EqualTo("Demo_Combat"));
-        }
-
-        [Test]
         public void DefenseTimelineUsesProductionDurationAndOrderedMilestones()
         {
             var timeline = CreateRuntimeObject("DontDiePlease.Narrative.Runtime.NarrativeDefenseTimeline");

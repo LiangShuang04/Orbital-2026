@@ -1899,17 +1899,20 @@
         {
           "id": "first_death_01",
           "speaker": "NARRATION",
-          "text": "Pain disappears first. Sound follows. The last thing left is an objective marker for a task not yet finished."
+          "text": "Pain disappears first. Sound follows. The last thing left is an objective marker for a task not yet finished.",
+          "autoAdvanceSeconds": 7
         },
         {
           "id": "first_death_02",
           "speaker": "MIMIR",
-          "text": "Vital signs lost. No. Rejected. Loading the latest record."
+          "text": "Vital signs lost. No. Rejected. Loading the latest record.",
+          "autoAdvanceSeconds": 6.5
         },
         {
           "id": "first_death_03",
           "speaker": "MIMIR",
           "text": "When you return, do not die. Please.",
+          "autoAdvanceSeconds": 6,
           "nextLineId": "END"
         }
       ],
@@ -1928,7 +1931,7 @@
           "id": "repeat_death",
           "speaker": "MIMIR",
           "text": "We have demonstrated that this method fails. Scientific practice recommends changing the variable.",
-          "autoAdvanceSeconds": 4,
+          "autoAdvanceSeconds": 6,
           "nextLineId": "END"
         }
       ]

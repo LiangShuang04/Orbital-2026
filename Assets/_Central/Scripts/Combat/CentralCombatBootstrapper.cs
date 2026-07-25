@@ -326,10 +326,17 @@ namespace DontDiePlease.Central.Combat
                 actor.actorName = "Survivor";
                 actor.type = "Player";
                 actor.teamId = 0;
-                actor.respawnable = true;
+                actor.respawnable = false;
                 actor.playerCardActive = true;
                 actor.playerUIEnabled = true;
             }
+
+            var recovery = player.GetComponent<CentralPlayerRecovery>();
+
+            if (recovery == null)
+                recovery = player.AddComponent<CentralPlayerRecovery>();
+
+            recovery.Configure(this);
 
             var inv = player.GetComponentInChildren<FrameworkInventory>(true);
 
@@ -364,6 +371,47 @@ namespace DontDiePlease.Central.Combat
             inventory.items = inventory.GetComponentsInChildren<FrameworkInventoryItem>(true).ToList();
             inventory.currentItemIndex = 0;
             inventory.Switch(0);
+        }
+
+        public void RecoverPlayer(GameObject previousPlayer)
+        {
+            StartCoroutine(RecoverPlayerRoutine(previousPlayer));
+        }
+
+        private IEnumerator RecoverPlayerRoutine(GameObject previousPlayer)
+        {
+            var playerPrefab = LoadAsset(assetCatalog?.PlayerPrefab, PlayerPrefabPath);
+
+            if (playerPrefab == null)
+            {
+                Debug.LogError($"Combat scene could not reload Akila player prefab at {PlayerPrefabPath}.");
+                yield break;
+            }
+
+            var player = Instantiate(playerPrefab, PickPlayerSpawn(), Quaternion.Euler(0f, 15f, 0f));
+            player.name = gameObject.scene.name == "Demo_Combat" ? "AkilaFPSFrameworkPlayer" : "AkilaCombatPlayer";
+            SceneManager.MoveGameObjectToScene(player, gameObject.scene);
+            ConfigurePlayer(player);
+
+            if (previousPlayer != null)
+                previousPlayer.SetActive(false);
+
+            yield return null;
+
+            EnsureEquippedWeapons(player);
+            EnsureSingleCamera(player);
+            DeathCamera.Instance?.Disable();
+
+            var spawner = FindObjectsByType<CentralCombatSpawner>(FindObjectsInactive.Include)
+                .FirstOrDefault(x => x != null && x.gameObject.scene == gameObject.scene);
+            spawner?.SetPlayerTarget(player.transform);
+
+            if (previousPlayer != null)
+                Destroy(previousPlayer);
+
+            FPSFrameworkCore.IsActive = true;
+            FPSFrameworkCore.IsPaused = false;
+            FPSFrameworkCore.IsInputActive = true;
         }
 
         private void EnsureWeaponInstance(FrameworkInventory inventory, GameObject prefab, string weaponName)

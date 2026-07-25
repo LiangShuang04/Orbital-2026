@@ -12,7 +12,7 @@ namespace DontDiePlease.Narrative.UI
 {
     public sealed class NarrativeMainMenuController : MonoBehaviour
     {
-        private const string MainGameplaySceneName = "MainGameplayScene";
+        private const string GameplaySceneName = "Demo_Combat";
         private static readonly Color Background = new Color(0.018f, 0.027f, 0.032f, 1f);
         private static readonly Color Primary = new Color(0.18f, 0.78f, 0.82f, 1f);
         private static readonly Color Secondary = new Color(0.11f, 0.17f, 0.19f, 1f);
@@ -100,13 +100,13 @@ namespace DontDiePlease.Narrative.UI
 
         private void LoadGameplayScene()
         {
-            if (!Application.CanStreamedLevelBeLoaded(MainGameplaySceneName))
+            if (!Application.CanStreamedLevelBeLoaded(GameplaySceneName))
             {
-                SetBusy(false, $"SCENE '{MainGameplaySceneName}' IS NOT IN BUILD SETTINGS");
+                SetBusy(false, $"SCENE '{GameplaySceneName}' IS NOT IN BUILD SETTINGS");
                 return;
             }
 
-            SceneManager.LoadScene(MainGameplaySceneName, LoadSceneMode.Single);
+            SceneManager.LoadScene(GameplaySceneName, LoadSceneMode.Single);
         }
 
         private void BuildInterface()

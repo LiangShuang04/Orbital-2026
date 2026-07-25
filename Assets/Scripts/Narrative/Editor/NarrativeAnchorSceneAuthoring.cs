@@ -20,6 +20,12 @@ namespace DontDiePlease.Narrative.Editor
             AssetDatabase.SaveAssets();
         }
 
+        public static void ApplyDemoCombatOnly()
+        {
+            ApplyDemoCombat();
+            AssetDatabase.SaveAssets();
+        }
+
         private static void ClearMainGameplayCombatAnchors()
         {
             var scene = EditorSceneManager.OpenScene(MainScenePath, OpenSceneMode.Single);

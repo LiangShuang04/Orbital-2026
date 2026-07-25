@@ -84,7 +84,7 @@ namespace DontDiePlease.Tests.PlayMode
             var continueButton = FindGameObject(SceneManager.GetActiveScene(), "ContinueButton");
             Assert.That(continueButton, Is.Not.Null);
             continueButton.GetComponent<Button>().onClick.Invoke();
-            yield return WaitForActiveScene("MainGameplayScene", 600);
+            yield return WaitForActiveScene("Demo_Combat", 600);
             var scene = SceneManager.GetActiveScene();
             yield return WaitForRuntimeObject(
                 scene,
@@ -125,7 +125,7 @@ namespace DontDiePlease.Tests.PlayMode
             var newGameButton = FindGameObject(SceneManager.GetActiveScene(), "NewGameButton");
             Assert.That(newGameButton, Is.Not.Null);
             newGameButton.GetComponent<Button>().onClick.Invoke();
-            yield return WaitForActiveScene("MainGameplayScene", 600);
+            yield return WaitForActiveScene("Demo_Combat", 600);
             var scene = SceneManager.GetActiveScene();
             yield return WaitForRuntimeObject(
                 scene,
@@ -519,6 +519,75 @@ namespace DontDiePlease.Tests.PlayMode
             Invoke(adapter, "Damage", damage, character.gameObject);
             Assert.That(GetProperty<float>(health, "CurrentHealth"), Is.EqualTo(deadHealth));
             UnityEngine.Object.Destroy(robot);
+        }
+
+        [UnityTest]
+        [Timeout(120000)]
+        public IEnumerator DemoCombatDeathRestoresAkilaPlayerCameraAndWeapon()
+        {
+            yield return LoadScene("Demo_Combat");
+            var scene = SceneManager.GetActiveScene();
+            yield return WaitForConfiguredSpawner(scene, 600);
+            yield return WaitForRuntimeObject(
+                scene,
+                "DontDiePlease.Narrative.Runtime.NarrativeDirector",
+                300);
+
+            var characterType = RuntimeType("Akila.FPSFramework.CharacterManager", "Akila.FPSFramework");
+            var damageableType = RuntimeType("Akila.FPSFramework.Damageable", "Akila.FPSFramework");
+            var recoveryType = RuntimeType("DontDiePlease.Central.Combat.CentralPlayerRecovery");
+            var original = FindSceneObjects(scene, characterType).OfType<Component>().Single();
+            var recovery = original.GetComponent(recoveryType);
+            var damageable = original.GetComponentInChildren(damageableType, true);
+            Assert.That(recovery, Is.Not.Null);
+            Assert.That(damageable, Is.Not.Null);
+
+            yield return null;
+            yield return null;
+            Invoke(damageable, "Damage", 1000f, original.gameObject);
+
+            var director = FindRuntimeObject(scene, "DontDiePlease.Narrative.Runtime.NarrativeDirector");
+
+            for (var frame = 0; frame < 180 && GetProperty<string>(director, "ActiveSequenceId") != "REACT_FIRST_DEATH"; frame++)
+                yield return null;
+
+            Assert.That(GetProperty<string>(director, "ActiveSequenceId"), Is.EqualTo("REACT_FIRST_DEATH"));
+            Invoke(director, "StopActiveSequence", true, true);
+
+            Component replacement = null;
+
+            for (var frame = 0; frame < 180 && replacement == null; frame++)
+            {
+                replacement = FindSceneObjects(scene, characterType)
+                    .OfType<Component>()
+                    .FirstOrDefault(item => item != null && item != original && item.gameObject.activeInHierarchy);
+                yield return null;
+            }
+
+            Assert.That(replacement, Is.Not.Null);
+            Assert.That(original == null || !original.gameObject.activeInHierarchy, Is.True);
+
+            var pistol = default(Component);
+            yield return WaitForPistol(scene, replacement.transform, value => pistol = value, 300);
+            Assert.That(pistol, Is.Not.Null);
+            Assert.That(pistol.gameObject.activeInHierarchy, Is.True);
+
+            var characterInputType = RuntimeType("Akila.FPSFramework.CharacterInput", "Akila.FPSFramework");
+            var characterInput = replacement.GetComponent(characterInputType) as Behaviour;
+            Assert.That(characterInput, Is.Not.Null);
+            Assert.That(characterInput.enabled, Is.True);
+
+            var enabledCameras = FindSceneObjects(scene, typeof(Camera))
+                .OfType<Camera>()
+                .Where(camera => camera.enabled && camera.gameObject.activeInHierarchy)
+                .ToArray();
+            Assert.That(enabledCameras.Count(camera => camera.name != "Overlay Camera"), Is.EqualTo(1));
+            Assert.That(enabledCameras.All(camera => camera.transform.IsChildOf(replacement.transform)), Is.True);
+
+            var enabledListeners = FindSceneObjects(scene, typeof(AudioListener))
+                .OfType<AudioListener>()
+                .Count(listener => listener.enabled && listener.gameObject.activeInHierarchy);
+            Assert.That(enabledListeners, Is.EqualTo(1));
         }
 
         [UnityTest]

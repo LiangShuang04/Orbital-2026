@@ -99,6 +99,20 @@ namespace DontDiePlease.Central.Combat
             CombatStateChanged?.Invoke(wave, ActiveEnemyCount);
         }
 
+        public void SetPlayerTarget(Transform target)
+        {
+            player = target;
+
+            foreach (var enemy in activeEnemies)
+            {
+                if (enemy == null || enemy.IsDead)
+                    continue;
+
+                var ai = enemy.GetComponent<CentralCombatEnemyAI>();
+                ai?.SetTarget(target);
+            }
+        }
+
         public CentralCombatEnemy SpawnEncounterEnemy(CentralCombatEnemyConfig config, Vector3 position)
         {
             if (!IsConfigured || config == null || player == null)
