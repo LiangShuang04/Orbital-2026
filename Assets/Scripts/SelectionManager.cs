@@ -1,9 +1,15 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
+// Looks at whatever is under the crosshair and lets the player interact
+// Handles both our own IInteractable (pickups, crafting, our doors) and the
+// Vattalus ship interactables (ship doors, switches)
+// If no prompt UI is assigned it builds its own, so nothing needs wiring
 public class SelectionManager : MonoBehaviour
 {
     [Header("UI")]
+    [Tooltip("Optional, leave empty to auto-build a prompt at runtime")]
     public GameObject interaction_Info_UI;
     [SerializeField] private string promptSuffix = "  [E]";
 
@@ -14,39 +20,100 @@ public class SelectionManager : MonoBehaviour
 
     private TMP_Text interactionText;
     private GameObject interactor;
+    private GameObject autoCanvas;
 
     void Start()
     {
-        if (interaction_Info_UI != null)
+        if (interaction_Info_UI == null)
+            BuildPromptUI();
+        else
             interactionText = interaction_Info_UI.GetComponent<TMP_Text>();
 
         if (playerInventory == null)
             playerInventory = FindObjectOfType<Inventory>();
 
         interactor = playerInventory != null ? playerInventory.gameObject : gameObject;
+
+        HidePrompt();
+    }
+
+    void OnDestroy()
+    {
+        if (autoCanvas != null) Destroy(autoCanvas);
     }
 
     void Update()
     {
-        if (Camera.main == null) return;
+        if (Camera.main == null) { HidePrompt(); return; }
 
-        IInteractable target = null;
         var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-
-        if (Physics.Raycast(ray, out var hit, interactDistance, ~0, QueryTriggerInteraction.Ignore))
-            target = hit.collider.GetComponentInParent<IInteractable>();
-
-        if (target != null)
+        if (!Physics.Raycast(ray, out var hit, interactDistance, ~0, QueryTriggerInteraction.Ignore))
         {
-            if (interactionText != null) interactionText.text = target.GetDisplayName() + promptSuffix;
-            if (interaction_Info_UI != null) interaction_Info_UI.SetActive(true);
+            HidePrompt();
+            return;
+        }
 
-            if (Input.GetKeyDown(interactKey))
-                target.Interact(interactor);
-        }
-        else if (interaction_Info_UI != null)
+        // our own interactables first (pickups, crafting stations, our doors)
+        var mine = hit.collider.GetComponentInParent<IInteractable>();
+        if (mine != null)
         {
-            interaction_Info_UI.SetActive(false);
+            ShowPrompt(mine.GetDisplayName());
+            if (Input.GetKeyDown(interactKey)) mine.Interact(interactor);
+            return;
         }
+
+        // vattalus ship interactables (ship doors, switches, etc)
+        var ship = hit.collider.GetComponentInParent<VattalusInteractable>();
+        if (ship != null)
+        {
+            // Vattalus keeps separate "Open"/"Close" text for its current state
+            ShowPrompt(ship.isActivated ? ship.deactivateText : ship.activateText);
+            if (Input.GetKeyDown(interactKey) && ship.CanInteract) ship.Interact();
+            return;
+        }
+
+        HidePrompt();
+    }
+
+    void ShowPrompt(string label)
+    {
+        if (interactionText != null) interactionText.text = label + promptSuffix;
+        if (interaction_Info_UI != null) interaction_Info_UI.SetActive(true);
+    }
+
+    void HidePrompt()
+    {
+        if (interaction_Info_UI != null) interaction_Info_UI.SetActive(false);
+    }
+
+    // builds a simple centred prompt label so nothing has to be wired in the editor
+    void BuildPromptUI()
+    {
+        autoCanvas = new GameObject("InteractPrompt (auto)");
+        var canvas = autoCanvas.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 550;
+
+        var scaler = autoCanvas.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        scaler.matchWidthOrHeight = 0.5f;
+
+        var textGO = new GameObject("PromptText", typeof(RectTransform));
+        var rect = textGO.GetComponent<RectTransform>();
+        rect.SetParent(autoCanvas.transform, false);
+        rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = new Vector2(0f, -70f); // just below the crosshair
+        rect.sizeDelta = new Vector2(700f, 40f);
+
+        var tmp = textGO.AddComponent<TextMeshProUGUI>();
+        tmp.alignment = TextAlignmentOptions.Center;
+        tmp.fontSize = 24f;
+        tmp.color = Color.white;
+        tmp.raycastTarget = false;
+        if (TMP_Settings.defaultFontAsset != null) tmp.font = TMP_Settings.defaultFontAsset;
+
+        interaction_Info_UI = textGO;
+        interactionText = tmp;
     }
 }
