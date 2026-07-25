@@ -55,6 +55,11 @@ public class SurvivalHUD : MonoBehaviour
             if (stats == null) return;
         }
 
+        // Hide the bars while the game is paused so they don't sit on top of the pause menu.
+        bool paused = Time.timeScale == 0f || Akila.FPSFramework.FPSFrameworkCore.IsPaused;
+        SetVisible(!paused);
+        if (paused) return;
+
         Apply(health, stats.currentHealth, stats.maxHealth);
         Apply(oxygen, stats.currentOxygen, stats.maxOxygen);
         Apply(saturation, stats.currentSaturation, stats.maxSaturation);
@@ -98,10 +103,10 @@ public class SurvivalHUD : MonoBehaviour
     Bar CreateBar(string title, Color color, int index, bool dangerWhenHigh)
     {
         var container = NewRect(title, root);
-        container.anchorMin = container.anchorMax = new Vector2(0f, 1f);
-        container.pivot = new Vector2(0f, 1f);
+        container.anchorMin = container.anchorMax = new Vector2(0f, 0f);
+        container.pivot = new Vector2(0f, 0f);
         container.sizeDelta = new Vector2(BarWidth, BarHeight);
-        container.anchoredPosition = new Vector2(MarginX, -(MarginY + index * (BarHeight + Gap)));
+        container.anchoredPosition = new Vector2(MarginX, MarginY + index * (BarHeight + Gap));
 
         var background = NewRect("Background", container);
         Stretch(background);

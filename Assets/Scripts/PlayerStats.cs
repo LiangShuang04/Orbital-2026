@@ -53,6 +53,13 @@ public class PlayerStats : MonoBehaviour
     void Update()
     {
         if (isDead) return;
+
+        // Don't drain survival stats while paused. Akila's pause flag is flipped
+        // immediately (its pause only eases Time.timeScale toward 0, so deltaTime is
+        // still non-zero for a few frames) and is set by both the Akila pause menu and
+        // our PauseSettingsMenuController — so this reliably freezes the bars.
+        if (Time.timeScale == 0f || Akila.FPSFramework.FPSFrameworkCore.IsPaused) return;
+
         var dt = Time.deltaTime;
 
         if (isInsideShip)
@@ -81,8 +88,9 @@ public class PlayerStats : MonoBehaviour
         if (isDead) return;
         isDead = true;
 
-        foreach (var b in disableOnDeath)
-            if (b != null) b.enabled = false;
+        if (disableOnDeath != null)
+            foreach (var b in disableOnDeath)
+                if (b != null) b.enabled = false;
 
         // legacy references, only used if this player has the old controller scripts
         if (movement != null) movement.enabled = false;
@@ -103,8 +111,9 @@ public class PlayerStats : MonoBehaviour
         currentSaturation = maxSaturation;
         currentToxicity = 0f;
 
-        foreach (var b in disableOnDeath)
-            if (b != null) b.enabled = true;
+        if (disableOnDeath != null)
+            foreach (var b in disableOnDeath)
+                if (b != null) b.enabled = true;
 
         if (movement != null) movement.enabled = true;
         if (camController != null) camController.enabled = true;
