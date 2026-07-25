@@ -1,15 +1,12 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 // Looks at whatever is under the crosshair and lets the player interact
 // Handles both our own IInteractable (pickups, crafting, our doors) and the
 // Vattalus ship interactables (ship doors, switches)
-// If no prompt UI is assigned it builds its own, so nothing needs wiring
 public class SelectionManager : MonoBehaviour
 {
     [Header("UI")]
-    [Tooltip("Optional, leave empty to auto-build a prompt at runtime")]
     public GameObject interaction_Info_UI;
     [SerializeField] private string promptSuffix = "  [E]";
 
@@ -20,26 +17,16 @@ public class SelectionManager : MonoBehaviour
 
     private TMP_Text interactionText;
     private GameObject interactor;
-    private GameObject autoCanvas;
 
     void Start()
     {
-        if (interaction_Info_UI == null)
-            BuildPromptUI();
-        else
+        if (interaction_Info_UI != null)
             interactionText = interaction_Info_UI.GetComponent<TMP_Text>();
 
         if (playerInventory == null)
             playerInventory = FindObjectOfType<Inventory>();
 
         interactor = playerInventory != null ? playerInventory.gameObject : gameObject;
-
-        HidePrompt();
-    }
-
-    void OnDestroy()
-    {
-        if (autoCanvas != null) Destroy(autoCanvas);
     }
 
     void Update()
@@ -62,7 +49,7 @@ public class SelectionManager : MonoBehaviour
             return;
         }
 
-        // vattalus ship interactables (ship doors, switches, etc)
+        // vattalus ship interactables (ship doors, switches)
         var ship = hit.collider.GetComponentInParent<VattalusInteractable>();
         if (ship != null)
         {
@@ -84,36 +71,5 @@ public class SelectionManager : MonoBehaviour
     void HidePrompt()
     {
         if (interaction_Info_UI != null) interaction_Info_UI.SetActive(false);
-    }
-
-    // builds a simple centred prompt label so nothing has to be wired in the editor
-    void BuildPromptUI()
-    {
-        autoCanvas = new GameObject("InteractPrompt (auto)");
-        var canvas = autoCanvas.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 550;
-
-        var scaler = autoCanvas.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
-        scaler.matchWidthOrHeight = 0.5f;
-
-        var textGO = new GameObject("PromptText", typeof(RectTransform));
-        var rect = textGO.GetComponent<RectTransform>();
-        rect.SetParent(autoCanvas.transform, false);
-        rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = new Vector2(0f, -70f); // just below the crosshair
-        rect.sizeDelta = new Vector2(700f, 40f);
-
-        var tmp = textGO.AddComponent<TextMeshProUGUI>();
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.fontSize = 24f;
-        tmp.color = Color.white;
-        tmp.raycastTarget = false;
-        if (TMP_Settings.defaultFontAsset != null) tmp.font = TMP_Settings.defaultFontAsset;
-
-        interaction_Info_UI = textGO;
-        interactionText = tmp;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -30,6 +31,15 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Environment")]
     public bool isInsideShip = true;
+
+    [Header("On Death")]
+    [Tooltip("Components disabled when the player dies (drag in the Akila FirstPersonController, CharacterInput, and any weapon/look scripts)")]
+    public Behaviour[] disableOnDeath;
+    [Tooltip("Where the player is placed on respawn. Leave empty to respawn on the spot")]
+    public Transform respawnPoint;
+
+    public bool IsDead => isDead;
+    public event Action OnDied;
 
     bool isDead;
 
@@ -68,10 +78,39 @@ public class PlayerStats : MonoBehaviour
 
     public void Die()
     {
+        if (isDead) return;
         isDead = true;
-        movement.enabled = false;
-        camController.enabled = false;
+
+        foreach (var b in disableOnDeath)
+            if (b != null) b.enabled = false;
+
+        // legacy references, only used if this player has the old controller scripts
+        if (movement != null) movement.enabled = false;
+        if (camController != null) camController.enabled = false;
+
+        OnDied?.Invoke();
         Debug.Log("Player died");
+    }
+
+    public void Respawn()
+    {
+        isDead = false;
+        currentHealth = maxHealth;
+        currentOxygen = maxOxygen;
+        currentSaturation = maxSaturation;
+        currentToxicity = 0f;
+
+        foreach (var b in disableOnDeath)
+            if (b != null) b.enabled = true;
+
+        if (movement != null) movement.enabled = true;
+        if (camController != null) camController.enabled = true;
+
+        if (respawnPoint != null)
+        {
+            transform.position = respawnPoint.position;
+            transform.rotation = respawnPoint.rotation;
+        }
     }
 
     public void Heal(float amount) => currentHealth = Mathf.Min(maxHealth, currentHealth + amount);

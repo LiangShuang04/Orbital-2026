@@ -33,6 +33,7 @@ RectTransform:
   m_Children:
   - {fileID: 8042611437098008405}
   m_Father: {fileID: 4360613557175629593}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -104,13 +105,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -162,6 +161,7 @@ RectTransform:
   - {fileID: 6913567078821283457}
   - {fileID: 5337208396306133373}
   m_Father: {fileID: 1680055141200789196}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -227,6 +227,7 @@ RectTransform:
   m_Children:
   - {fileID: 8699127353773622242}
   m_Father: {fileID: 8933881938487563302}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -298,13 +299,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -355,6 +354,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3920531491956339837}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -427,23 +427,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -511,6 +508,7 @@ RectTransform:
   - {fileID: 5124859908546776461}
   - {fileID: 3560508601362336485}
   m_Father: {fileID: 1680055141200789196}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -576,6 +574,7 @@ RectTransform:
   m_Children:
   - {fileID: 1081480666286338189}
   m_Father: {fileID: 8933881938487563302}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -647,13 +646,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -704,6 +701,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4424023362238861018}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -776,23 +774,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -855,6 +850,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7199145747615111580}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -927,23 +923,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -1007,6 +1000,7 @@ RectTransform:
   m_Children:
   - {fileID: 5309566572404336091}
   m_Father: {fileID: 579395865380181772}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1078,13 +1072,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -1136,6 +1128,7 @@ RectTransform:
   m_Children:
   - {fileID: 4656171220157629797}
   m_Father: {fileID: 579395865380181772}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1207,13 +1200,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -1264,6 +1255,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3279595412420667932}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -1336,23 +1328,20 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -1417,6 +1406,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1683618195254380069}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1489,23 +1479,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -1569,6 +1556,7 @@ RectTransform:
   m_Children:
   - {fileID: 1863652870104984216}
   m_Father: {fileID: 8933881938487563302}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1640,13 +1628,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -1698,6 +1684,7 @@ RectTransform:
   m_Children:
   - {fileID: 5137412028227603593}
   m_Father: {fileID: 2505122225423034708}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1769,13 +1756,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -1827,6 +1812,7 @@ RectTransform:
   - {fileID: 3920531491956339837}
   - {fileID: 5407800808216594729}
   m_Father: {fileID: 1680055141200789196}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1891,6 +1877,7 @@ RectTransform:
   m_Children:
   - {fileID: 1680055141200789196}
   m_Father: {fileID: 6494925244190921477}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1967,6 +1954,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6913567078821283457}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2039,23 +2027,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -2119,6 +2104,7 @@ RectTransform:
   m_Children:
   - {fileID: 3391839814533285992}
   m_Father: {fileID: 8933881938487563302}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2190,13 +2176,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -2247,6 +2231,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 579395865380181772}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2319,23 +2304,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -2398,6 +2380,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 859457966121448487}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2470,23 +2453,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -2549,6 +2529,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2791596945970061107}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2621,23 +2602,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -2701,6 +2679,7 @@ RectTransform:
   m_Children:
   - {fileID: 2874154104207421499}
   m_Father: {fileID: 2505122225423034708}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2772,13 +2751,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -2830,6 +2807,7 @@ RectTransform:
   - {fileID: 859457966121448487}
   - {fileID: 7199145747615111580}
   m_Father: {fileID: 1680055141200789196}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2893,6 +2871,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2395028575956843094}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2970,6 +2949,7 @@ RectTransform:
   m_Children:
   - {fileID: 5872204380978951334}
   m_Father: {fileID: 8933881938487563302}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3041,13 +3021,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -3110,6 +3088,7 @@ RectTransform:
   - {fileID: 5119610979641969997}
   - {fileID: 2395028575956843094}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3134,7 +3113,6 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -3256,6 +3234,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8933881938487563302}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3328,23 +3307,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -3409,6 +3385,7 @@ RectTransform:
   m_Children:
   - {fileID: 4214604181094595689}
   m_Father: {fileID: 3279595412420667932}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3499,6 +3476,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2797076607979545200}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3571,23 +3549,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -3650,6 +3625,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5337208396306133373}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3722,23 +3698,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -3802,6 +3775,7 @@ RectTransform:
   m_Children:
   - {fileID: 358115088870141766}
   m_Father: {fileID: 8933881938487563302}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3873,13 +3847,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -3934,6 +3906,7 @@ RectTransform:
   - {fileID: 2505122225423034708}
   - {fileID: 579395865380181772}
   m_Father: {fileID: 4214604181094595689}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4008,6 +3981,7 @@ RectTransform:
   m_Children:
   - {fileID: 330730980306787362}
   m_Father: {fileID: 3279595412420667932}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -4080,23 +4054,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -4172,6 +4143,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4360613557175629593}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4244,23 +4216,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -4323,6 +4292,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3560508601362336485}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4395,23 +4365,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -4475,6 +4442,7 @@ RectTransform:
   m_Children:
   - {fileID: 3785285826302312820}
   m_Father: {fileID: 4360613557175629593}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4546,13 +4514,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -4603,6 +4569,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9160226292486998112}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4675,23 +4642,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -4755,6 +4719,7 @@ RectTransform:
   - {fileID: 3572557361442723436}
   - {fileID: 1683618195254380069}
   m_Father: {fileID: 1680055141200789196}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4820,6 +4785,7 @@ RectTransform:
   m_Children:
   - {fileID: 470081254779214525}
   m_Father: {fileID: 8012623484790726304}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4891,13 +4857,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -4948,6 +4912,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3572557361442723436}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5020,23 +4985,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -5099,6 +5061,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5407800808216594729}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5171,23 +5134,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -5250,6 +5210,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8012623484790726304}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5322,23 +5283,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -5401,6 +5359,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2505122225423034708}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5473,23 +5432,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -5552,6 +5508,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5124859908546776461}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5624,23 +5581,20 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
-  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
@@ -5704,6 +5658,7 @@ RectTransform:
   m_Children:
   - {fileID: 3461085483263584319}
   m_Father: {fileID: 8012623484790726304}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5775,13 +5730,11 @@ MonoBehaviour:
   highlightSound:
     audioProfile: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   selectSound:
     audioProfile: {fileID: 11400000, guid: 6e8e15ca2915e7b4383679054863fe92, type: 2}
     component: {fileID: 0}
-    isSetup: 0
     isEventsEnabled: 0
     distanceFromListener: 0
   onClick:
@@ -5922,10 +5875,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3279595412420667932}
     m_Modifications:
-    - target: {fileID: 719379286567054709, guid: bd84ff1208700144ba78dfd7981a8a46, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
     - target: {fileID: 1210560613704433530, guid: bd84ff1208700144ba78dfd7981a8a46, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6041,10 +5990,6 @@ PrefabInstance:
     - target: {fileID: 4631206208003920270, guid: bd84ff1208700144ba78dfd7981a8a46, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4631206208645056573, guid: bd84ff1208700144ba78dfd7981a8a46, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.29999542
       objectReference: {fileID: 0}
     - target: {fileID: 4631206208675033617, guid: bd84ff1208700144ba78dfd7981a8a46, type: 3}
       propertyPath: m_AnchorMax.x
@@ -6384,10 +6329,6 @@ PrefabInstance:
       propertyPath: highlightSound.audioProfile
       value: 
       objectReference: {fileID: 11400000, guid: b7a13230ac3085d44b20f12fa5752455, type: 2}
-    - target: {fileID: 1717035567945946456, guid: e63dcd50334295048aefe7bb62acf5e8, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
     - target: {fileID: 1717035567945946458, guid: e63dcd50334295048aefe7bb62acf5e8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -6416,10 +6357,6 @@ PrefabInstance:
       propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3080036204814230213, guid: e63dcd50334295048aefe7bb62acf5e8, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
     - target: {fileID: 7064238462006129801, guid: e63dcd50334295048aefe7bb62acf5e8, type: 3}
       propertyPath: selectSound.audioProfile
       value: 
@@ -6432,14 +6369,6 @@ PrefabInstance:
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8214570784801533506}
-    - target: {fileID: 7542239723952043986, guid: e63dcd50334295048aefe7bb62acf5e8, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
-    - target: {fileID: 7542239724753557606, guid: e63dcd50334295048aefe7bb62acf5e8, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
     - target: {fileID: 7542239725167450460, guid: e63dcd50334295048aefe7bb62acf5e8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -6471,10 +6400,6 @@ PrefabInstance:
     - target: {fileID: 7542239725895585022, guid: e63dcd50334295048aefe7bb62acf5e8, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7542239725950518056, guid: e63dcd50334295048aefe7bb62acf5e8, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 7679690332946792295, guid: e63dcd50334295048aefe7bb62acf5e8, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6880,7 +6805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3961204816946492746, guid: e4df641fdecdeec4f9a829bacafb9fcf, type: 3}
       propertyPath: m_Size
-      value: 0.16637656
+      value: 0.36825398
       objectReference: {fileID: 0}
     - target: {fileID: 3961204816946492746, guid: e4df641fdecdeec4f9a829bacafb9fcf, type: 3}
       propertyPath: m_Value
@@ -7469,15 +7394,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5200646117151937160, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5200646117151937160, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5200646117151937160, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 178.48999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5200646117151937160, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -7485,11 +7410,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5200646117151937160, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 190.0905
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5200646117151937160, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -18.336
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5200646117213742466, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_text
@@ -7518,10 +7443,6 @@ PrefabInstance:
     - target: {fileID: 5200646117213742466, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 5200646117213742466, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 5200646117625532540, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_SizeDelta.x
@@ -7603,29 +7524,25 @@ PrefabInstance:
       propertyPath: m_IsTextObjectScaleStatic
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9106042870088563465, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
     - target: {fileID: 9106042870088563467, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9106042870088563467, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9106042870088563467, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 118.49
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9106042870088563467, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 89.244995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9106042870088563467, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -18.336
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9106042870088563508, guid: 0312c2af7b09ef54e861db9a14ee785d, type: 3}
       propertyPath: m_IsActive
@@ -7695,7 +7612,6 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

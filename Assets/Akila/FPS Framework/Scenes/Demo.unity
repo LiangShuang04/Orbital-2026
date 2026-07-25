@@ -213,7 +213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4308090959622565671, guid: 365989104bab89047b810e46a38f7798, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 54.02
       objectReference: {fileID: 0}
     - target: {fileID: 4308090959622565671, guid: 365989104bab89047b810e46a38f7798, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -233,7 +233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5165165174099706403, guid: 365989104bab89047b810e46a38f7798, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 30.310001
       objectReference: {fileID: 0}
     - target: {fileID: 5165165174099706403, guid: 365989104bab89047b810e46a38f7798, type: 3}
       propertyPath: m_SizeDelta.y
@@ -245,7 +245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5165165174099706403, guid: 365989104bab89047b810e46a38f7798, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -4
+      value: -20.55
       objectReference: {fileID: 0}
     - target: {fileID: 5228876867769616884, guid: 365989104bab89047b810e46a38f7798, type: 3}
       propertyPath: m_SizeDelta.x
@@ -265,7 +265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5884059689305574358, guid: 365989104bab89047b810e46a38f7798, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 10.31
       objectReference: {fileID: 0}
     - target: {fileID: 5884059689305574358, guid: 365989104bab89047b810e46a38f7798, type: 3}
       propertyPath: m_SizeDelta.y
@@ -316,7 +316,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c5b3567d510276b48a1ff16dfd9ed418, type: 3}
   m_Resource: {fileID: 8300000, guid: c5b3567d510276b48a1ff16dfd9ed418, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5

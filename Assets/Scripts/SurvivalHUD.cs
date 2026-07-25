@@ -99,7 +99,6 @@ public class SurvivalHUD : MonoBehaviour
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920f, 1080f);
         scaler.matchWidthOrHeight = 0.5f;
-        // deliberately no GraphicRaycaster, the HUD should never eat mouse clicks
 
         var rootGO = new GameObject("Bars", typeof(RectTransform));
         root = rootGO.GetComponent<RectTransform>();

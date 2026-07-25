@@ -35,7 +35,7 @@ namespace Akila.FPSFramework
         [Tooltip("How high the player can jump.")]
         public float jumpHeight = 6;
 
-        [Tooltip("Playerï¿½s height when crouched.")]
+        [Tooltip("Player’s height when crouched.")]
         public float crouchHeight = 1.5f;
 
         public float crouchTime = 0.1f;
@@ -74,7 +74,7 @@ namespace Akila.FPSFramework
 
         [Header("Camera")]
         [FormerlySerializedAs("_Camera")]
-        [Tooltip("Reference to the playerï¿½s camera transform.")]
+        [Tooltip("Reference to the player’s camera transform.")]
         public Transform cameraTransform;
 
         [Tooltip("Maximum upward camera rotation in degrees.")]

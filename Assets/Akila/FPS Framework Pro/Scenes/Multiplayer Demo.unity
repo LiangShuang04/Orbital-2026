@@ -966,23 +966,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
-  m_RenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_ShadowRenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_Version: 4
-  m_LightLayerMask: 1
-  m_ShadowLayerMask: 1
-  m_RenderingLayers: 1
-  m_ShadowRenderingLayers: 1
 --- !u!1 &1985763238 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1508297696162938588, guid: 2a8d36980e27f5043ac94d7b0de91454, type: 3}
@@ -1346,17 +1340,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2651374196078321411, guid: f6a36f52df45cdf489d311a363b85737, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
-      objectReference: {fileID: 0}
     - target: {fileID: 3163294472169048847, guid: f6a36f52df45cdf489d311a363b85737, type: 3}
       propertyPath: m_Name
       value: Network Discovery HUD
-      objectReference: {fileID: 0}
-    - target: {fileID: 3644678007751460103, guid: f6a36f52df45cdf489d311a363b85737, type: 3}
-      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
-      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 5407284166782250279, guid: f6a36f52df45cdf489d311a363b85737, type: 3}
       propertyPath: m_AnchorMax.y
