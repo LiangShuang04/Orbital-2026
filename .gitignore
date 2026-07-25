@@ -36,3 +36,18 @@ sysinfo.txt
 
 node_modules/
 .env
+
+# Large third-party asset packs — each teammate imports these locally
+# (kept on disk, just not pushed to GitHub)
+/Assets/_DLNK/
+/Assets/_DLNK.meta
+/Assets/SineVFX/
+/Assets/SineVFX.meta
+/Assets/VattalusAssets/
+/Assets/VattalusAssets.meta
+/Assets/Health Pack/
+/Assets/Health Pack.meta
+
+# WebGL build output — never commit builds
+/Milestone 2 trial game/
+/Milestone 2 trial game.zip
