@@ -367,7 +367,7 @@ namespace DontDiePlease.Narrative.UI
             SetRect(objectiveTitle.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(22f, -14f), new Vector2(-40f, 26f));
             objectiveDescription = CreateText(objectiveRoot.transform, "ObjectiveDescription", 17f, FontStyles.Normal, TextAlignmentOptions.TopLeft);
             objectiveDescription.color = TextColor;
-            SetRect(objectiveDescription.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), new Vector2(22f, 12f), new Vector2(-40f, -50f));
+            SetRect(objectiveDescription.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(22f, -44f), new Vector2(-40f, 66f));
         }
 
         private Button CreateChoiceButton(Transform parent, int index, float y)
