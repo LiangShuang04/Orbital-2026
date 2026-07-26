@@ -553,7 +553,11 @@ namespace DontDiePlease.Central.Combat
                         collider.name.Contains("BoundsCollider", StringComparison.OrdinalIgnoreCase)));
 
             foreach (var light in ship.GetComponentsInChildren<Light>(true))
+            {
+                light.enabled = true;
+                light.lightmapBakeType = LightmapBakeType.Realtime;
                 light.shadows = LightShadows.None;
+            }
         }
 
         private bool IsRoomVisible(MonoBehaviour room)
@@ -1276,8 +1280,9 @@ namespace DontDiePlease.Central.Combat
             skyMaterial.SetFloat("_Exposure", 0.72f);
             skyMaterial.SetFloat("_SunSize", 0.025f);
             RenderSettings.skybox = skyMaterial;
-            RenderSettings.ambientMode = AmbientMode.Skybox;
-            RenderSettings.ambientIntensity = 0.68f;
+            RenderSettings.ambientMode = AmbientMode.Flat;
+            RenderSettings.ambientLight = new Color(0.3f, 0.32f, 0.34f, 1f);
+            RenderSettings.ambientIntensity = 1f;
             DynamicGI.UpdateEnvironment();
         }
 

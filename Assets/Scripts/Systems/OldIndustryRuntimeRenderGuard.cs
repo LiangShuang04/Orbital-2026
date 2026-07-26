@@ -138,6 +138,7 @@ namespace DontDiePlease.Systems
                 }
 
                 light.useColorTemperature = false;
+                light.lightmapBakeType = LightmapBakeType.Realtime;
 
                 if (light.type == LightType.Directional)
                 {
