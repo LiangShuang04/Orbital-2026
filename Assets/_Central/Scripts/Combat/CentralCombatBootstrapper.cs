@@ -111,6 +111,9 @@ namespace DontDiePlease.Central.Combat
                 yield break;
 
             yield return FinishPlayerSetup(player);
+
+            SpawnSurvivalWorldObjects(player);
+
             if (SceneManager.GetActiveScene().name == "Demo_Combat")
             {
                 var demoSpawner = EnsureSpawner();
@@ -193,6 +196,70 @@ namespace DontDiePlease.Central.Combat
             }
         }
 
+        // Bolts our survival systems onto whatever player the bootstrapper spawns.
+        // NOTE: a bare "Inventory" here would resolve to Akila's (via 'using Akila.FPSFramework'),
+        // so the survival inventory must be referenced as global::Inventory.
+        private void AttachSurvivalSystems(GameObject player)
+        {
+            if (player.GetComponent<PlayerStats>() == null) player.AddComponent<PlayerStats>();                   // survival stats -> SurvivalHUD
+            if (player.GetComponent<global::Inventory>() == null) player.AddComponent<global::Inventory>();       // crystals -> GraphicalInventoryUI, crafting
+            if (player.GetComponent<SelectionManager>() == null) player.AddComponent<SelectionManager>();         // look + interact: pickups, station, generator
+            if (player.GetComponent<AkilaInventoryBridge>() == null) player.AddComponent<AkilaInventoryBridge>(); // guns appear in the Tab inventory
+            if (player.GetComponent<CombatHealthBridge>() == null) player.AddComponent<CombatHealthBridge>();     // enemy damage -> survival HP bar
+
+            player.tag = "Player"; // enemies find the player by this tag
+        }
+
+        // Spawns the survival world objects (item spawners, crafting station, signal
+        // generator) from configured prefabs in Resources/SurvivalWorld/. Each prefab bakes
+        // in its own content (loot table / recipe / required parts), so this stays build-safe
+        // with no runtime asset wiring. Missing prefabs are logged and skipped.
+        private void SpawnSurvivalWorldObjects(GameObject player)
+        {
+            Vector3 origin = player != null ? player.transform.position : PickPlayerSpawn();
+
+            SpawnFromResources("SurvivalWorld/ItemSpawner", origin + new Vector3(0f, 0f, 6f));
+            SpawnFromResources("SurvivalWorld/CraftingStation", origin + new Vector3(4f, 0f, 6f));
+            SpawnFromResources("SurvivalWorld/SignalGenerator", origin + new Vector3(-4f, 0f, 8f));
+        }
+
+        private void SpawnFromResources(string resourcePath, Vector3 position)
+        {
+            var prefab = Resources.Load<GameObject>(resourcePath);
+            if (prefab == null)
+            {
+                Debug.LogWarning($"[Survival] No prefab at Resources/{resourcePath} — skipped. Create + configure it and put it there to spawn it.");
+                return;
+            }
+
+            var obj = Instantiate(prefab, position, Quaternion.identity);
+            SceneManager.MoveGameObjectToScene(obj, gameObject.scene);
+        }
+
+        // Disables Akila HUD elements we don't use: the PlayerCard (Akila's health/name
+        // bar — our SurvivalHUD shows health instead) and the Minimap (non-functional).
+        // Component-based, so it works no matter which prefab (GameManager or HUD) spawned them.
+        private void StripUnwantedHudElements()
+        {
+            foreach (var card in FindObjectsByType<PlayerCard>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                card.gameObject.SetActive(false);
+
+            foreach (var minimap in FindObjectsByType<Minimap>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                minimap.gameObject.SetActive(false);
+
+            // Move the Akila FPS counter to the top-right so it stops overlapping the
+            // survival HUD and the wave counter in the top-left.
+            foreach (var fps in FindObjectsByType<Akila.FPSFramework.UI.FPSCounter>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                if (fps.transform is RectTransform rt)
+                {
+                    // top-right, but well to the LEFT of the 380-wide objective panel so they don't overlap
+                    rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(1f, 1f);
+                    rt.anchoredPosition = new Vector2(-430f, -20f);
+                }
+            }
+        }
+
         private void EnsureFrameworkManagers()
         {
             if (FindAnyObjectByType<Akila.FPSFramework.GameManager>(FindObjectsInactive.Include) == null)
@@ -210,6 +277,10 @@ namespace DontDiePlease.Central.Combat
                 if (hudPrefab != null)
                     Instantiate(hudPrefab);
             }
+
+            // strip the Akila player-card health bar + broken minimap from the spawned HUD
+            StripUnwantedHudElements();
+            Invoke(nameof(StripUnwantedHudElements), 0.25f); // re-run in case the HUD spawns a frame later
 
             if (SpawnManager.Instance == null && FindAnyObjectByType<SpawnManager>(FindObjectsInactive.Include) == null)
             {
@@ -397,6 +468,10 @@ namespace DontDiePlease.Central.Combat
                 grounding = player.AddComponent<CentralPlayerGrounding>();
 
             grounding.Configure(player.transform.position);
+
+            // Attach all our survival systems (stats, inventory, interaction, gun mirror,
+            // combat -> survival health bridge, and the Player tag) onto the spawned player.
+            AttachSurvivalSystems(player);
 
             var inv = player.GetComponentInChildren<FrameworkInventory>(true);
 
