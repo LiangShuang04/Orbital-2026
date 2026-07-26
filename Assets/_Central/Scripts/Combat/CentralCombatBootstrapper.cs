@@ -88,7 +88,7 @@ namespace DontDiePlease.Central.Combat
             EnsureSeedManager();
             DisableCompetingControllers();
             DisableActiveEventSystems();
-            BuildRuntimeNavMesh();
+            EnsureNavMesh();
             mapSpawn = PickMapSpawn();
             mapSpawnReady = true;
 
@@ -227,6 +227,24 @@ namespace DontDiePlease.Central.Combat
                     }
                 };
             }
+        }
+
+        private void EnsureNavMesh()
+        {
+            var bakedSurface = FindObjectsByType<NavMeshSurface>(FindObjectsInactive.Include)
+                .FirstOrDefault(surface =>
+                    surface != null &&
+                    surface.gameObject.scene == gameObject.scene &&
+                    surface.navMeshData != null);
+
+            if (bakedSurface != null)
+            {
+                bakedSurface.enabled = true;
+                bakedSurface.AddData();
+                return;
+            }
+
+            BuildRuntimeNavMesh();
         }
 
         private void BuildRuntimeNavMesh()

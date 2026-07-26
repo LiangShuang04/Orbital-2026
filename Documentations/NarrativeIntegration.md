@@ -24,7 +24,9 @@ The authored scene contains:
 - Signal Generator assembly and placement
 - defence centre and four defence enemy spawns
 
-At runtime, `CentralCombatBootstrapper` creates the Akila managers, FPS player, weapons, NavMesh and combat spawner. `NarrativeRuntimeInstaller` creates the dialogue presenter, save adapter, world binder and combat coordinator.
+At runtime, `CentralCombatBootstrapper` loads the baked Demo_Combat NavMesh, creates the Akila managers, FPS player, weapons and combat spawner, and falls back to runtime NavMesh generation only when baked data is missing. `NarrativeRuntimeInstaller` creates the dialogue presenter, save adapter, world binder and combat coordinator.
+
+After changing terrain or building colliders, open `Demo_Combat` and run `Tools > Don't Die Please > Combat > Demo > Bake Demo Combat NavMesh`.
 
 ## Death Recovery
 
